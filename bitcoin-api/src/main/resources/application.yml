@@ -1,0 +1,36 @@
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure.include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    binders:
+      enabled: true
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          auto-add-partitions: true
+      bindings:
+        output:
+          destination: com.mycompany.bitcoin.api.price
+          content-type: application/*+avro
+          producer:
+            partition-key-expression: headers['partitionKey']
+            partition-count: 2
+  sleuth:
+    sampler.probability: 1.0
+#    web.skipPattern: (^cleanup.*|.+favicon.*)
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
