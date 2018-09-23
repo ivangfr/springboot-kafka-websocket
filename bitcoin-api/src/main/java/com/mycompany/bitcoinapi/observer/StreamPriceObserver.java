@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @EnableBinding(Source.class)
-public class PriceStreamObserver implements PriceObserver<PriceDto> {
+public class StreamPriceObserver implements PriceObserver {
 
     private final Source source;
     private final Gson gson;
 
-    public PriceStreamObserver(Source source, Gson gson) {
+    public StreamPriceObserver(Source source, Gson gson) {
         this.source = source;
         this.gson = gson;
     }
