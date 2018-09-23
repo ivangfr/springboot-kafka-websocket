@@ -70,9 +70,8 @@ public class PriceSubjectImpl implements PriceSubject {
     public void notifyObservers() {
         PriceDto priceDto = new PriceDto(price.getValue(), price.getTimestamp());
         log.info("New {}", priceDto);
-        for (PriceObserver observer : observers) {
-            observer.update(priceDto);
-        }
+
+        observers.forEach(observer -> observer.update(priceDto));
     }
 
     private boolean simulateTrade() {

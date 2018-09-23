@@ -29,13 +29,13 @@ public class SimulationRunner implements CommandLineRunner {
     public void run(String... args) {
         PriceSubject priceSubject = new PriceSubjectImpl(priceService);
 
-        OHLCObserver ohlcObserver = new OHLCObserverImpl(priceSubject, ohlcService);
+        //OHLCObserver ohlcObserver = new OHLCObserverImpl(priceSubject, ohlcService);
 
-        priceSubject.register(ohlcObserver);
+        //priceSubject.register(ohlcObserver);
         priceSubject.register(priceStream);
 
         new Thread(priceSubject).start();
-        new Thread(ohlcObserver).start();
+        //new Thread(ohlcObserver).start();
     }
 
 }

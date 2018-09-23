@@ -21,8 +21,8 @@ spring:
       bindings:
         input:
           destination: com.mycompany.bitcoin.api.price
-          content-type: application/*+avro
-          group: newsClientGroup
+          content-type: application/json
+          group: bitcoinClientGroup
           consumer:
             max-attempts: 4
             back-off-initial-interval: 10000
