@@ -13,8 +13,9 @@ import java.util.List;
 import java.util.Random;
 
 @Slf4j
-public class PriceSubjectImpl implements PriceSubject {
+public class PriceSubjectRunnableImpl implements PriceSubjectRunnable {
 
+    private static final int SLEEP_TIME = 1000;
     private static final int TRADE_DIFFICULT = 4;
     private static final Random rand = new Random();
     private static final BigDecimal INITIAL_PRICE = new BigDecimal(6000);
@@ -25,13 +26,8 @@ public class PriceSubjectImpl implements PriceSubject {
 
     private final PriceService priceService;
 
-    public PriceSubjectImpl(PriceService priceService) {
+    public PriceSubjectRunnableImpl(PriceService priceService) {
         this.priceService = priceService;
-    }
-
-    @Override
-    public Price getPrice() {
-        return price;
     }
 
     @Override
@@ -40,7 +36,7 @@ public class PriceSubjectImpl implements PriceSubject {
 
         while (true) {
             try {
-                Thread.sleep(Ticker.SLEEP_TIME);
+                Thread.sleep(SLEEP_TIME);
 
                 boolean hasTrade = simulateTrade();
                 if (hasTrade) {

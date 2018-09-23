@@ -1,10 +1,10 @@
 package com.mycompany.bitcoinapi.observer;
 
-public interface Subject {
+public interface Subject<T> {
 
-    void register(PriceObserver observer);
+    void register(T observer);
 
-    void unregister(PriceObserver observer);
+    void unregister(T observer);
 
     void notifyObservers();
 

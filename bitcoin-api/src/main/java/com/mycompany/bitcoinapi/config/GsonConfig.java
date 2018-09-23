@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class GsonConfig {
 
     @Bean
-    public Gson gson() {
+    Gson gson() {
         return new Gson();
     }
 

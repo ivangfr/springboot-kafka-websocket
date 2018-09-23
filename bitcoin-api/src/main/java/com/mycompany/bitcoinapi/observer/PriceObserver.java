@@ -1,9 +1,7 @@
 package com.mycompany.bitcoinapi.observer;
 
-import com.mycompany.bitcoinapi.dto.PriceDto;
+public interface PriceObserver<T> {
 
-public interface PriceObserver {
-
-    void update(PriceDto priceDto);
+    void update(T message);
 
 }
