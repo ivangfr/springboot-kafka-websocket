@@ -1,11 +1,11 @@
 package com.mycompany.bitcoinapi.service;
 
-import com.mycompany.bitcoinapi.dto.Period;
 import com.mycompany.bitcoinapi.model.OHLC;
 import com.mycompany.bitcoinapi.repository.OHLCRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class OHLCServiceImpl implements OHLCService {
@@ -17,8 +17,8 @@ public class OHLCServiceImpl implements OHLCService {
     }
 
     @Override
-    public Page<OHLC> listOHLCByPage(Period period, Pageable pageable) {
-        return ohlcRepository.findByOpenTimeBetween(period.getFrom(), period.getTo(), pageable);
+    public List<OHLC> listOHLCByPage(Date from, Date to) {
+        return ohlcRepository.findByOpenTimeBetween(from, to);
     }
 
     @Override

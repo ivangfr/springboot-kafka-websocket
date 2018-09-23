@@ -1,6 +1,6 @@
-package com.mycompany.bitcoinapi.bus;
+package com.mycompany.bitcoinapi.observer;
 
-import com.mycompany.bitcoinapi.model.PriceEvent;
+import com.mycompany.bitcoinapi.dto.PriceDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
@@ -11,21 +11,21 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @EnableBinding(Source.class)
-public class PriceStream {
+public class PriceStreamObserver implements PriceObserver {
 
     private final Source source;
 
-    public PriceStream(Source source) {
+    public PriceStreamObserver(Source source) {
         this.source = source;
     }
 
-    public void sendPrice(PriceEvent priceEvent) {
-        Message<String> message = MessageBuilder.withPayload(priceEvent.toString())
-                .setHeader("partitionKey", priceEvent.getTimestamp().getTime())
+    @Override
+    public void update(PriceDto priceDto) {
+        Message<String> message = MessageBuilder.withPayload(priceDto.toString())
+                .setHeader("partitionKey", priceDto.getTimestamp().getTime())
                 .build();
         source.output().send(message);
 
-        log.info("{} sent to bus.", priceEvent);
+        log.info("{} sent to bus.", priceDto);
     }
-
 }

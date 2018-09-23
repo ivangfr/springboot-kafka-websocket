@@ -1,17 +1,16 @@
 package com.mycompany.bitcoinapi.controller;
 
+import com.mycompany.bitcoinapi.dto.OHLCDto;
+import com.mycompany.bitcoinapi.dto.PeriodRequest;
 import com.mycompany.bitcoinapi.dto.PriceDto;
-import com.mycompany.bitcoinapi.dto.Period;
-import com.mycompany.bitcoinapi.model.OHLC;
 import com.mycompany.bitcoinapi.service.OHLCService;
-import com.mycompany.bitcoinapi.service.TradeService;
+import com.mycompany.bitcoinapi.service.PriceService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import ma.glasnost.orika.MapperFacade;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,17 +20,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/bitcoin")
-public class BitcoinPriceController {
+public class PriceController {
 
+    private final PriceService priceService;
     private final OHLCService ohlcPriceService;
-    private final TradeService tradeService;
+    private final MapperFacade mapperFacade;
 
-    public BitcoinPriceController(OHLCService ohlcPriceService, TradeService tradeService) {
+    public PriceController(PriceService priceService, OHLCService ohlcPriceService, MapperFacade mapperFacade) {
+        this.priceService = priceService;
         this.ohlcPriceService = ohlcPriceService;
-        this.tradeService = tradeService;
+        this.mapperFacade = mapperFacade;
     }
 
     @ApiOperation("Get last price")
@@ -42,7 +45,7 @@ public class BitcoinPriceController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/last")
     public PriceDto getLastPrice() {
-        return new PriceDto(tradeService.getPrice(), new DateTime(DateTimeZone.UTC).toDate());
+        return new PriceDto(priceService.getLastPrice().getValue(), new DateTime(DateTimeZone.UTC).toDate());
     }
 
     @ApiOperation(
@@ -55,8 +58,11 @@ public class BitcoinPriceController {
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/period")
-    public Page<OHLC> getOHLCs(@Valid @RequestBody Period period, Pageable pageable) {
-        return ohlcPriceService.listOHLCByPage(period, pageable);
+    public List<OHLCDto> getOHLCs(@Valid @RequestBody PeriodRequest periodRequest) {
+        return ohlcPriceService.listOHLCByPage(periodRequest.getFrom(), periodRequest.getTo())
+                .stream()
+                .map(ohlc -> mapperFacade.map(ohlc, OHLCDto.class))
+                .collect(Collectors.toList());
     }
 
 }

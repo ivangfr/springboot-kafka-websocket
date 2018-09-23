@@ -1,13 +1,13 @@
 package com.mycompany.bitcoinapi.service;
 
-import com.mycompany.bitcoinapi.dto.Period;
 import com.mycompany.bitcoinapi.model.OHLC;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.Date;
+import java.util.List;
 
 public interface OHLCService {
 
-    Page<OHLC> listOHLCByPage(Period period, Pageable pageable);
+    List<OHLC> listOHLCByPage(Date from, Date to);
 
     OHLC saveOHLC(OHLC ohlc);
 }

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
-public class Period {
+public class PeriodRequest {
 
     @ApiModelProperty(value = "FROM date time", example = "2018-09-22 10:00")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
