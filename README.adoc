@@ -62,4 +62,5 @@ mvn spring-boot:run
 
 == TODO
 
-- ...
+- bitcoin-client: add endpoint to add point manually
+- bitcoin-client: add limit to rows in the table
