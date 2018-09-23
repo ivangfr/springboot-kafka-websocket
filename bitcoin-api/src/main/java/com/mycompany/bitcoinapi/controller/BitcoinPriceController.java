@@ -1,11 +1,15 @@
 package com.mycompany.bitcoinapi.controller;
 
+import com.mycompany.bitcoinapi.dto.PriceDto;
 import com.mycompany.bitcoinapi.dto.Period;
-import com.mycompany.bitcoinapi.model.BitcoinPrice;
-import com.mycompany.bitcoinapi.service.BitcoinPriceService;
+import com.mycompany.bitcoinapi.model.OHLC;
+import com.mycompany.bitcoinapi.service.OHLCService;
+import com.mycompany.bitcoinapi.service.TradeService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -22,10 +26,12 @@ import javax.validation.Valid;
 @RequestMapping("/api/bitcoin")
 public class BitcoinPriceController {
 
-    private final BitcoinPriceService bitcoinPriceService;
+    private final OHLCService ohlcPriceService;
+    private final TradeService tradeService;
 
-    public BitcoinPriceController(BitcoinPriceService bitcoinPriceService) {
-        this.bitcoinPriceService = bitcoinPriceService;
+    public BitcoinPriceController(OHLCService ohlcPriceService, TradeService tradeService) {
+        this.ohlcPriceService = ohlcPriceService;
+        this.tradeService = tradeService;
     }
 
     @ApiOperation("Get last price")
@@ -35,12 +41,12 @@ public class BitcoinPriceController {
     })
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/last")
-    public BitcoinPrice getLastPrice() {
-        return bitcoinPriceService.getLastPrice();
+    public PriceDto getLastPrice() {
+        return new PriceDto(tradeService.getPrice(), new DateTime(DateTimeZone.UTC).toDate());
     }
 
     @ApiOperation(
-            value = "Get prices",
+            value = "Get OHLC's",
             notes = "To sort the results by a specified field, use in 'sort' field a string like: fieldname,[asc|desc]"
     )
     @ApiResponses(value = {
@@ -49,8 +55,8 @@ public class BitcoinPriceController {
     })
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/period")
-    public Page<BitcoinPrice> getPrices(@Valid @RequestBody Period period, Pageable pageable) {
-        return bitcoinPriceService.listProductsByPage(period, pageable);
+    public Page<OHLC> getOHLCs(@Valid @RequestBody Period period, Pageable pageable) {
+        return ohlcPriceService.listOHLCByPage(period, pageable);
     }
 
 }

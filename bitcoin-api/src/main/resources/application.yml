@@ -26,7 +26,7 @@ spring:
       bindings:
         output:
           destination: com.mycompany.bitcoin.api.price
-          content-type: application/*+avro
+          content-type: application/json
           producer:
             partition-key-expression: headers['partitionKey']
             partition-count: 2
