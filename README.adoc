@@ -58,6 +58,8 @@ mvn spring-boot:run
 ```
 - The link for bitcoin-client website is http://localhost:8082
 
+image::./images/bitcoint-client.png.png[bitcoint-client]
+
 == Useful links
 
 - Zipkin can be accessed at http://localhost:9411
