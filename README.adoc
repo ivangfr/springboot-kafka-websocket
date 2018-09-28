@@ -58,7 +58,7 @@ mvn spring-boot:run
 ```
 - The link for bitcoin-client website is http://localhost:8082
 
-image::./images/bitcoint-client.png[bitcoint-client]
+image::./images/bitcoin-client.png[bitcoin-client]
 
 == Useful links
 

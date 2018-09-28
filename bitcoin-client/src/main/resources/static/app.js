@@ -22,7 +22,7 @@ function connect() {
                 $('#currentPrice').text(Number(priceValue).toFixed(2));
                 $('#variation').text((priceVar > 0 ? "+" : "") + Number(priceVar).toFixed(2));
 
-                var row = '<tr><td>'+priceValue+'</td><td>'+moment(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')+'</td></tr>';
+                var row = '<tr><td>'+Number(priceValue).toFixed(2)+'</td><td>'+moment(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')+'</td></tr>';
                 $('#priceList tbody').prepend(row);
             });
 
