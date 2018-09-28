@@ -2,7 +2,9 @@
 
 == Goal
 
-The goal of this project is ...
+The goal of this project is to implement two micro-services: 1) bitcoin-api: responsible simulate the BTC price changes
+and push those price changes to Kafka and 2) bitcoin-client: service that reads from Kafka and updates its UI using
+Websockets.
 
 == Start Environment
 
@@ -62,5 +64,4 @@ mvn spring-boot:run
 
 == TODO
 
-- bitcoin-client: add endpoint to add point manually
 - bitcoin-client: add limit to rows in the table

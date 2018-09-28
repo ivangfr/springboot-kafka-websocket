@@ -32,7 +32,7 @@
         </div>
 
         <!-- Websocket Connection -->
-        <div class="col s3">
+        <div class="col s4">
             <label>Websocket</label>
             <div class="switch">
                 <label>
@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col s6">
             <!-- Prices -->
-            <table id="priceList">
+            <table id="priceList" class="striped">
                 <thead>
                 <tr>
                     <th>Price</th>
@@ -58,6 +58,34 @@
                 <tbody></tbody>
             </table>
         </div>
+
+        <div class="col s6">
+            <div class="row">
+                <form class="col s12">
+                    <div class="input-field col s12">
+                        <input id="username" type="text" class="validate">
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="message" class="materialize-textarea"></textarea>
+                        <label for="message">Message</label>
+                    </div>
+                    <div class="center-align">
+                        <button id="send" class="btn waves-effect waves-light" type="button">Send</button>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <table id="chat" class="striped">
+                        <thead>
+                            <tr><th>Chat</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -66,7 +94,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script src="/app.js"></script>
 
 </body>

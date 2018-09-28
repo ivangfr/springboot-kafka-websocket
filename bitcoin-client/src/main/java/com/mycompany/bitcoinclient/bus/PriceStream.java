@@ -35,7 +35,7 @@ public class PriceStream {
         log.info("PriceDto with value '{}' and timestamp '{}' received from bus. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
                 priceDto.getValue(), priceDto.getTimestamp(), topic, partition, offset, deliveryAttempt);
 
-        simpMessagingTemplate.convertAndSend("/topic/price", priceDto);
+        simpMessagingTemplate.convertAndSend("/topic/prices", priceDto);
     }
 
 }
