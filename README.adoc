@@ -58,6 +58,9 @@ mvn spring-boot:run
 ```
 - The link for bitcoin-client website is http://localhost:8082
 
+- The image bellow shows two users checking real-time the BTC price changes. Besides, they are using a chat channel to
+communicate each other.
+
 image::./images/bitcoin-client.png[bitcoin-client]
 
 == Useful links
