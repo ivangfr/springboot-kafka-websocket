@@ -2,9 +2,19 @@
 
 == Goal
 
-The goal of this project is to implement two micro-services: 1) bitcoin-api: responsible simulate the BTC price changes
-and push those price changes to Kafka and 2) bitcoin-client: service that reads from Kafka and updates its UI using
-Websockets.
+The goal of this project is to implement two micro-services: 1) `bitcoin-api`: responsible simulate the BTC price changes
+and push those price changes to Kafka and 2) `bitcoin-client`: service that reads from Kafka and updates its UI using
+Websocket.
+
+* We are using https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle[Spring Cloud Stream]
+framework for building highly scalable event-driven microservices connected with shared messaging systems.
+
+* We are using https://www.thymeleaf.org/[Thymeleaf] as HTML template
+
+* We are using https://zipkin.io[Zipkin] for visualizing traces between and within microservices.
+
+* We are using https://github.com/Netflix/eureka/wiki[Eureka], also known as Discovery Server, it is an application that holds the information about all
+microservices.
 
 == Start Environment
 
@@ -38,7 +48,7 @@ docker-compose ps
 ```
 mvn spring-boot:run
 ```
-- The link for eureka-server is http://localhost:8761
+- The link for `eureka-server` is http://localhost:8761
 
 === bitcoin-api
 
@@ -47,7 +57,7 @@ mvn spring-boot:run
 ```
 mvn spring-boot:run
 ```
-- The link for bitcoin-api swagger is http://localhost:8081/swagger-ui.html
+- The link for `bitcoin-api` swagger is http://localhost:8081/swagger-ui.html
 
 === bitcoin-client
 
@@ -56,12 +66,12 @@ mvn spring-boot:run
 ```
 mvn spring-boot:run
 ```
-- The link for bitcoin-client website is http://localhost:8082
+- The link for `bitcoin-client` website is http://localhost:8082
 
-- The image bellow shows two users checking real-time the BTC price changes. Besides, they are using a chat channel to
-communicate each other.
+- The gif bellow shows two users checking real-time the BTC price changes. Besides, they are using a chat channel to
+communicate with each other.
 
-image::./images/bitcoin-client.png[bitcoin-client]
+image::./images/two-users-example.gif[]
 
 == Useful links
 

@@ -3,7 +3,7 @@ version: "3.5"
 services:
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:4.1.0
+    image: confluentinc/cp-zookeeper:5.0.0
     container_name: zookeeper
     restart: unless-stopped
     ports:
@@ -16,7 +16,7 @@ services:
       start_period: 20s
 
   kafka:
-    image: confluentinc/cp-kafka:4.1.0
+    image: confluentinc/cp-kafka:5.0.0
     container_name: kafka
     restart: unless-stopped
     depends_on:
@@ -35,7 +35,7 @@ services:
 
   bitcoin-mysql:
     container_name: bitcoin-mysql
-    image: mysql:5.7.22
+    image: mysql:8.0.13
     restart: unless-stopped
     ports:
     - 3306:3306
@@ -50,7 +50,7 @@ services:
 
   zipkin:
     container_name: zipkin
-    image: openzipkin/zipkin:2.11
+    image: openzipkin/zipkin:2.11.7
     restart: unless-stopped
     ports:
     - 9411:9411
