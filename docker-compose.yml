@@ -3,11 +3,11 @@ version: "3.5"
 services:
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.0.0
+    image: confluentinc/cp-zookeeper:5.1.0
     container_name: zookeeper
     restart: unless-stopped
     ports:
-    - "2181:2181"
+      - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       TZ: "${TZ-Europe/Berlin}"
@@ -16,17 +16,18 @@ services:
       start_period: 20s
 
   kafka:
-    image: confluentinc/cp-kafka:5.0.0
+    image: confluentinc/cp-kafka:5.1.0
     container_name: kafka
     restart: unless-stopped
     depends_on:
-    - zookeeper
+      - zookeeper
     ports:
-    - "9092:9092"
+      - "29092:29092"
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_DELETE_TOPIC_ENABLE: "true"
       TZ: "${TZ-Europe/Berlin}"
     healthcheck:
@@ -38,12 +39,12 @@ services:
     image: mysql:8.0.13
     restart: unless-stopped
     ports:
-    - 3306:3306
+      - "3306:3306"
     environment:
-    - MYSQL_ROOT_PASSWORD=secret
-    - MYSQL_DATABASE=bitcoindb
-    - MYSQL_USERNAME=root
-    - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=bitcoindb
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWORD=secret
     healthcheck:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
       start_period: 20s
@@ -53,7 +54,7 @@ services:
     image: openzipkin/zipkin:2.11.7
     restart: unless-stopped
     ports:
-    - 9411:9411
+      - "9411:9411"
     healthcheck:
       test: "curl -f http://localhost:9411 || exit 1"
       start_period: 20s

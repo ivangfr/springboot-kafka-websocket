@@ -24,6 +24,7 @@ spring:
     stream:
       kafka:
         binder:
+          brokers: localhost:29092
           auto-add-partitions: true
       bindings:
         output:
