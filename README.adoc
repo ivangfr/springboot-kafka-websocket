@@ -28,7 +28,7 @@ docker-compose up -d
 ```
 [NOTE]
 ====
-To stop and remove containers, networks, images, and volumes
+To stop and remove containers, networks and volumes
 ```
 docker-compose down -v
 ```
@@ -78,5 +78,9 @@ image::./images/two-users-example.gif[]
 - Zipkin can be accessed at http://localhost:9411
 
 == TODO
+
+- update spring-boot version >= 2.1.1 (and spring-cloud)
+tried but occurred an exception saying that `Failed to send GenericMessage`. At class
+`com.mycompany.bitcoinclient.bus.PriceStream.java`, line `simpMessagingTemplate.convertAndSend("/topic/prices", priceDto);`
 
 - bitcoin-client: add limit to rows in the table
