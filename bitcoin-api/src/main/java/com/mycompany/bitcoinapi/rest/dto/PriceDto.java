@@ -1,11 +1,11 @@
-package com.mycompany.bitcoinapi.dto;
+package com.mycompany.bitcoinapi.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +13,6 @@ import java.util.Date;
 public class PriceDto {
 
     private BigDecimal value;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
 }

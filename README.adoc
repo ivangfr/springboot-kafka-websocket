@@ -68,7 +68,7 @@ docker-compose ps
 
 - Open a new terminal
 
-- Inside `/springboot-kafka-websocket` root folder run
+- Inside `springboot-kafka-websocket` root folder run
 ```
 ./mvnw spring-boot:run --projects bitcoin-client
 ```
@@ -98,8 +98,10 @@ select * from prices;
 
 = TODO
 
-- update spring-boot version >= 2.1.1 (and spring-cloud)
-tried but occurred an exception saying that `Failed to send GenericMessage`. At class
-`com.mycompany.bitcoinclient.bus.PriceStream.java`, line `simpMessagingTemplate.convertAndSend("/topic/prices", priceDto);`
-
 - bitcoin-client: add limit to rows in the table
+
+= Issues
+
+- update spring-boot version >= 2.1.3 (and spring-cloud) tried but occurred an exception saying that
+`Failed to send GenericMessage`. At class `com.mycompany.bitcoinclient.bus.PriceStream.java`,
+line `simpMessagingTemplate.convertAndSend("/topic/prices", priceDto);`

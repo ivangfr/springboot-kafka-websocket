@@ -1,6 +1,5 @@
 package com.mycompany.bitcoinclient.bus;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -18,24 +17,21 @@ import org.springframework.stereotype.Component;
 public class PriceStream {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final Gson gson;
 
-    public PriceStream(SimpMessagingTemplate simpMessagingTemplate, Gson gson) {
+    public PriceStream(SimpMessagingTemplate simpMessagingTemplate) {
         this.simpMessagingTemplate = simpMessagingTemplate;
-        this.gson = gson;
     }
 
     @StreamListener(Sink.INPUT)
-    public void handlePriceDto(@Payload String message,
+    public void handlePriceDto(@Payload PriceMessage priceMessage,
                                @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
                                @Header(KafkaHeaders.RECEIVED_PARTITION_ID) Integer partition,
                                @Header(KafkaHeaders.OFFSET) Long offset,
                                @Header(IntegrationMessageHeaderAccessor.DELIVERY_ATTEMPT) Integer deliveryAttempt) {
-        PriceDto priceDto = gson.fromJson(message, PriceDto.class);
-        log.info("PriceDto with value '{}' and timestamp '{}' received from bus. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
-                priceDto.getValue(), priceDto.getTimestamp(), topic, partition, offset, deliveryAttempt);
+        log.info("PriceMessage with id {}, value '{}' and timestamp '{}' received from bus. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
+                priceMessage.getId(), priceMessage.getValue(), priceMessage.getTimestamp(), topic, partition, offset, deliveryAttempt);
 
-        simpMessagingTemplate.convertAndSend("/topic/prices", priceDto);
+        simpMessagingTemplate.convertAndSend("/topic/prices", priceMessage);
     }
 
 }

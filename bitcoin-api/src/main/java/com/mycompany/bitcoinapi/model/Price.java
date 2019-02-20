@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -24,9 +24,9 @@ public class Price {
     private BigDecimal value;
 
     @Column(nullable = false)
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
-    public Price(BigDecimal value, Date timestamp) {
+    public Price(BigDecimal value, LocalDateTime timestamp) {
         this.value = value;
         this.timestamp = timestamp;
     }

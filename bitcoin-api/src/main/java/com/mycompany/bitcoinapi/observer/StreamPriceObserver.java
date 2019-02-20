@@ -1,7 +1,5 @@
 package com.mycompany.bitcoinapi.observer;
 
-import com.google.gson.Gson;
-import com.mycompany.bitcoinapi.dto.PriceDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
@@ -15,17 +13,15 @@ import org.springframework.stereotype.Component;
 public class StreamPriceObserver implements PriceObserver {
 
     private final Source source;
-    private final Gson gson;
 
-    public StreamPriceObserver(Source source, Gson gson) {
+    public StreamPriceObserver(Source source) {
         this.source = source;
-        this.gson = gson;
     }
 
     @Override
-    public void update(PriceDto priceDto) {
-        Message<String> message = MessageBuilder.withPayload(gson.toJson(priceDto))
-                .setHeader("partitionKey", priceDto.getTimestamp().getTime())
+    public void update(PriceMessage priceMessage) {
+        Message<PriceMessage> message = MessageBuilder.withPayload(priceMessage)
+                .setHeader("partitionKey", priceMessage.getId())
                 .build();
         source.output().send(message);
 

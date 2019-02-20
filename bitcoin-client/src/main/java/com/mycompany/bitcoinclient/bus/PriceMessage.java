@@ -3,12 +3,13 @@ package com.mycompany.bitcoinclient.bus;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
-public class PriceDto {
+public class PriceMessage {
 
+    private Long id;
     private BigDecimal value;
-    private Date timestamp;
+    private LocalDateTime timestamp;
 
 }

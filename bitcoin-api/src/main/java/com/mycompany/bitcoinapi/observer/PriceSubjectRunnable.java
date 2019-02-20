@@ -1,13 +1,12 @@
 package com.mycompany.bitcoinapi.observer;
 
-import com.mycompany.bitcoinapi.dto.PriceDto;
 import com.mycompany.bitcoinapi.model.Price;
 import com.mycompany.bitcoinapi.service.PriceService;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
+import ma.glasnost.orika.MapperFacade;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,12 +21,14 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
 
     private List<PriceObserver> observers = new ArrayList<>();
 
-    private Price price = new Price(INITIAL_PRICE, new DateTime(DateTimeZone.UTC).toDate());
+    private Price price = new Price(INITIAL_PRICE, LocalDateTime.now());
 
     private final PriceService priceService;
+    private final MapperFacade mapperFacade;
 
-    public PriceSubjectRunnable(PriceService priceService) {
+    public PriceSubjectRunnable(PriceService priceService, MapperFacade mapperFacade) {
         this.priceService = priceService;
+        this.mapperFacade = mapperFacade;
     }
 
     @Override
@@ -64,10 +65,9 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
 
     @Override
     public void notifyObservers() {
-        PriceDto priceDto = new PriceDto(price.getValue(), price.getTimestamp());
-        log.info("{} New {}", observers.size(), priceDto);
-
-        observers.forEach(observer -> observer.update(priceDto));
+        PriceMessage priceMessage = mapperFacade.map(price, PriceMessage.class);
+        log.info("New {}", priceMessage);
+        observers.forEach(observer -> observer.update(priceMessage));
     }
 
     private boolean simulateTrade() {
@@ -85,7 +85,7 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
         double var = rand.nextDouble() * 100;
         BigDecimal variation = new BigDecimal(sign ? var : -1 * var);
         BigDecimal newValue = currentPrice.add(variation).setScale(2, BigDecimal.ROUND_HALF_UP);
-        return new Price(newValue, new DateTime(DateTimeZone.UTC).toDate());
+        return new Price(newValue, LocalDateTime.now());
     }
 
 }
