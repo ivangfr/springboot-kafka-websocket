@@ -3,11 +3,9 @@ package com.mycompany.bitcoinapi.runner;
 import com.mycompany.bitcoinapi.observer.PriceObserver;
 import com.mycompany.bitcoinapi.observer.PriceSubjectRunnable;
 import com.mycompany.bitcoinapi.service.PriceService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class SimulationRunner implements CommandLineRunner {
 

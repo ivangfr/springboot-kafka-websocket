@@ -1,6 +1,4 @@
-= springboot-kafka-websocket
-
-== Goal
+= `springboot-kafka-websocket`
 
 The goal of this project is to implement two micro-services: 1) `bitcoin-api`: responsible simulate the BTC price changes
 and push those price changes to Kafka and 2) `bitcoin-client`: service that reads from Kafka and updates its UI using
@@ -13,16 +11,19 @@ framework for building highly scalable event-driven microservices connected with
 
 * We are using https://zipkin.io[Zipkin] for visualizing traces between and within microservices.
 
-* We are using https://github.com/Netflix/eureka/wiki[Eureka], also known as Discovery Server, it is an application that holds the information about all
+* We are using https://github.com/Landoop/kafka-topics-ui[Kafka Topics UI] for visualizing the messages on Kafka topics.
+
+* We are using https://github.com/Netflix/eureka/wiki[Eureka], also known as Discovery Server, it is an application
+that holds the information about all
 microservices.
 
-== Start Environment
+= Start Environment
 
-=== Docker Compose
+== Docker Compose
 
 - Open one terminal
 
-- In `/springboot-kafka-websocket` root folder run
+- In `springboot-kafka-websocket` root folder run
 ```
 docker-compose up -d
 ```
@@ -39,45 +40,63 @@ docker-compose down -v
 docker-compose ps
 ```
 
-== Start Services
+= Start Services
 
-=== eureka-server
+== eureka-server
 
 - Open a new terminal
-- Inside `/springboot-kafka-websocket/eureka-server` folder run
+
+- Inside `springboot-kafka-websocket` root folder run
 ```
-mvn spring-boot:run
+./mvnw spring-boot:run --projects eureka-server
 ```
+
 - The link for `eureka-server` is http://localhost:8761
 
-=== bitcoin-api
+== bitcoin-api
 
 - Open a new terminal
-- Inside `/springboot-kafka-websocket/bitcoin-api` folder run
-```
-mvn spring-boot:run
-```
-- The link for `bitcoin-api` swagger is http://localhost:8081/swagger-ui.html
 
-=== bitcoin-client
+- Inside `springboot-kafka-websocket` root folder run
+```
+./mvnw spring-boot:run --projects bitcoin-api
+```
+
+- The link for `bitcoin-api` swagger is http://localhost:9081/swagger-ui.html
+
+== bitcoin-client
 
 - Open a new terminal
-- Inside `/springboot-kafka-websocket/bitcoin-client` folder run
+
+- Inside `/springboot-kafka-websocket` root folder run
 ```
-mvn spring-boot:run
+./mvnw spring-boot:run --projects bitcoin-client
 ```
-- The link for `bitcoin-client` website is http://localhost:8082
+
+- The link for `bitcoin-client` website is http://localhost:9082
 
 - The gif bellow shows two users checking real-time the BTC price changes. Besides, they are using a chat channel to
 communicate with each other.
 
 image::./images/two-users-example.gif[]
 
-== Useful links
+= Useful links
 
-- Zipkin can be accessed at http://localhost:9411
+=== Zipkin
 
-== TODO
+Zipkin can be accessed at http://localhost:9411
+
+=== Kafka Topics UI
+
+Kafka Topics UI can be accessed at http://localhost:8085
+
+=== MySQL
+```
+docker exec -it bitcoin-mysql mysql -uroot -psecret --database=bitcoindb
+select * from prices;
+```
+
+= TODO
 
 - update spring-boot version >= 2.1.1 (and spring-cloud)
 tried but occurred an exception saying that `Failed to send GenericMessage`. At class
