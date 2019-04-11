@@ -107,57 +107,6 @@ I am facing the following exception. It seems related to sleuth & websocket. It 
 https://github.com/spring-cloud/spring-cloud-sleuth/issues/1184
 
 ```
-java.lang.IllegalStateException: Error processing condition on org.springframework.cloud.sleuth.sampler.SamplerAutoConfiguration$RefreshScopedSamplerConfiguration.defaultTraceSampler
-        at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:64) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:108) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod(ConfigurationClassBeanDefinitionReader.java:181) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:141) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:117) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:327) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:232) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:275) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:95) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:705) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:531) ~[spring-context-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142) ~[spring-boot-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775) [spring-boot-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397) [spring-boot-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) [spring-boot-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260) [spring-boot-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248) [spring-boot-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at com.mycompany.bitcoinapi.BitcoinApiApplication.main(BitcoinApiApplication.java:12) [classes/:na]
-        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_102]
-        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_102]
-        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_102]
-        at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_102]
-        at org.springframework.boot.maven.AbstractRunMojo$LaunchRunner.run(AbstractRunMojo.java:558) [spring-boot-maven-plugin-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at java.lang.Thread.run(Thread.java:745) [na:1.8.0_102]
-Caused by: java.lang.IllegalStateException: @ConditionalOnMissingBean did not specify a bean using type, name or annotation and the attempt to deduce the bean's type failed
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.validate(OnBeanCondition.java:451) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.<init>(OnBeanCondition.java:441) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.<init>(OnBeanCondition.java:416) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchOutcome(OnBeanCondition.java:158) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:47) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        ... 23 common frames omitted
-Caused by: org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanTypeDeductionException: Failed to deduce bean type for org.springframework.cloud.sleuth.sampler.SamplerAutoConfiguration$RefreshScopedSamplerConfiguration.defaultTraceSampler
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.addDeducedBeanTypeForBeanMethod(OnBeanCondition.java:496) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.addDeducedBeanType(OnBeanCondition.java:483) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.<init>(OnBeanCondition.java:435) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        ... 26 common frames omitted
-Caused by: java.lang.ClassNotFoundException: brave.sampler.Sampler
-        at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_102]
-        at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_102]
-        at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_102]
-        at java.lang.Class.forName0(Native Method) ~[na:1.8.0_102]
-        at java.lang.Class.forName(Class.java:348) ~[na:1.8.0_102]
-        at org.springframework.util.ClassUtils.forName(ClassUtils.java:275) ~[spring-core-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.getReturnType(OnBeanCondition.java:505) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        at org.springframework.boot.autoconfigure.condition.OnBeanCondition$BeanSearchSpec.addDeducedBeanTypeForBeanMethod(OnBeanCondition.java:491) ~[spring-boot-autoconfigure-2.1.3.RELEASE.jar:2.1.3.RELEASE]
-        ... 28 common frames omitted
-```
-
-==== LOG-2
-```
 ERROR [bitcoin-client,74d983b2269b06fe,a6410b57f9052393,true] 26068 --- [container-0-C-1] o.s.m.s.b.SimpleBrokerMessageHandler     : Failed to send GenericMessage [payload=byte[62], headers={simpMessageType=MESSAGE, simpDestination=/topic/prices, spanTraceId=74d983b2269b06fe, spanId=d4386ddbd580efbd, spanParentSpanId=ee2caefd848bd085, nativeHeaders={spanTraceId=[74d983b2269b06fe], spanId=[d4386ddbd580efbd], spanParentSpanId=[ee2caefd848bd085], spanSampled=[1]}, spanSampled=1, contentType=application/json;charset=UTF-8}]
 
 org.springframework.messaging.MessageDeliveryException: Failed to send message to ExecutorSubscribableChannel[clientOutboundChannel]; nested exception is java.lang.UnsupportedOperationException
