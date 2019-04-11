@@ -18,6 +18,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <brave.version>5.6.3</brave.version>
         <springfox.version>2.9.2</springfox.version>
         <orika.version>1.5.2</orika.version>
     </properties>
@@ -45,11 +46,18 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
+        <!-- Sleuth & Brave -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave</artifactId>
+            <version>${brave.version}</version>
         </dependency>
 
         <!-- Swagger2 -->
@@ -71,12 +79,14 @@
             <version>${orika.version}</version>
         </dependency>
 
+        <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
