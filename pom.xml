@@ -19,7 +19,6 @@
     </parent>
 
     <modules>
-        <module>/eureka-server</module>
         <module>/bitcoin-api</module>
         <module>/bitcoin-client</module>
     </modules>
