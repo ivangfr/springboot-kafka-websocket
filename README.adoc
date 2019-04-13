@@ -39,10 +39,10 @@ microservices docker images
 |Specify port of the `Kafka` message broker to use (default `29092`)
 
 |`ZIPKIN_HOST`
-|Specify host of the `Zipkin` to use (default `localhost`)
+|Specify host of the `Zipkin` distributed tracing system to use (default `localhost`)
 
 |`ZIPKIN_PORT`
-|Specify port of the `Zipkin` to use (default `9411`)
+|Specify port of the `Zipkin` distributed tracing system to use (default `9411`)
 
 |===
 
@@ -55,13 +55,16 @@ microservices docker images
 |Environment Variable | Description
 
 |`KAFKA_HOST`
-|Specify host of the `Kafka` message broker to use (default `localhost`).
+|Specify host of the `Kafka` message broker to use (default `localhost`)
 
 |`KAFKA_PORT`
-|Specify port of the `Kafka` message broker to use (default `9092`).
+|Specify port of the `Kafka` message broker to use (default `9092`)
 
 |`ZIPKIN_HOST`
-|Specify host of the `Zipkin` to use (default `localhost`). Default port is `9411`.
+|Specify host of the `Zipkin` distributed tracing system to use (default `localhost`)
+
+|`ZIPKIN_PORT`
+|Specify port of the `Zipkin` distributed tracing system to use (default `9411`)
 
 |===
 
