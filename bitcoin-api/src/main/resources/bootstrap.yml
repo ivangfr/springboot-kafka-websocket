@@ -2,5 +2,5 @@ spring:
   application:
     name: bitcoin-api
   zipkin:
-    baseUrl: http://${ZIPKIN_HOST:localhost}:9411
+    baseUrl: http://${ZIPKIN_HOST:localhost}:${ZIPKIN_PORT:9411}
     sender.type: web

@@ -13,9 +13,59 @@ framework for building highly scalable event-driven microservices connected with
 
 * We are using https://github.com/Landoop/kafka-topics-ui[Kafka Topics UI] for visualizing the messages on Kafka topics.
 
-= Start Environment
+= Build Docker Images
 
-- Open one terminal
+In a terminal and inside `springboot-kafka-websocket` root folder, run the following `./mvnw` commands to build the
+microservices docker images
+
+== bitcoin-api
+
+```
+./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-api
+```
+|===
+|Environment Variable | Description
+
+|`MYSQL_HOST`
+|Specify host of the `MySQL` database to use (default `localhost`)
+
+|`MYSQL_PORT`
+|Specify port of the `MySQL` database to use (default `3306`)
+
+|`KAFKA_HOST`
+|Specify host of the `Kafka` message broker to use (default `localhost`)
+
+|`KAFKA_PORT`
+|Specify port of the `Kafka` message broker to use (default `29092`)
+
+|`ZIPKIN_HOST`
+|Specify host of the `Zipkin` to use (default `localhost`)
+
+|`ZIPKIN_PORT`
+|Specify port of the `Zipkin` to use (default `9411`)
+
+|===
+
+== bitcoin-client
+
+```
+./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-client
+```
+|===
+|Environment Variable | Description
+
+|`KAFKA_HOST`
+|Specify host of the `Kafka` message broker to use (default `localhost`).
+
+|`KAFKA_PORT`
+|Specify port of the `Kafka` message broker to use (default `9092`).
+
+|`ZIPKIN_HOST`
+|Specify host of the `Zipkin` to use (default `localhost`). Default port is `9411`.
+
+|===
+
+= Start Environment
 
 - In `springboot-kafka-websocket` root folder run
 ```
@@ -34,34 +84,41 @@ docker-compose down -v
 docker-compose ps
 ```
 
-= Start Services
+= Microservice Links
+
+|===
+|Microservice |URL
+
+|`bitcoin-api`
+|http://localhost:9081/swagger-ui.html
+
+|`bitcoin-client`
+|http://localhost:9082
+
+|===
+
+The gif below shows two users checking real-time the BTC price changes. Besides, they are using a chat channel to
+communicate with each other.
+
+image::./images/two-users-example.gif[]
+
+= Running microservices with Maven
+
+During development, it is better to just run the microservices with Maven instead of always build the docker images and
+run it. In order to do that, comment the `bitcoin-api` and/or `bitcoin-client` in `docker-compose.yml` file and run the
+microservice(s) with Maven Wrapper.
 
 == bitcoin-api
 
-- Open a new terminal
-
-- Inside `springboot-kafka-websocket` root folder run
 ```
 ./mvnw spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
 ```
 
-- The link for `bitcoin-api` swagger is http://localhost:9081/swagger-ui.html
-
 == bitcoin-client
 
-- Open a new terminal
-
-- Inside `springboot-kafka-websocket` root folder run
 ```
 ./mvnw spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
 ```
-
-- The link for `bitcoin-client` website is http://localhost:9082
-
-- The gif below shows two users checking real-time the BTC price changes. Besides, they are using a chat channel to
-communicate with each other.
-
-image::./images/two-users-example.gif[]
 
 = Useful links
 
@@ -78,10 +135,6 @@ Kafka Topics UI can be accessed at http://localhost:8085
 docker exec -it bitcoin-mysql mysql -uroot -psecret --database=bitcoindb
 select * from prices;
 ```
-
-= TODO
-
-- bitcoin-client: add limit to rows in the table
 
 = Issues
 
