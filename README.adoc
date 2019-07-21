@@ -1,8 +1,8 @@
 = `springboot-kafka-websocket`
 
-The goal of this project is to implement two micro-services: 1) `bitcoin-api`: responsible simulate the BTC price changes
-and push those price changes to Kafka and 2) `bitcoin-client`: service that reads from Kafka and updates its UI using
-Websocket.
+The goal of this project is to implement two micro-services: 1) `bitcoin-api`: responsible simulate the `BTC` price
+changes and push those price changes to `Kafka` and 2) `bitcoin-client`: service that reads from `Kafka` and updates
+its UI using `Websocket`.
 
 * We are using https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle[Spring Cloud Stream]
 framework for building highly scalable event-driven microservices connected with shared messaging systems.
@@ -13,12 +13,12 @@ framework for building highly scalable event-driven microservices connected with
 
 * We are using https://github.com/Landoop/kafka-topics-ui[Kafka Topics UI] for visualizing the messages on Kafka topics.
 
-= Build Docker Images
+== Build Docker Images
 
 In a terminal and inside `springboot-kafka-websocket` root folder, run the following `./mvnw` commands to build the
 microservices docker images
 
-== bitcoin-api
+=== bitcoin-api
 
 ```
 ./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-api
@@ -46,7 +46,7 @@ microservices docker images
 
 |===
 
-== bitcoin-client
+=== bitcoin-client
 
 ```
 ./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-client
@@ -68,26 +68,19 @@ microservices docker images
 
 |===
 
-= Start Environment
+== Start Environment
 
-- In `springboot-kafka-websocket` root folder run
+In a terminal and inside `springboot-kafka-websocket` root folder run
 ```
 docker-compose up -d
 ```
-[NOTE]
-====
-To stop and remove containers, networks and volumes
-```
-docker-compose down -v
-```
-====
 
-- Wait a little bit until all containers are Up (healthy). You can check their status running
+Wait a little bit until all containers are Up (healthy). You can check their status running
 ```
 docker-compose ps
 ```
 
-= Microservice Links
+== Microservice Links
 
 |===
 |Microservice |URL
@@ -105,117 +98,55 @@ communicate with each other.
 
 image::./images/two-users-example.gif[]
 
-= Running microservices with Maven
+== Running microservices with Maven
 
 During development, it is better to just run the microservices with Maven instead of always build the docker images and
 run it. In order to do that, comment the `bitcoin-api` and/or `bitcoin-client` in `docker-compose.yml` file and run the
 microservice(s) with Maven Wrapper.
 
-== bitcoin-api
+=== bitcoin-api
 
 ```
 ./mvnw spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
 ```
 
-== bitcoin-client
+=== bitcoin-client
 
 ```
 ./mvnw spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
 ```
 
-= Useful links
+== Shutdown
 
-== Zipkin
+Run the command below to stop and remove containers, networks and volumes
+```
+docker-compose down -v
+```
 
-Zipkin can be accessed at http://localhost:9411
+== Useful Links & Commands
 
-== Kafka Topics UI
+=== Zipkin
 
-Kafka Topics UI can be accessed at http://localhost:8085
+`Zipkin` can be accessed at http://localhost:9411
 
-== MySQL
+=== Kafka Topics UI
+
+`Kafka Topics UI` can be accessed at http://localhost:8085
+
+=== Kafka Manager
+
+`Kafka Manager` can be accessed at http://localhost:9000
+
+**Configuration**
+
+- First, you must create a new cluster. Click on `Cluster` (dropdown on the header) and then on `Add Cluster`
+- Type the name of your cluster in `Cluster Name` field, for example: `MyZooCluster`
+- Type `zookeeper:2181` in `Cluster Zookeeper Hosts` field
+- Enable checkbox `Poll consumer information (Not recommended for large # of consumers if ZK is used for offsets tracking on older Kafka versions)`
+- Click on `Save` button at the bottom of the page.
+
+=== MySQL
 ```
 docker exec -it bitcoin-mysql mysql -uroot -psecret --database=bitcoindb
 select * from prices;
-```
-
-= Issues
-
-I am facing the following exception. It seems related to sleuth & websocket. It started happen when I update spring-boot to
-2.1.4 and also spring-cloud to Greenwich.SR1.
-
-> The workaround is to disable Sleuth's websocket messaging support via `spring.sleuth.integration.websockets.enabled=false`
-https://github.com/spring-cloud/spring-cloud-sleuth/issues/1184
-
-```
-ERROR [bitcoin-client,74d983b2269b06fe,a6410b57f9052393,true] 26068 --- [container-0-C-1] o.s.m.s.b.SimpleBrokerMessageHandler     : Failed to send GenericMessage [payload=byte[62], headers={simpMessageType=MESSAGE, simpDestination=/topic/prices, spanTraceId=74d983b2269b06fe, spanId=d4386ddbd580efbd, spanParentSpanId=ee2caefd848bd085, nativeHeaders={spanTraceId=[74d983b2269b06fe], spanId=[d4386ddbd580efbd], spanParentSpanId=[ee2caefd848bd085], spanSampled=[1]}, spanSampled=1, contentType=application/json;charset=UTF-8}]
-
-org.springframework.messaging.MessageDeliveryException: Failed to send message to ExecutorSubscribableChannel[clientOutboundChannel]; nested exception is java.lang.UnsupportedOperationException
-        at org.springframework.messaging.support.AbstractMessageChannel.send(AbstractMessageChannel.java:146) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.support.AbstractMessageChannel.send(AbstractMessageChannel.java:122) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler.lambda$sendMessageToSubscribers$0(SimpleBrokerMessageHandler.java:401) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at java.util.Map.forEach(Map.java:630) ~[na:1.8.0_102]
-        at org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler.sendMessageToSubscribers(SimpleBrokerMessageHandler.java:388) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler.handleMessageInternal(SimpleBrokerMessageHandler.java:304) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.simp.broker.AbstractBrokerMessageHandler.handleMessage(AbstractBrokerMessageHandler.java:256) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.support.ExecutorSubscribableChannel$SendTask.run(ExecutorSubscribableChannel.java:144) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.support.ExecutorSubscribableChannel.sendInternal(ExecutorSubscribableChannel.java:100) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.support.AbstractMessageChannel.send(AbstractMessageChannel.java:136) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.support.AbstractMessageChannel.send(AbstractMessageChannel.java:122) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.simp.SimpMessagingTemplate.sendInternal(SimpMessagingTemplate.java:187) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.simp.SimpMessagingTemplate.doSend(SimpMessagingTemplate.java:162) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.simp.SimpMessagingTemplate.doSend(SimpMessagingTemplate.java:48) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.core.AbstractMessageSendingTemplate.send(AbstractMessageSendingTemplate.java:109) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.core.AbstractMessageSendingTemplate.convertAndSend(AbstractMessageSendingTemplate.java:151) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.core.AbstractMessageSendingTemplate.convertAndSend(AbstractMessageSendingTemplate.java:129) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.core.AbstractMessageSendingTemplate.convertAndSend(AbstractMessageSendingTemplate.java:122) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at com.mycompany.bitcoinclient.bus.PriceStream.handlePriceDto(PriceStream.java:34) ~[classes/:na]
-        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_102]
-        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_102]
-        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_102]
-        at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_102]
-        at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:170) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:120) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.cloud.stream.binding.StreamListenerMessageHandler.handleRequestMessage(StreamListenerMessageHandler.java:55) ~[spring-cloud-stream-2.1.0.RC4.jar:2.1.0.RC4]
-        at org.springframework.integration.handler.AbstractReplyProducingMessageHandler.handleMessageInternal(AbstractReplyProducingMessageHandler.java:123) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.handler.AbstractMessageHandler.handleMessage(AbstractMessageHandler.java:162) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.dispatcher.AbstractDispatcher.tryOptimizedDispatch(AbstractDispatcher.java:115) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.dispatcher.UnicastingDispatcher.doDispatch(UnicastingDispatcher.java:132) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.dispatcher.UnicastingDispatcher.dispatch(UnicastingDispatcher.java:105) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.channel.AbstractSubscribableChannel.doSend(AbstractSubscribableChannel.java:73) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.channel.AbstractMessageChannel.send(AbstractMessageChannel.java:453) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.channel.AbstractMessageChannel.send(AbstractMessageChannel.java:401) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.messaging.core.GenericMessagingTemplate.doSend(GenericMessagingTemplate.java:187) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.core.GenericMessagingTemplate.doSend(GenericMessagingTemplate.java:166) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.core.GenericMessagingTemplate.doSend(GenericMessagingTemplate.java:47) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.core.AbstractMessageSendingTemplate.send(AbstractMessageSendingTemplate.java:109) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.integration.endpoint.MessageProducerSupport.sendMessage(MessageProducerSupport.java:205) ~[spring-integration-core-5.1.3.RELEASE.jar:5.1.3.RELEASE]
-        at org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter.sendMessageIfAny(KafkaMessageDrivenChannelAdapter.java:369) ~[spring-integration-kafka-3.1.0.RELEASE.jar:3.1.0.RELEASE]
-        at org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter.access$400(KafkaMessageDrivenChannelAdapter.java:74) ~[spring-integration-kafka-3.1.0.RELEASE.jar:3.1.0.RELEASE]
-        at org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter$IntegrationRecordMessageListener.onMessage(KafkaMessageDrivenChannelAdapter.java:431) ~[spring-integration-kafka-3.1.0.RELEASE.jar:3.1.0.RELEASE]
-        at org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter$IntegrationRecordMessageListener.onMessage(KafkaMessageDrivenChannelAdapter.java:402) ~[spring-integration-kafka-3.1.0.RELEASE.jar:3.1.0.RELEASE]
-        at org.springframework.kafka.listener.adapter.RetryingMessageListenerAdapter.lambda$onMessage$0(RetryingMessageListenerAdapter.java:120) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.retry.support.RetryTemplate.doExecute(RetryTemplate.java:287) ~[spring-retry-1.2.4.RELEASE.jar:na]
-        at org.springframework.retry.support.RetryTemplate.execute(RetryTemplate.java:211) ~[spring-retry-1.2.4.RELEASE.jar:na]
-        at org.springframework.kafka.listener.adapter.RetryingMessageListenerAdapter.onMessage(RetryingMessageListenerAdapter.java:114) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.adapter.RetryingMessageListenerAdapter.onMessage(RetryingMessageListenerAdapter.java:40) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeOnMessage(KafkaMessageListenerContainer.java:1224) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeOnMessage(KafkaMessageListenerContainer.java:1217) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeRecordListener(KafkaMessageListenerContainer.java:1178) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.doInvokeWithRecords(KafkaMessageListenerContainer.java:1159) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeRecordListener(KafkaMessageListenerContainer.java:1099) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.invokeListener(KafkaMessageListenerContainer.java:934) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.pollAndInvoke(KafkaMessageListenerContainer.java:750) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:699) ~[spring-kafka-2.2.4.RELEASE.jar:2.2.4.RELEASE]
-        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[na:1.8.0_102]
-        at java.util.concurrent.FutureTask.run(FutureTask.java:266) ~[na:1.8.0_102]
-        at java.lang.Thread.run(Thread.java:745) ~[na:1.8.0_102]
-Caused by: java.lang.UnsupportedOperationException: null
-        at java.util.Collections$UnmodifiableMap.remove(Collections.java:1460) ~[na:1.8.0_102]
-        at org.springframework.messaging.support.NativeMessageHeaderAccessor.removeNativeHeader(NativeMessageHeaderAccessor.java:209) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.cloud.sleuth.instrument.messaging.MessageHeaderPropagation.removeAnyTraceHeaders(MessageHeaderPropagation.java:85) ~[spring-cloud-sleuth-core-2.1.0.RC3.jar:2.1.0.RC3]
-        at org.springframework.cloud.sleuth.instrument.messaging.TracingChannelInterceptor.preSend(TracingChannelInterceptor.java:156) ~[spring-cloud-sleuth-core-2.1.0.RC3.jar:2.1.0.RC3]
-        at org.springframework.messaging.support.AbstractMessageChannel$ChannelInterceptorChain.applyPreSend(AbstractMessageChannel.java:178) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        at org.springframework.messaging.support.AbstractMessageChannel.send(AbstractMessageChannel.java:132) ~[spring-messaging-5.1.5.RELEASE.jar:5.1.5.RELEASE]
-        ... 58 common frames omitted
 ```
