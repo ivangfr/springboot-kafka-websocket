@@ -20,17 +20,13 @@ spring:
             partition-key-expression: headers['partitionKey']
             partition-count: 2
   sleuth:
-    sampler.probability: 1.0
+    sampler:
+      probability: 1.0
 
 management:
-  security:
-    enabled: false
   endpoints:
     web:
       exposure.include: "*"
   endpoint:
     health:
       show-details: always
-  health:
-    binders:
-      enabled: true

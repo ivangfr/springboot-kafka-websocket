@@ -15,17 +15,13 @@ spring:
             max-attempts: 4
             back-off-initial-interval: 10000
   sleuth:
-    sampler.probability: 1.0
+    sampler:
+      probability: 1.0
 
 management:
-  security:
-    enabled: false
   endpoints:
     web:
       exposure.include: "*"
   endpoint:
     health:
       show-details: always
-  health:
-    binders:
-      enabled: true

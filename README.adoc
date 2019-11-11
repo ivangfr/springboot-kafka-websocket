@@ -1,28 +1,34 @@
 = `springboot-kafka-websocket`
 
-The goal of this project is to implement two micro-services: 1) `bitcoin-api`: responsible simulate the `BTC` price
-changes and push those price changes to `Kafka` and 2) `bitcoin-client`: service that reads from `Kafka` and updates
-its UI using `Websocket`.
+The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`]
+applications: 1) `bitcoin-api`: responsible simulate the `BTC` price changes and push those price changes to `Kafka`
+and 2) `bitcoin-client`: service that reads from `Kafka` and updates its UI using `Websocket`.
 
-* We are using https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle[Spring Cloud Stream]
-framework for building highly scalable event-driven microservices connected with shared messaging systems.
+* We are using https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle[`Spring Cloud Stream`]
+framework for building highly scalable event-driven applications connected with shared messaging systems.
 
-* We are using https://www.thymeleaf.org/[Thymeleaf] as HTML template
+* We are using https://www.thymeleaf.org/[`Thymeleaf`] as HTML template
 
-* We are using https://zipkin.io[Zipkin] for visualizing traces between and within microservices.
+* We are using https://zipkin.io[`Zipkin`] for visualizing traces between and within applications.
 
-* We are using https://github.com/Landoop/kafka-topics-ui[Kafka Topics UI] for visualizing the messages on Kafka topics.
+* We are using https://github.com/Landoop/kafka-topics-ui[`Kafka Topics UI`] for visualizing the messages on Kafka topics.
 
 == Build Docker Images
 
-In a terminal and inside `springboot-kafka-websocket` root folder, run the following `./mvnw` commands to build the
-microservices docker images
+In a terminal and inside `springboot-kafka-websocket` root folder, in order to build the applications docker images,
+you can just run the following script or manually run the `./mvnw` commands for each application.
+
+[source]
+----
+./build-apps.sh
+----
 
 === bitcoin-api
 
-```
+[source]
+----
 ./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-api
-```
+----
 |===
 |Environment Variable | Description
 
@@ -48,9 +54,10 @@ microservices docker images
 
 === bitcoin-client
 
-```
+[source]
+----
 ./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-client
-```
+----
 |===
 |Environment Variable | Description
 
@@ -71,19 +78,51 @@ microservices docker images
 == Start Environment
 
 In a terminal and inside `springboot-kafka-websocket` root folder run
-```
+
+[source]
+----
 docker-compose up -d
-```
+----
 
 Wait a little bit until all containers are Up (healthy). You can check their status running
-```
-docker-compose ps
-```
 
-== Microservice Links
+[source]
+----
+docker-compose ps
+----
+
+== Running Applications as Docker containers
+
+Open a terminal and inside `springboot-kafka-websocket` root folder run following script
+
+[source]
+----
+./start-apps.sh
+----
+
+== Running applications with Maven
+
+During development, it is easier to just run the applications instead of always build the docker images and then run it.
+For it, inside `springboot-kafka-websocket`, run the following Maven commands in different terminals
+
+=== bitcoin-api
+
+[source]
+----
+./mvnw spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
+----
+
+=== bitcoin-client
+
+[source]
+----
+./mvnw spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
+----
+
+== Applications Links
 
 |===
-|Microservice |URL
+|Application |URL
 
 |`bitcoin-api`
 |http://localhost:9081/swagger-ui.html
@@ -93,35 +132,26 @@ docker-compose ps
 
 |===
 
-The gif below shows two users checking real-time the BTC price changes. Besides, they are using a chat channel to
+The gif below shows two users checking real-time the `BTC` price changes. Besides, they are using a chat channel to
 communicate with each other.
 
 image::./images/two-users-example.gif[]
 
-== Running microservices with Maven
-
-During development, it is better to just run the microservices with Maven instead of always build the docker images and
-run it. In order to do that, comment the `bitcoin-api` and/or `bitcoin-client` in `docker-compose.yml` file and run the
-microservice(s) with Maven Wrapper.
-
-=== bitcoin-api
-
-```
-./mvnw spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
-```
-
-=== bitcoin-client
-
-```
-./mvnw spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
-```
-
 == Shutdown
 
-Run the command below to stop and remove containers, networks and volumes
-```
+Run the command below to stop the applications
+
+[source]
+----
+./stop-apps.sh
+----
+
+Then, run the following command to stop and remove containers, networks and volumes
+
+[source]
+----
 docker-compose down -v
-```
+----
 
 == Useful Links & Commands
 
@@ -146,7 +176,9 @@ docker-compose down -v
 - Click on `Save` button at the bottom of the page.
 
 === MySQL
-```
+
+[source]
+----
 docker exec -it bitcoin-mysql mysql -uroot -psecret --database=bitcoindb
 select * from prices;
-```
+----
