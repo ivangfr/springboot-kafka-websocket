@@ -1,34 +1,61 @@
-= `springboot-kafka-websocket`
+= springboot-kafka-websocket
 
-The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`]
-applications: 1) `bitcoin-api`: responsible simulate the `BTC` price changes and push those price changes to `Kafka`
-and 2) `bitcoin-client`: service that reads from `Kafka` and updates its UI using `Websocket`.
+The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications
 
-* We are using https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle[`Spring Cloud Stream`]
-framework for building highly scalable event-driven applications connected with shared messaging systems.
+* *bitcoin-api*: service that simulates `BTC` price changes and pushes those changes to https://kafka.apache.org/[`Kafka`]
+* *bitcoin-client*: service that reads from `Kafka` and updates its UI using `Websocket`
 
-* We are using https://www.thymeleaf.org/[`Thymeleaf`] as HTML template
+== Start Environment
 
-* We are using https://zipkin.io[`Zipkin`] for visualizing traces between and within applications.
+* Open a terminal and inside `springboot-kafka-websocket` root folder run
++
+[source]
+----
+docker-compose up -d
+----
 
-* We are using https://github.com/Landoop/kafka-topics-ui[`Kafka Topics UI`] for visualizing the messages on Kafka topics.
+* Wait a little bit until all containers are Up (healthy). You can check their status running
++
+[source]
+----
+docker-compose ps
+----
 
-== Build Docker Images
+== Running applications with Maven
 
-In a terminal and inside `springboot-kafka-websocket` root folder, in order to build the applications docker images,
-you can just run the following script or manually run the `./mvnw` commands for each application.
+Inside `springboot-kafka-websocket` root folder, run the following `Maven` commands in different terminals
 
+* *bitcoin-api*
++
+[source]
+----
+./mvnw spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
+----
+
+* *bitcoin-client*
++
+[source]
+----
+./mvnw spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
+----
+
+== Running Applications as Docker containers
+
+=== Build Application's Docker Image
+
+* In a terminal, make sure you are in `springboot-kafka-websocket` root folder
+
+* In order to build the applications docker images, run the following script
++
 [source]
 ----
 ./build-apps.sh
 ----
 
-=== bitcoin-api
+=== Application's Environment Variables
 
-[source]
-----
-./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-api
-----
+* *bitcoin-api*
++
 |===
 |Environment Variable | Description
 
@@ -49,15 +76,10 @@ you can just run the following script or manually run the `./mvnw` commands for 
 
 |`ZIPKIN_PORT`
 |Specify port of the `Zipkin` distributed tracing system to use (default `9411`)
-
 |===
 
-=== bitcoin-client
-
-[source]
-----
-./mvnw clean package dockerfile:build -DskipTests --projects bitcoin-client
-----
+* *bitcoin-client*
++
 |===
 |Environment Variable | Description
 
@@ -65,61 +87,27 @@ you can just run the following script or manually run the `./mvnw` commands for 
 |Specify host of the `Kafka` message broker to use (default `localhost`)
 
 |`KAFKA_PORT`
-|Specify port of the `Kafka` message broker to use (default `9092`)
+|Specify port of the `Kafka` message broker to use (default `29092`)
 
 |`ZIPKIN_HOST`
 |Specify host of the `Zipkin` distributed tracing system to use (default `localhost`)
 
 |`ZIPKIN_PORT`
 |Specify port of the `Zipkin` distributed tracing system to use (default `9411`)
-
 |===
 
-== Start Environment
+== Start Application's Docker container
 
-In a terminal and inside `springboot-kafka-websocket` root folder run
+* In a terminal, make sure you are inside `springboot-kafka-websocket` root folder
 
-[source]
-----
-docker-compose up -d
-----
-
-Wait a little bit until all containers are Up (healthy). You can check their status running
-
-[source]
-----
-docker-compose ps
-----
-
-== Running Applications as Docker containers
-
-Open a terminal and inside `springboot-kafka-websocket` root folder run following script
-
+* Run following script
++
 [source]
 ----
 ./start-apps.sh
 ----
 
-== Running applications with Maven
-
-During development, it is easier to just run the applications instead of always build the docker images and then run it.
-For it, inside `springboot-kafka-websocket`, run the following Maven commands in different terminals
-
-=== bitcoin-api
-
-[source]
-----
-./mvnw spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
-----
-
-=== bitcoin-client
-
-[source]
-----
-./mvnw spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
-----
-
-== Applications Links
+== Applications URLs
 
 |===
 |Application |URL
@@ -129,7 +117,6 @@ For it, inside `springboot-kafka-websocket`, run the following Maven commands in
 
 |`bitcoin-client`
 |http://localhost:9082
-
 |===
 
 The gif below shows two users checking real-time the `BTC` price changes. Besides, they are using a chat channel to
@@ -139,15 +126,17 @@ image::./images/two-users-example.gif[]
 
 == Shutdown
 
-Run the command below to stop the applications
-
+* Stop applications
+** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
+** If they were started as a Docker container, inside `springboot-kafka-websocket` root folder, run the script below
++
 [source]
 ----
 ./stop-apps.sh
 ----
 
-Then, run the following command to stop and remove containers, networks and volumes
-
+* Stop and remove docker-compose containers, networks and volumes
++
 [source]
 ----
 docker-compose down -v
@@ -155,28 +144,28 @@ docker-compose down -v
 
 == Useful Links & Commands
 
-=== Zipkin
-
+* *Zipkin*
++
 `Zipkin` can be accessed at http://localhost:9411
 
-=== Kafka Topics UI
-
+* *Kafka Topics UI*
++
 `Kafka Topics UI` can be accessed at http://localhost:8085
 
-=== Kafka Manager
-
+* *Kafka Manager*
++
 `Kafka Manager` can be accessed at http://localhost:9000
-
-**Configuration**
-
-- First, you must create a new cluster. Click on `Cluster` (dropdown on the header) and then on `Add Cluster`
++
+_Configuration_
++
+- First, you must create a new cluster. Click on `Cluster` (dropdown button on the header) and then on `Add Cluster`
 - Type the name of your cluster in `Cluster Name` field, for example: `MyZooCluster`
 - Type `zookeeper:2181` in `Cluster Zookeeper Hosts` field
 - Enable checkbox `Poll consumer information (Not recommended for large # of consumers if ZK is used for offsets tracking on older Kafka versions)`
 - Click on `Save` button at the bottom of the page.
 
-=== MySQL
-
+* *MySQL*
++
 [source]
 ----
 docker exec -it bitcoin-mysql mysql -uroot -psecret --database=bitcoindb

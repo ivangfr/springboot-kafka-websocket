@@ -1,7 +1,7 @@
 spring:
   jpa:
-    hibernate.ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/bitcoindb?autoReconnect=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
@@ -10,7 +10,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}
+          brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
           auto-add-partitions: true
       bindings:
         output:
