@@ -32,7 +32,7 @@ function connect() {
                 var message = chatCommentBody.message;
                 var timestamp = chatCommentBody.timestamp;
 
-                var row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+username+': '+message+'<td></tr>';
+                var row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+username+': '+message+'</td></tr>';
                 $('#chat tbody').prepend(row);
             });
         },
