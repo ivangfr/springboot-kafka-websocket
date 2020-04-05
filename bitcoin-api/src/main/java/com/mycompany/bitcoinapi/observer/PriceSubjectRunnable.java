@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
                     notifyObservers();
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
     }
@@ -83,8 +84,8 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
     private Price getNewPrice(BigDecimal currentPrice) {
         boolean sign = rand.nextBoolean();
         double var = rand.nextDouble() * 100;
-        BigDecimal variation = new BigDecimal(sign ? var : -1 * var);
-        BigDecimal newValue = currentPrice.add(variation).setScale(2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal variation = BigDecimal.valueOf(sign ? var : -1 * var);
+        BigDecimal newValue = currentPrice.add(variation).setScale(2, RoundingMode.HALF_UP);
         return new Price(newValue, LocalDateTime.now());
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xml:lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bitcoin-Client</title>
@@ -50,8 +50,8 @@
             <table id="priceList" class="striped">
                 <thead>
                 <tr>
-                    <th>Price</th>
-                    <th>Timestamp</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Timestamp</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -62,7 +62,7 @@
             <div class="row">
                 <form class="col s12">
                     <div class="input-field col s12">
-                        <input id="username" type="text" class="validate">
+                        <input id="username" type="text" class="validate"/>
                         <label for="username">Username</label>
                     </div>
                     <div class="input-field col s12">
@@ -78,7 +78,7 @@
                 <div class="col s12">
                     <table id="chat" class="striped">
                         <thead>
-                            <tr><th>Chat</th></tr>
+                            <tr><th scope="col">Chat</th></tr>
                         </thead>
                         <tbody></tbody>
                     </table>
