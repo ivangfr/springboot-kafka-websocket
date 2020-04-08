@@ -62,8 +62,12 @@
             <div class="row">
                 <form class="col s12">
                     <div class="input-field col s12">
-                        <input id="username" type="text" class="validate"/>
-                        <label for="username">Username</label>
+                        <input disabled id="fromUser" type="text" class="validate" th:value="${#authentication.getName()}"/>
+                        <label for="fromUser">Username</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="toUser" type="text" class="validate"/>
+                        <label for="toUser">To</label>
                     </div>
                     <div class="input-field col s12">
                         <textarea id="message" class="materialize-textarea"></textarea>

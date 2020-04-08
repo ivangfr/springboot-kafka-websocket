@@ -1,7 +1,7 @@
 var stompClient = null;
 
 function connect() {
-    const socket = new SockJS('/price-websocket')
+    const socket = new SockJS('/websocket')
     stompClient = Stomp.over(socket)
 
     var prevPriceValue = null
@@ -23,17 +23,30 @@ function connect() {
                 $('#variation').text((priceVar > 0 ? "+" : "") + Number(priceVar).toFixed(2))
 
                 var row = '<tr><td>'+Number(priceValue).toFixed(2)+'</td><td>'+moment(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')+'</td></tr>'
-                $('#priceList tbody').prepend(row)
+                if ($('#priceList tr').length > 10) {
+                    $('#priceList tr:last').remove()
+                }
+                $('#priceList').find('tbody').prepend(row)
             })
 
             stompClient.subscribe('/topic/comments', function (chatComment) {
                 const chatCommentBody = JSON.parse(chatComment.body)
-                const username = chatCommentBody.username
+                const fromUser = chatCommentBody.fromUser
                 const message = chatCommentBody.message
                 const timestamp = chatCommentBody.timestamp
 
-                const row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+username+': '+message+'</td></tr>'
-                $('#chat tbody').prepend(row)
+                const row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+fromUser+' to all: '+message+'</td></tr>'
+                $('#chat').find('tbody').prepend(row)
+            })
+
+            stompClient.subscribe('/user/topic/comments', function (chatComment) {
+                const chatCommentBody = JSON.parse(chatComment.body)
+                const fromUser = chatCommentBody.fromUser
+                const message = chatCommentBody.message
+                const timestamp = chatCommentBody.timestamp
+
+                const row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+fromUser+' to you: '+message+'</td></tr>'
+                $('#chat').find('tbody').prepend(row)
             })
         },
         function() {
@@ -58,16 +71,16 @@ $(function () {
             disconnect()
         }
     })
-    $('#send').click(function() {
-        const usernameVal = $("#username").val()
 
-        var message = $("#message")
+    $('#send').click(function() {
+        const fromUserVal = $("#fromUser").val()
+        const toUserVal = $("#toUser").val()
+        const message = $("#message")
         const messageVal = message.val()
 
-        if (usernameVal.length !== 0 && messageVal.length !== 0) {
-            const comment = JSON.stringify({'username': usernameVal, 'message': messageVal})
+        if (fromUserVal.length !== 0 && messageVal.length !== 0) {
+            const comment = JSON.stringify({'fromUser': fromUserVal, 'toUser': toUserVal, 'message': messageVal})
             stompClient.send("/app/chat", {}, comment)
-
             message.val('')
         }
     })

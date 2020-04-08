@@ -3,7 +3,7 @@
 The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications
 
 * *bitcoin-api*: service that simulates `BTC` price changes and pushes those changes to https://kafka.apache.org/[`Kafka`]
-* *bitcoin-client*: service that reads from `Kafka` and updates its UI using `Websocket`
+* *bitcoin-client*: service that reads from `Kafka` and updates its UI using `Websocket`. It has also a chat where users can talk to each other, by sending comments publicly or privately.
 
 == Start Environment
 
@@ -110,13 +110,15 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 == Applications URLs
 
 |===
-|Application |URL
+|Application |URL |Credentials (user/pass)
 
 |`bitcoin-api`
 |http://localhost:9081/swagger-ui.html
+|
 
 |`bitcoin-client`
 |http://localhost:9082
+|`user1/123` or `user2/123`
 |===
 
 The gif below shows two users checking real-time the `BTC` price changes. Besides, they are using a chat channel to

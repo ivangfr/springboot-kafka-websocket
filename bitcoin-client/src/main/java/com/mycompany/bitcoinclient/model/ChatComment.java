@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class ChatComment {
 
-    private String username;
+    private String fromUser;
     private String message;
     private LocalDateTime timestamp;
 

@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class Comment {
 
-    private String username;
+    private String fromUser;
+    private String toUser;
     private String message;
 
 }
