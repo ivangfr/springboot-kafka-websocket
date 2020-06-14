@@ -2,6 +2,7 @@ package com.mycompany.bitcoinclient.controller;
 
 import com.mycompany.bitcoinclient.model.ChatComment;
 import com.mycompany.bitcoinclient.model.Comment;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -10,14 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @Controller
 public class PriceController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
-
-    public PriceController(SimpMessagingTemplate simpMessagingTemplate) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }
 
     @GetMapping("/")
     public String getPrices() {

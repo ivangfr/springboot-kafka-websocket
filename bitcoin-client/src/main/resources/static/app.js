@@ -23,7 +23,7 @@ function connect() {
                 $('#variation').text((priceVar > 0 ? "+" : "") + Number(priceVar).toFixed(2))
 
                 var row = '<tr><td>'+Number(priceValue).toFixed(2)+'</td><td>'+moment(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')+'</td></tr>'
-                if ($('#priceList tr').length > 10) {
+                if ($('#priceList tr').length > 20) {
                     $('#priceList tr:last').remove()
                 }
                 $('#priceList').find('tbody').prepend(row)
@@ -72,7 +72,9 @@ $(function () {
         }
     })
 
-    $('#send').click(function() {
+    $('#chatForm').submit(function(e) {
+        e.preventDefault();
+
         const fromUserVal = $("#fromUser").val()
         const toUserVal = $("#toUser").val()
         const message = $("#message")
@@ -84,6 +86,12 @@ $(function () {
             message.val('')
         }
     })
+
+    let height = window.innerHeight - 245
+    $('#priceList').parent().css({"height": height, "max-height": height, "overflow-y": "auto"})
+
+    height = window.innerHeight - 500
+    $('#chat').parent().css({"height": height, "max-height": height, "overflow-y": "auto"})
 })
 
 connect()

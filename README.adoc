@@ -5,6 +5,12 @@ The goal of this project is to implement two https://docs.spring.io/spring-boot/
 * *bitcoin-api*: service that simulates `BTC` price changes and pushes those changes to https://kafka.apache.org/[`Kafka`]
 * *bitcoin-client*: service that reads from `Kafka` and updates its UI using `Websocket`. It has also a chat where users can talk to each other, by sending comments publicly or privately.
 
+== Prerequisites
+
+- `Java 11+`
+- `Docker`
+- `Docker-Compose`
+
 == Start Environment
 
 * Open a terminal and inside `springboot-kafka-websocket` root folder run
@@ -112,11 +118,11 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 |===
 |Application |URL |Credentials (user/pass)
 
-|`bitcoin-api`
+|bitcoin-api
 |http://localhost:9081/swagger-ui.html
 |
 
-|`bitcoin-client`
+|bitcoin-client
 |http://localhost:9082
 |`user1/123` or `user2/123`
 |===

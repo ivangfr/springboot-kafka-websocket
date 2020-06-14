@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xml:lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bitcoin-Client</title>
@@ -8,89 +8,95 @@
     <!--Import materialize.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="/app.css">
-
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        body { display: flex; min-height: 100vh; flex-direction: column; }
+        main { flex: 1 0 auto; }
+    </style>
 </head>
 
 <body>
-<nav>
-    <div class="nav-wrapper light-blue darken-3">
+
+<!-- Header -->
+<div th:insert="fragments/header :: header"></div>
+
+<main>
+    <div class="container">
         <div class="row">
             <div class="col s6">
-                <label class="brand-logo center">Bitcoin-Client</label>
-            </div>
-        </div>
-    </div>
-</nav>
-<div class="container">
-    <div class="row">
-        <div class="col s8">
-            <span class="light-blue-text text-darken-3" id="currentPrice">____.__</span>
-            <span class="light-blue-text text-darken-3" id="variation">__</span>
-        </div>
+                <div class="row">
+                    <div class="col s8">
+                        <span class="light-blue-text text-darken-3" id="currentPrice">____.__</span>
+                        <span class="light-blue-text text-darken-3" id="variation">__</span>
+                    </div>
 
-        <!-- Websocket Connection -->
-        <div class="col s4">
-            <label>Websocket</label>
-            <div class="switch">
-                <label>
-                    Off
-                    <input id="websocketSwitch" type="checkbox" checked>
-                    <span class="lever"></span>
-                    On
-                </label>
+                    <!-- Websocket Connection -->
+                    <div class="col s4">
+                        <label>Websocket</label>
+                        <div class="switch">
+                            <label>
+                                Off
+                                <input id="websocketSwitch" type="checkbox" checked>
+                                <span class="lever"></span>
+                                On
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <table id="priceList" class="striped">
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col s6">
-            <!-- Prices -->
-            <table id="priceList" class="striped">
-                <thead>
-                <tr>
-                    <th scope="col">Price</th>
-                    <th scope="col">Timestamp</th>
-                </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <div class="col s6">
-            <div class="row">
-                <form class="col s12">
-                    <div class="input-field col s12">
-                        <input disabled id="fromUser" type="text" class="validate" th:value="${#authentication.getName()}"/>
-                        <label for="fromUser">Username</label>
+            <div class="col s6">
+                <h5 class="center-align orange lighten-4">Chat</h5>
+                <div class="row">
+                    <form id="chatForm" class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input disabled id="fromUser" type="text" class="validate"
+                                       th:value="${#authentication.getName()}"/>
+                                <label for="fromUser">Username</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="toUser" type="text" class="validate"/>
+                                <label for="toUser">To</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="message" type="text" class="validate"/>
+                                <label for="message">Message</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="center-align">
+                                <button class="btn waves-effect waves-light btn-small" type="submit">Send
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <table id="chat" class="striped">
+                            <tbody></tbody>
+                        </table>
                     </div>
-                    <div class="input-field col s12">
-                        <input id="toUser" type="text" class="validate"/>
-                        <label for="toUser">To</label>
-                    </div>
-                    <div class="input-field col s12">
-                        <textarea id="message" class="materialize-textarea"></textarea>
-                        <label for="message">Message</label>
-                    </div>
-                    <div class="center-align">
-                        <button id="send" class="btn waves-effect waves-light" type="button">Send</button>
-                    </div>
-                </form>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <table id="chat" class="striped">
-                        <thead>
-                            <tr><th scope="col">Chat</th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
+
+<!-- Footer -->
+<div th:insert="fragments/footer :: footer"></div>
 
 <!--JavaScript at end of body for optimized loading-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

@@ -1,5 +1,6 @@
 package com.mycompany.bitcoinapi.observer;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
@@ -8,15 +9,12 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 @EnableBinding(Source.class)
 public class StreamPriceObserver implements PriceObserver {
 
     private final Source source;
-
-    public StreamPriceObserver(Source source) {
-        this.source = source;
-    }
 
     @Override
     public void update(PriceMessage priceMessage) {

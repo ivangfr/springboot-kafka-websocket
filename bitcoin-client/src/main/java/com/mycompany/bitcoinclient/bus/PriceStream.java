@@ -1,5 +1,6 @@
 package com.mycompany.bitcoinclient.bus;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -12,15 +13,12 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 @EnableBinding(Sink.class)
 public class PriceStream {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
-
-    public PriceStream(SimpMessagingTemplate simpMessagingTemplate) {
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }
 
     @StreamListener(Sink.INPUT)
     public void handlePriceDto(@Payload PriceMessage priceMessage,

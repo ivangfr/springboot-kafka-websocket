@@ -2,16 +2,14 @@ package com.mycompany.bitcoinapi.service;
 
 import com.mycompany.bitcoinapi.model.Price;
 import com.mycompany.bitcoinapi.repository.PriceRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class PriceServiceImpl implements PriceService {
 
     private final PriceRepository priceRepository;
-
-    public PriceServiceImpl(PriceRepository priceRepository) {
-        this.priceRepository = priceRepository;
-    }
 
     @Override
     public Price getLastPrice() {

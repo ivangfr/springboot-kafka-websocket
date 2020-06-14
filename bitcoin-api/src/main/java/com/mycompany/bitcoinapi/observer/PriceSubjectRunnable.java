@@ -1,9 +1,10 @@
 package com.mycompany.bitcoinapi.observer;
 
+import com.mycompany.bitcoinapi.mapper.PriceMapper;
 import com.mycompany.bitcoinapi.model.Price;
 import com.mycompany.bitcoinapi.service.PriceService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 @Slf4j
+@RequiredArgsConstructor
 public class PriceSubjectRunnable implements PriceSubject, Runnable {
 
     private static final int SLEEP_TIME = 1000;
@@ -20,17 +22,12 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
     private static final Random rand = new Random();
     private static final BigDecimal INITIAL_PRICE = new BigDecimal(6000);
 
-    private List<PriceObserver> observers = new ArrayList<>();
+    private final List<PriceObserver> observers = new ArrayList<>();
 
     private Price price = new Price(INITIAL_PRICE, LocalDateTime.now());
 
     private final PriceService priceService;
-    private final MapperFacade mapperFacade;
-
-    public PriceSubjectRunnable(PriceService priceService, MapperFacade mapperFacade) {
-        this.priceService = priceService;
-        this.mapperFacade = mapperFacade;
-    }
+    private final PriceMapper priceMapper;
 
     @Override
     public void run() {
@@ -66,7 +63,7 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
 
     @Override
     public void notifyObservers() {
-        PriceMessage priceMessage = mapperFacade.map(price, PriceMessage.class);
+        PriceMessage priceMessage = priceMapper.toPriceMessage(price);
         log.info("New {}", priceMessage);
         observers.forEach(observer -> observer.update(priceMessage));
     }
