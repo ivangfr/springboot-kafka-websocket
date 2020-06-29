@@ -3,7 +3,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/bitcoindb?autoReconnect=true&useSSL=false&useUnicode=yes&characterEncoding=UTF-8&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/bitcoindb?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: secret
   cloud:
@@ -18,7 +18,7 @@ spring:
           content-type: application/json
           producer:
             partition-key-expression: headers['partitionKey']
-            partition-count: 2
+            partition-count: 3
   sleuth:
     sampler:
       probability: 1.0

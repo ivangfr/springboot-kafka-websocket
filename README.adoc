@@ -7,9 +7,9 @@ The goal of this project is to implement two https://docs.spring.io/spring-boot/
 
 == Prerequisites
 
-- `Java 11+`
-- `Docker`
-- `Docker-Compose`
+* https://www.oracle.com/java/technologies/javase-jdk11-downloads.html[`Java 11+`]
+* https://www.docker.com/[`Docker`]
+* https://docs.docker.com/compose/install/[`Docker-Compose`]
 
 == Start Environment
 
@@ -167,7 +167,7 @@ docker-compose down -v
 _Configuration_
 +
 - First, you must create a new cluster. Click on `Cluster` (dropdown button on the header) and then on `Add Cluster`
-- Type the name of your cluster in `Cluster Name` field, for example: `MyZooCluster`
+- Type the name of your cluster in `Cluster Name` field, for example: `MyCluster`
 - Type `zookeeper:2181` in `Cluster Zookeeper Hosts` field
 - Enable checkbox `Poll consumer information (Not recommended for large # of consumers if ZK is used for offsets tracking on older Kafka versions)`
 - Click on `Save` button at the bottom of the page.
@@ -176,6 +176,6 @@ _Configuration_
 +
 [source]
 ----
-docker exec -it bitcoin-mysql mysql -uroot -psecret --database=bitcoindb
+docker exec -it mysql mysql -uroot -psecret --database=bitcoindb
 select * from prices;
 ----

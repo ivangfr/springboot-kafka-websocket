@@ -5,7 +5,7 @@ spring:
         binder:
           brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
           auto-add-partitions: true
-          min-partition-count: 2
+          min-partition-count: 3
       bindings:
         input:
           destination: com.mycompany.bitcoin.api.price
