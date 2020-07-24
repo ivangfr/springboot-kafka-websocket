@@ -1,9 +1,20 @@
 = springboot-kafka-websocket
 
-The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications
+The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications, `bitcoin-api` and `bitcoin-client`. The first simulates `BTC` price changes and the second, will listen from those changes and update an UI at real-time.
 
-* *bitcoin-api*: service that simulates `BTC` price changes and pushes those changes to https://kafka.apache.org/[`Kafka`]
-* *bitcoin-client*: service that reads from `Kafka` and updates its UI using `Websocket`. It has also a chat where users can talk to each other, by sending comments publicly or privately.
+== Project Diagram
+
+image::./images/project-diagram.png[]
+
+== Applications
+
+* *bitcoin-api*
++
+`Spring Boot` Web Java application service that simulates `BTC` price changes and pushes those changes to https://kafka.apache.org/[`Kafka`]
+
+* *bitcoin-client*
++
+`Spring Boot` Web Java application that was implemented using `Thymeleaf` as HTML template. It reads from `Kafka` and updates its UI using `Websocket`. It has also a chat where users can talk to each other, by sending comments publicly or privately.
 
 == Prerequisites
 
@@ -35,14 +46,14 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 +
 [source]
 ----
-./mvnw spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
+./mvnw clean spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
 ----
 
 * *bitcoin-client*
 +
 [source]
 ----
-./mvnw spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
+./mvnw clean spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
 ----
 
 == Running Applications as Docker containers
@@ -132,24 +143,6 @@ communicate with each other.
 
 image::./images/two-users-example.gif[]
 
-== Shutdown
-
-* Stop applications
-** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
-** If they were started as a Docker container, inside `springboot-kafka-websocket` root folder, run the script below
-+
-[source]
-----
-./stop-apps.sh
-----
-
-* Stop and remove docker-compose containers, networks and volumes
-+
-[source]
-----
-docker-compose down -v
-----
-
 == Useful Links & Commands
 
 * *Zipkin*
@@ -178,4 +171,22 @@ _Configuration_
 ----
 docker exec -it mysql mysql -uroot -psecret --database=bitcoindb
 select * from prices;
+----
+
+== Shutdown
+
+* Stop applications
+** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
+** If they were started as a Docker container, inside `springboot-kafka-websocket` root folder, run the script below
++
+[source]
+----
+./stop-apps.sh
+----
+
+* Stop and remove docker-compose containers, networks and volumes
++
+[source]
+----
+docker-compose down -v
 ----
