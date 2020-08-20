@@ -1,10 +1,10 @@
-var stompClient = null;
+let stompClient = null;
 
 function connect() {
     const socket = new SockJS('/websocket')
     stompClient = Stomp.over(socket)
 
-    var prevPriceValue = null
+    let prevPriceValue = null
     stompClient.connect({},
         function (frame) {
             console.log('Connected: ' + frame)
@@ -13,6 +13,7 @@ function connect() {
                 const priceBody = JSON.parse(price.body)
                 const priceValue = priceBody.value
                 const priceTimestamp = priceBody.timestamp
+
                 if (prevPriceValue == null) {
                     prevPriceValue = priceValue
                 }
@@ -22,7 +23,7 @@ function connect() {
                 $('#currentPrice').text(Number(priceValue).toFixed(2))
                 $('#variation').text((priceVar > 0 ? "+" : "") + Number(priceVar).toFixed(2))
 
-                var row = '<tr><td>'+Number(priceValue).toFixed(2)+'</td><td>'+moment(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')+'</td></tr>'
+                const row = '<tr><td>'+Number(priceValue).toFixed(2)+'</td><td>'+moment(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')+'</td></tr>'
                 if ($('#priceList tr').length > 20) {
                     $('#priceList tr:last').remove()
                 }
