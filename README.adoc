@@ -1,6 +1,6 @@
 = springboot-kafka-websocket
 
-The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications, `bitcoin-api` and `bitcoin-client`. The first simulates `BTC` price changes and the second, will listen from those changes and update an UI at real-time.
+The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications, `bitcoin-api` and `bitcoin-client`. The first simulates `BTC` price changes and, the second, will listen from those changes and update a UI at real-time.
 
 == Project Diagram
 
@@ -31,7 +31,7 @@ image::./images/project-diagram.png[]
 docker-compose up -d
 ----
 
-* Wait a little bit until all containers are Up (healthy). You can check their status running
+* Wait until all containers are Up (healthy). You can check their status running
 +
 [source]
 ----

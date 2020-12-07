@@ -68,7 +68,7 @@ services:
 
   mysql:
     container_name: mysql
-    image: mysql:8.0.21
+    image: mysql:8.0.22
     restart: unless-stopped
     ports:
       - "3306:3306"
@@ -81,7 +81,7 @@ services:
 
   zipkin:
     container_name: zipkin
-    image: openzipkin/zipkin:2.21.5
+    image: openzipkin/zipkin:2.23.0
     restart: unless-stopped
     ports:
       - "9411:9411"

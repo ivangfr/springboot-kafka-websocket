@@ -2,34 +2,38 @@ package com.mycompany.bitcoinclient.bus;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.context.annotation.Bean;
 import org.springframework.integration.IntegrationMessageHeaderAccessor;
 import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-@EnableBinding(Sink.class)
 public class PriceStream {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    @StreamListener(Sink.INPUT)
-    public void handlePriceDto(@Payload PriceMessage priceMessage,
-                               @Header(KafkaHeaders.RECEIVED_TOPIC) String topic,
-                               @Header(KafkaHeaders.RECEIVED_PARTITION_ID) Integer partition,
-                               @Header(KafkaHeaders.OFFSET) Long offset,
-                               @Header(IntegrationMessageHeaderAccessor.DELIVERY_ATTEMPT) Integer deliveryAttempt) {
-        log.info("PriceMessage with id {}, value '{}' and timestamp '{}' received from bus. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
-                priceMessage.getId(), priceMessage.getValue(), priceMessage.getTimestamp(), topic, partition, offset, deliveryAttempt);
+    @Bean
+    public Consumer<Message<PriceMessage>> listen() {
+        return message -> {
+            PriceMessage priceMessage = message.getPayload();
+            MessageHeaders messageHeaders = message.getHeaders();
+            log.info("PriceMessage with id {}, value '{}' and timestamp '{}' received from bus. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
+                    priceMessage.getId(), priceMessage.getValue(), priceMessage.getTimestamp(),
+                    messageHeaders.get(KafkaHeaders.RECEIVED_TOPIC, String.class),
+                    messageHeaders.get(KafkaHeaders.RECEIVED_PARTITION_ID, Integer.class),
+                    messageHeaders.get(KafkaHeaders.OFFSET, Long.class),
+                    messageHeaders.get(IntegrationMessageHeaderAccessor.DELIVERY_ATTEMPT, AtomicInteger.class));
 
-        simpMessagingTemplate.convertAndSend("/topic/prices", priceMessage);
+            simpMessagingTemplate.convertAndSend("/topic/prices", priceMessage);
+        };
     }
 
 }
