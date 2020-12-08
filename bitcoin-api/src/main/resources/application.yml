@@ -13,7 +13,7 @@ spring:
           brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
           auto-add-partitions: true
       bindings:
-        output:
+        stream-out-0:
           destination: com.mycompany.bitcoin.api.price
           content-type: application/json
           producer:

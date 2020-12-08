@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
 
     private static final int SLEEP_TIME = 1000;
     private static final int TRADE_DIFFICULT = 4;
-    private static final Random rand = new Random();
+    private static final Random rand = new SecureRandom();
     private static final BigDecimal INITIAL_PRICE = new BigDecimal(6000);
 
     private final List<PriceObserver> observers = new ArrayList<>();
