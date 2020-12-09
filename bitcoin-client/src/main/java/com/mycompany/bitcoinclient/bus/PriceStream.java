@@ -21,7 +21,7 @@ public class PriceStream {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Bean
-    public Consumer<Message<PriceMessage>> listen() {
+    public Consumer<Message<PriceMessage>> prices() {
         return message -> {
             PriceMessage priceMessage = message.getPayload();
             MessageHeaders messageHeaders = message.getHeaders();

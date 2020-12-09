@@ -7,7 +7,7 @@ spring:
           auto-add-partitions: true
           min-partition-count: 3
       bindings:
-        listen-in-0:
+        prices-in-0:
           destination: com.mycompany.bitcoin.api.price
           content-type: application/json
           group: bitcoinClientGroup

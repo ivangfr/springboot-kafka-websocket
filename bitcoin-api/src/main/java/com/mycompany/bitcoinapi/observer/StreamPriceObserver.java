@@ -19,7 +19,7 @@ public class StreamPriceObserver implements PriceObserver {
         Message<PriceMessage> message = MessageBuilder.withPayload(priceMessage)
                 .setHeader("partitionKey", priceMessage.getId())
                 .build();
-        streamBridge.send("stream-out-0", message);
+        streamBridge.send("prices-out-0", message);
 
         log.info("{} sent to bus.", message);
     }
