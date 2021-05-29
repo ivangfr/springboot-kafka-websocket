@@ -2,27 +2,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <groupId>com.mycompany</groupId>
     <artifactId>springboot-kafka-websocket</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-
     <name>springboot-kafka-websocket</name>
     <description>Demo project for Spring Boot</description>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
     <properties>
         <java.version>11</java.version>
-        <spring-cloud.version>2020.0.1</spring-cloud.version>
-        <jib.maven-plugin.version>2.7.1</jib.maven-plugin.version>
-        <docker.image.prefix>docker.mycompany.com</docker.image.prefix>
+        <spring-cloud.version>2020.0.3-SNAPSHOT</spring-cloud.version>
+        <jib-maven-plugin.version>3.0.0</jib-maven-plugin.version>
+        <docker-image.prefix>ivanfranchin</docker-image.prefix>
     </properties>
 
     <modules>
@@ -47,17 +45,36 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib.maven-plugin.version}</version>
+                <version>${jib-maven-plugin.version}</version>
                 <configuration>
                     <from>
-                        <image>openjdk:11.0.9</image>
+                        <image>openjdk:11.0.11</image>
                     </from>
                     <to>
-                        <image>${docker.image.prefix}/${project.artifactId}:${project.version}</image>
+                        <image>${docker-image.prefix}/${project.artifactId}:${project.version}</image>
                     </to>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>

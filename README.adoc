@@ -66,7 +66,7 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 +
 [source]
 ----
-./build-apps.sh
+./docker-build.sh
 ----
 
 === Application's Environment Variables
@@ -113,7 +113,7 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 |Specify port of the `Zipkin` distributed tracing system to use (default `9411`)
 |===
 
-== Start Application's Docker container
+== Run Application's Docker container
 
 * In a terminal, make sure you are inside `springboot-kafka-websocket` root folder
 
@@ -184,7 +184,7 @@ select * from prices;
 ./stop-apps.sh
 ----
 
-* Stop and remove docker-compose containers, networks and volumes
+* Stop and remove docker-compose containers, network and volumes
 +
 [source]
 ----
