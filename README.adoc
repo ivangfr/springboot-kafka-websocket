@@ -124,6 +124,13 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 ./start-apps.sh
 ----
 
+* Wait for application's Docker containers `STATUS` to be `Up (healthy)`. You can check by running
++
+[source]
+----
+docker ps -f name=bitcoin-api -f name=bitcoin-client
+----
+
 == Applications URLs
 
 |===
@@ -175,18 +182,25 @@ select * from prices;
 
 == Shutdown
 
-* Stop applications
+* To stop applications
 ** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
-** If they were started as a Docker container, inside `springboot-kafka-websocket` root folder, run the script below
+** If they were started as Docker containers, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below
 +
 [source]
 ----
 ./stop-apps.sh
 ----
-
-* Stop and remove docker-compose containers, network and volumes
+* To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the following command
 +
 [source]
 ----
 docker-compose down -v
+----
+
+== Cleanup
+
+To remove the Docker images created by this project, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below
+[source]
+----
+./remove-docker-images.sh
 ----

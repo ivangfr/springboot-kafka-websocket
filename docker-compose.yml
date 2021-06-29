@@ -2,6 +2,19 @@ version: "3.8"
 
 services:
 
+  mysql:
+    image: mysql:8.0.25
+    container_name: mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=bitcoindb
+    healthcheck:
+      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
+      start_period: 30s
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.1.1
     container_name: zookeeper
@@ -66,22 +79,9 @@ services:
       test: "wget --quiet --tries=1 --spider http://localhost:8000 || exit 1"
       start_period: 30s
 
-  mysql:
-    container_name: mysql
-    image: mysql:8.0.25
-    restart: unless-stopped
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=bitcoindb
-    healthcheck:
-      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
-      start_period: 30s
-
   zipkin:
-    container_name: zipkin
     image: openzipkin/zipkin:2.23.2
+    container_name: zipkin
     restart: unless-stopped
     ports:
       - "9411:9411"
@@ -90,8 +90,8 @@ services:
       start_period: 30s
 
   kafka-manager:
-    container_name: kafka-manager
     image: hlebalbau/kafka-manager:3.0.0.5
+    container_name: kafka-manager
     restart: unless-stopped
     depends_on:
       - zookeeper
