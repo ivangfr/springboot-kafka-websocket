@@ -1,4 +1,4 @@
-package com.mycompany.bitcoinclient.bus;
+package com.mycompany.bitcoinclient.kafka;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,5 +35,4 @@ public class PriceStream {
             simpMessagingTemplate.convertAndSend("/topic/prices", priceMessage);
         };
     }
-
 }

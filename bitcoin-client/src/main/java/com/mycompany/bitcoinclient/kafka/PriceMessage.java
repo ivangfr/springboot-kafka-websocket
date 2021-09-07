@@ -1,4 +1,4 @@
-package com.mycompany.bitcoinapi.observer;
+package com.mycompany.bitcoinclient.kafka;
 
 import lombok.Value;
 

@@ -86,5 +86,4 @@ public class PriceSubjectRunnable implements PriceSubject, Runnable {
         BigDecimal newValue = currentPrice.add(variation).setScale(2, RoundingMode.HALF_UP);
         return new Price(newValue, LocalDateTime.now());
     }
-
 }

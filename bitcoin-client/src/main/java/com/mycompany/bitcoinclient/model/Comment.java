@@ -1,12 +1,11 @@
 package com.mycompany.bitcoinclient.model;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value
 public class Comment {
 
-    private String fromUser;
-    private String toUser;
-    private String message;
-
+    String fromUser;
+    String toUser;
+    String message;
 }

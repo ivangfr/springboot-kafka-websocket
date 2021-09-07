@@ -23,5 +23,4 @@ public class SimulationRunner implements CommandLineRunner {
 
         new Thread(priceSubjectRunnable).start();
     }
-
 }

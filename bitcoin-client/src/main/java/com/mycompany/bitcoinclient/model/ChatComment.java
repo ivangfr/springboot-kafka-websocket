@@ -1,16 +1,13 @@
 package com.mycompany.bitcoinclient.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@Data
+@Value(staticConstructor = "of")
 public class ChatComment {
 
-    private String fromUser;
-    private String message;
-    private LocalDateTime timestamp;
-
+    String fromUser;
+    String message;
+    LocalDateTime timestamp;
 }

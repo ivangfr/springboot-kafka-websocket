@@ -22,5 +22,4 @@ public class PriceController {
     public PriceDto getLastPrice() {
         return priceMapper.toPriceDto(priceService.getLastPrice());
     }
-
 }

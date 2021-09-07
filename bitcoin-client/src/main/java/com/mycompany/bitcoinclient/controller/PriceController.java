@@ -24,12 +24,11 @@ public class PriceController {
 
     @MessageMapping("/chat")
     public void addChatComment(@Payload Comment comment) {
-        ChatComment chatComment = new ChatComment(comment.getFromUser(), comment.getMessage(), LocalDateTime.now());
+        ChatComment chatComment = ChatComment.of(comment.getFromUser(), comment.getMessage(), LocalDateTime.now());
         if (comment.getToUser().isEmpty()) {
             simpMessagingTemplate.convertAndSend("/topic/comments", chatComment);
         } else {
             simpMessagingTemplate.convertAndSendToUser(comment.getToUser(), "/topic/comments", chatComment);
         }
     }
-
 }

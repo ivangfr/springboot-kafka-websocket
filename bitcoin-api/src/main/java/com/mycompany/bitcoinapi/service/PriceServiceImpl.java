@@ -20,5 +20,4 @@ public class PriceServiceImpl implements PriceService {
     public Price savePrice(Price price) {
         return priceRepository.save(price);
     }
-
 }
