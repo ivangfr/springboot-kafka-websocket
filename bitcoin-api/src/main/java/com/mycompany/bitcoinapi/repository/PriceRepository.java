@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface PriceRepository extends CrudRepository<Price, Long> {
 
     Price findTopByOrderByTimestampDesc();
-
 }

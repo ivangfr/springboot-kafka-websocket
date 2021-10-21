@@ -4,7 +4,7 @@ The goal of this project is to implement two https://docs.spring.io/spring-boot/
 
 == Project Diagram
 
-image::./images/project-diagram.png[]
+image::./documentation/project-diagram.png[]
 
 == Applications
 
@@ -18,7 +18,7 @@ image::./images/project-diagram.png[]
 
 == Prerequisites
 
-* https://www.oracle.com/java/technologies/javase-jdk11-downloads.html[`Java 11+`]
+* https://www.oracle.com/java/technologies/downloads/#java11[`Java 11+`]
 * https://www.docker.com/[`Docker`]
 * https://docs.docker.com/compose/install/[`Docker-Compose`]
 
@@ -31,7 +31,7 @@ image::./images/project-diagram.png[]
 docker-compose up -d
 ----
 
-* Wait until all containers are Up (healthy). You can check their status running
+* Wait for Docker containers to be with state `Up (healthy)`. To check it, run
 +
 [source]
 ----
@@ -148,7 +148,7 @@ docker ps -f name=bitcoin-api -f name=bitcoin-client
 The gif below shows two users checking real-time the `BTC` price changes. Besides, they are using a chat channel to
 communicate with each other.
 
-image::./images/two-users-example.gif[]
+image::./documentation/two-users-example.gif[]
 
 == Useful Links & Commands
 

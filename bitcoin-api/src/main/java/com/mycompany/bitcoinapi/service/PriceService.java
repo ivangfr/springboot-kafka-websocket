@@ -7,5 +7,4 @@ public interface PriceService {
     Price getLastPrice();
 
     Price savePrice(Price price);
-
 }

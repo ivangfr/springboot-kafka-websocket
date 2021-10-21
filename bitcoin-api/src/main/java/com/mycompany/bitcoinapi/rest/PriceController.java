@@ -1,7 +1,7 @@
 package com.mycompany.bitcoinapi.rest;
 
 import com.mycompany.bitcoinapi.mapper.PriceMapper;
-import com.mycompany.bitcoinapi.rest.dto.PriceDto;
+import com.mycompany.bitcoinapi.rest.dto.PriceResponse;
 import com.mycompany.bitcoinapi.service.PriceService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class PriceController {
 
     @Operation(summary = "Get last price")
     @GetMapping("/last")
-    public PriceDto getLastPrice() {
-        return priceMapper.toPriceDto(priceService.getLastPrice());
+    public PriceResponse getLastPrice() {
+        return priceMapper.toPriceResponse(priceService.getLastPrice());
     }
 }

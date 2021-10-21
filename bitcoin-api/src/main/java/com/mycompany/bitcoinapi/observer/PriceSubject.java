@@ -7,5 +7,4 @@ public interface PriceSubject {
     void unregister(PriceObserver priceObserver);
 
     void notifyObservers();
-
 }

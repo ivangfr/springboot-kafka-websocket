@@ -11,5 +11,4 @@ class BitcoinClientApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

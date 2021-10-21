@@ -6,7 +6,7 @@ echo "Starting bitcoin-api..."
 docker run -d --rm --name bitcoin-api -p 9081:8080 \
   -e MYSQL_HOST=mysql -e KAFKA_HOST=kafka -e KAFKA_PORT=9092 -e ZIPKIN_HOST=zipkin \
   --network=springboot-kafka-websocket_default \
-  --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" --health-start-period=1m \
+  --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" \
   ivanfranchin/bitcoin-api:1.0.0
 
 echo
@@ -15,7 +15,7 @@ echo "Starting bitcoin-client..."
 docker run -d --rm --name bitcoin-client -p 9082:8080 \
   -e KAFKA_HOST=kafka -e KAFKA_PORT=9092 -e ZIPKIN_HOST=zipkin \
   --network=springboot-kafka-websocket_default \
-  --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" --health-start-period=1m \
+  --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" \
   ivanfranchin/bitcoin-client:1.0.0
 
 printf "\n"

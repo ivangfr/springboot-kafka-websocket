@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Value
-public class PriceDto {
+public class PriceResponse {
 
     BigDecimal value;
     LocalDateTime timestamp;
