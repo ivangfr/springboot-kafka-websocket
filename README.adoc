@@ -31,7 +31,7 @@ image::./documentation/project-diagram.png[]
 docker-compose up -d
 ----
 
-* Wait for Docker containers to be with state `Up (healthy)`. To check it, run
+* Wait for Docker containers to be up and running. To check it, run
 +
 [source]
 ----
@@ -124,7 +124,7 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 ./start-apps.sh
 ----
 
-* Wait for application's Docker containers `STATUS` to be `Up (healthy)`. You can check by running
+* Wait for application's Docker containers to be up and running. To check it, run
 +
 [source]
 ----
