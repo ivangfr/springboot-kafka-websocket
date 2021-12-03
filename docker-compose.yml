@@ -15,7 +15,7 @@ services:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:6.1.1
+    image: confluentinc/cp-zookeeper:7.0.0
     container_name: zookeeper
     restart: unless-stopped
     ports:
@@ -26,7 +26,7 @@ services:
       test: "echo stat | nc localhost $$ZOOKEEPER_CLIENT_PORT"
 
   kafka:
-    image: confluentinc/cp-kafka:6.1.1
+    image: confluentinc/cp-kafka:7.0.0
     container_name: kafka
     restart: unless-stopped
     depends_on:
@@ -43,7 +43,7 @@ services:
       test: [ "CMD", "nc", "-z", "localhost", "9092" ]
 
   kafka-rest-proxy:
-    image: confluentinc/cp-kafka-rest:6.1.1
+    image: confluentinc/cp-kafka-rest:7.0.0
     container_name: kafka-rest-proxy
     restart: unless-stopped
     depends_on:
