@@ -12,14 +12,9 @@ spring:
       kafka:
         binder:
           brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
-          auto-add-partitions: true
       bindings:
         prices-out-0:
           destination: com.mycompany.bitcoin.api.price
-          content-type: application/json
-          producer:
-            partition-key-expression: headers['partitionKey']
-            partition-count: 3
   sleuth:
     sampler:
       probability: 1.0

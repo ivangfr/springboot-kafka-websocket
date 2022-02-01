@@ -1,7 +1,7 @@
 package com.mycompany.bitcoinapi.mapper;
 
 import com.mycompany.bitcoinapi.model.Price;
-import com.mycompany.bitcoinapi.observer.PriceMessage;
+import com.mycompany.bitcoinapi.kafka.PriceMessage;
 import com.mycompany.bitcoinapi.rest.dto.PriceResponse;
 import org.mapstruct.Mapper;
 

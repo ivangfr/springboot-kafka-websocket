@@ -4,16 +4,10 @@ spring:
       kafka:
         binder:
           brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
-          auto-add-partitions: true
-          min-partition-count: 3
       bindings:
         prices-in-0:
           destination: com.mycompany.bitcoin.api.price
-          content-type: application/json
           group: bitcoinClientGroup
-          consumer:
-            max-attempts: 4
-            back-off-initial-interval: 10000
   sleuth:
     sampler:
       probability: 1.0
