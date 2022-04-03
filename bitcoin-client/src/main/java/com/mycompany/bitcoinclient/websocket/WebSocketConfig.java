@@ -1,4 +1,4 @@
-package com.mycompany.bitcoinclient.config;
+package com.mycompany.bitcoinclient.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

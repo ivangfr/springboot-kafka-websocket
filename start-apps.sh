@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source scripts/my-functions.sh
+
 echo
 echo "Starting bitcoin-api..."
 
@@ -9,6 +11,8 @@ docker run -d --rm --name bitcoin-api -p 9081:8080 \
   --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" \
   ivanfranchin/bitcoin-api:1.0.0
 
+wait_for_container_log "bitcoin-api" "Started"
+
 echo
 echo "Starting bitcoin-client..."
 
@@ -17,6 +21,8 @@ docker run -d --rm --name bitcoin-client -p 9082:8080 \
   --network=springboot-kafka-websocket_default \
   --health-cmd="curl -f http://localhost:8080/actuator/health || exit 1" \
   ivanfranchin/bitcoin-client:1.0.0
+
+wait_for_container_log "bitcoin-client" "Started"
 
 printf "\n"
 printf "%15s | %37s |\n" "Application" "URL"

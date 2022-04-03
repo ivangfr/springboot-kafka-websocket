@@ -124,13 +124,6 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 ./start-apps.sh
 ----
 
-* Wait for application's Docker containers to be up and running. To check it, run
-+
-[source]
-----
-docker ps -f name=bitcoin-api -f name=bitcoin-client
-----
-
 == Applications URLs
 
 |===
