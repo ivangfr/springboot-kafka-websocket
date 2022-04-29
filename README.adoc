@@ -169,7 +169,7 @@ _Configuration_
 +
 [source]
 ----
-docker exec -it mysql mysql -uroot -psecret --database=bitcoindb
+docker exec -it -e MYSQL_PWD=secret mysql mysql -uroot --database bitcoindb
 select * from prices;
 ----
 
