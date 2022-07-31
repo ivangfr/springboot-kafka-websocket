@@ -6,7 +6,7 @@ spring:
           brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
       bindings:
         prices-in-0:
-          destination: com.mycompany.bitcoin.api.price
+          destination: com.ivanfranchin.bitcoin.api.price
           group: bitcoinClientGroup
   sleuth:
     sampler:

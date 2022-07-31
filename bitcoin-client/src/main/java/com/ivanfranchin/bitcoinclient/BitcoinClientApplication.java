@@ -1,0 +1,12 @@
+package com.ivanfranchin.bitcoinclient;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BitcoinClientApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(BitcoinClientApplication.class, args);
+    }
+}

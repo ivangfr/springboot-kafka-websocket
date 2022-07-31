@@ -25,8 +25,8 @@ docker run -d --rm --name bitcoin-client -p 9082:8080 \
 wait_for_container_log "bitcoin-client" "Started"
 
 printf "\n"
-printf "%15s | %37s |\n" "Application" "URL"
-printf "%15s + %37s |\n" "--------------" "-------------------------------------"
-printf "%15s | %37s |\n" "bitcoin-api" "http://localhost:9081/swagger-ui.html"
-printf "%15s | %37s |\n" "bitcoin-client" "http://localhost:9082"
+printf "%15s | %43s |\n" "Application" "URL"
+printf "%15s + %43s |\n" "--------------" "-------------------------------------------"
+printf "%15s | %43s |\n" "bitcoin-api" "http://localhost:9081/swagger-ui/index.html"
+printf "%15s | %43s |\n" "bitcoin-client" "http://localhost:9082"
 printf "\n"

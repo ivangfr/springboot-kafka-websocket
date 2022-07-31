@@ -14,7 +14,7 @@ spring:
           brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
       bindings:
         prices-out-0:
-          destination: com.mycompany.bitcoin.api.price
+          destination: com.ivanfranchin.bitcoin.api.price
   sleuth:
     sampler:
       probability: 1.0
