@@ -8,6 +8,8 @@ spring:
         prices-in-0:
           destination: com.ivanfranchin.bitcoin.api.price
           group: bitcoinClientGroup
+    function:
+      definition: prices # https://github.com/spring-cloud/spring-cloud-function/issues/942
   sleuth:
     sampler:
       probability: 1.0

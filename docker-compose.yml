@@ -3,7 +3,7 @@ version: "3.8"
 services:
 
   mysql:
-    image: mysql:8.0.29
+    image: mysql:8.0.31
     container_name: mysql
     restart: unless-stopped
     ports:
@@ -55,7 +55,7 @@ services:
       test: "curl -f http://localhost:9000 || exit 1"
 
   zipkin:
-    image: openzipkin/zipkin:2.23.18
+    image: openzipkin/zipkin:2.23.19
     container_name: zipkin
     restart: unless-stopped
     ports:

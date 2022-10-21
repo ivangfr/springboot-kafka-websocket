@@ -130,7 +130,7 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 |Application |URL |Credentials (user/pass)
 
 |bitcoin-api
-|http://localhost:9081/swagger-ui/index.html
+|http://localhost:9081/swagger-ui.html
 |
 
 |bitcoin-client
