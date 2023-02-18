@@ -15,9 +15,6 @@ spring:
       bindings:
         prices-out-0:
           destination: com.ivanfranchin.bitcoin.api.price
-  sleuth:
-    sampler:
-      probability: 1.0
 
 management:
   endpoints:
@@ -26,9 +23,16 @@ management:
   endpoint:
     health:
       show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
 
 springdoc:
   show-actuator: true
   swagger-ui:
     groups-order: DESC
     disable-swagger-default-url: true
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

@@ -3,7 +3,7 @@ version: "3.8"
 services:
 
   mysql:
-    image: mysql:8.0.31
+    image: mysql:8.0.32
     container_name: mysql
     restart: unless-stopped
     ports:
@@ -15,7 +15,7 @@ services:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.1
+    image: confluentinc/cp-zookeeper:7.3.1
     container_name: zookeeper
     restart: unless-stopped
     ports:
@@ -26,7 +26,7 @@ services:
       test: "echo stat | nc localhost $$ZOOKEEPER_CLIENT_PORT"
 
   kafka:
-    image: confluentinc/cp-kafka:7.0.1
+    image: confluentinc/cp-kafka:7.3.1
     container_name: kafka
     restart: unless-stopped
     depends_on:
@@ -55,7 +55,7 @@ services:
       test: "curl -f http://localhost:9000 || exit 1"
 
   zipkin:
-    image: openzipkin/zipkin:2.23.19
+    image: openzipkin/zipkin:2.24.0
     container_name: zipkin
     restart: unless-stopped
     ports:

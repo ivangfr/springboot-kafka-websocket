@@ -28,7 +28,7 @@ public class PriceStream {
             log.info("PriceMessage with id {}, value '{}' and timestamp '{}' received from bus. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
                     priceMessage.id(), priceMessage.value(), priceMessage.timestamp(),
                     messageHeaders.get(KafkaHeaders.RECEIVED_TOPIC, String.class),
-                    messageHeaders.get(KafkaHeaders.RECEIVED_PARTITION_ID, Integer.class),
+                    messageHeaders.get(KafkaHeaders.RECEIVED_PARTITION, Integer.class),
                     messageHeaders.get(KafkaHeaders.OFFSET, Long.class),
                     messageHeaders.get(IntegrationMessageHeaderAccessor.DELIVERY_ATTEMPT, AtomicInteger.class));
 

@@ -8,11 +8,6 @@ spring:
         prices-in-0:
           destination: com.ivanfranchin.bitcoin.api.price
           group: bitcoinClientGroup
-    function:
-      definition: prices # https://github.com/spring-cloud/spring-cloud-function/issues/942
-  sleuth:
-    sampler:
-      probability: 1.0
 
 management:
   endpoints:
@@ -21,3 +16,10 @@ management:
   endpoint:
     health:
       show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
