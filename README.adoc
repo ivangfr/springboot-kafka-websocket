@@ -4,7 +4,7 @@ The goal of this project is to implement two https://docs.spring.io/spring-boot/
 
 == Project Diagram
 
-image::./documentation/project-diagram.png[]
+image::./documentation/project-diagram.jpeg[]
 
 == Applications
 
