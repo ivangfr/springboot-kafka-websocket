@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: bitcoin-api
   jpa:
     hibernate:
       ddl-auto: update
@@ -8,7 +10,6 @@ spring:
     password: secret
   cloud:
     stream:
-      source: prices
       kafka:
         binder:
           brokers: ${KAFKA_HOST:localhost}:${KAFKA_PORT:29092}
@@ -23,16 +24,9 @@ management:
   endpoint:
     health:
       show-details: always
-  tracing:
-    sampling:
-      probability: 1.0
 
 springdoc:
   show-actuator: true
   swagger-ui:
     groups-order: DESC
     disable-swagger-default-url: true
-
-logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"

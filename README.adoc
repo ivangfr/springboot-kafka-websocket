@@ -87,12 +87,6 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 
 |`KAFKA_PORT`
 |Specify port of the `Kafka` message broker to use (default `29092`)
-
-|`ZIPKIN_HOST`
-|Specify host of the `Zipkin` distributed tracing system to use (default `localhost`)
-
-|`ZIPKIN_PORT`
-|Specify port of the `Zipkin` distributed tracing system to use (default `9411`)
 |===
 
 * *bitcoin-client*
@@ -105,12 +99,6 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 
 |`KAFKA_PORT`
 |Specify port of the `Kafka` message broker to use (default `29092`)
-
-|`ZIPKIN_HOST`
-|Specify host of the `Zipkin` distributed tracing system to use (default `localhost`)
-
-|`ZIPKIN_PORT`
-|Specify port of the `Zipkin` distributed tracing system to use (default `9411`)
 |===
 
 == Run Application's Docker container
@@ -144,10 +132,6 @@ communicate with each other.
 image::./documentation/two-users-example.gif[]
 
 == Useful Links & Commands
-
-* *Zipkin*
-+
-`Zipkin` can be accessed at http://localhost:9411
 
 * *Kafdrop*
 +

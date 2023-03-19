@@ -53,12 +53,3 @@ services:
       KAFKA_BROKERCONNECT: kafka:9092
     healthcheck:
       test: "curl -f http://localhost:9000 || exit 1"
-
-  zipkin:
-    image: openzipkin/zipkin:2.24.0
-    container_name: zipkin
-    restart: unless-stopped
-    ports:
-      - "9411:9411"
-    healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "9411" ]
