@@ -30,23 +30,23 @@ function connect() {
                 $('#priceList').find('tbody').prepend(row)
             })
 
-            stompClient.subscribe('/topic/comments', function (chatComment) {
-                const chatCommentBody = JSON.parse(chatComment.body)
-                const fromUser = chatCommentBody.fromUser
-                const message = chatCommentBody.message
-                const timestamp = chatCommentBody.timestamp
+            stompClient.subscribe('/topic/chat-messages', function (chatMessage) {
+                const chatMessageBody = JSON.parse(chatMessage.body)
+                const fromUser = chatMessageBody.fromUser
+                const comment = chatMessageBody.comment
+                const timestamp = chatMessageBody.timestamp
 
-                const row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+fromUser+' to all: '+message+'</td></tr>'
+                const row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+fromUser+' to all: '+comment+'</td></tr>'
                 $('#chat').find('tbody').prepend(row)
             })
 
-            stompClient.subscribe('/user/topic/comments', function (chatComment) {
-                const chatCommentBody = JSON.parse(chatComment.body)
-                const fromUser = chatCommentBody.fromUser
-                const message = chatCommentBody.message
-                const timestamp = chatCommentBody.timestamp
+            stompClient.subscribe('/user/topic/chat-messages', function (chatMessage) {
+                const chatMessageBody = JSON.parse(chatMessage.body)
+                const fromUser = chatMessageBody.fromUser
+                const comment = chatMessageBody.comment
+                const timestamp = chatMessageBody.timestamp
 
-                const row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+fromUser+' to you: '+message+'</td></tr>'
+                const row = '<tr><td>['+moment(timestamp).format('YYYY-MM-DD HH:mm:ss')+'] '+fromUser+' to you: '+comment+'</td></tr>'
                 $('#chat').find('tbody').prepend(row)
             })
         },
@@ -76,15 +76,16 @@ $(function () {
     $('#chatForm').submit(function(e) {
         e.preventDefault();
 
-        const fromUserVal = $("#fromUser").val()
-        const toUserVal = $("#toUser").val()
-        const message = $("#message")
-        const messageVal = message.val()
+        const fromUser = $("#fromUser").val()
+        const toUser = $("#toUser").val()
+        const $comment = $("#comment")
+        const comment = $comment.val()
+        const timestamp = new Date()
 
-        if (fromUserVal.length !== 0 && messageVal.length !== 0) {
-            const comment = JSON.stringify({'fromUser': fromUserVal, 'toUser': toUserVal, 'message': messageVal})
-            stompClient.send("/app/chat", {}, comment)
-            message.val('')
+        if (fromUser.length !== 0 && comment.length !== 0) {
+            const chatMessage = JSON.stringify({fromUser, toUser, comment, timestamp})
+            stompClient.send("/app/chat", {}, chatMessage)
+            $comment.val('')
         }
     })
 
