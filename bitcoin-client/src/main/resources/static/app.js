@@ -94,6 +94,6 @@ $(function () {
 
     height = window.innerHeight - 500
     $('#chat').parent().css({"height": height, "max-height": height, "overflow-y": "auto"})
-})
 
-connect()
+    connect()
+})
