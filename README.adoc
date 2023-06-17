@@ -2,6 +2,10 @@
 
 The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications, `bitcoin-api` and `bitcoin-client`. The first simulates `BTC` price changes and, the second, will listen from those changes and update a UI at real-time.
 
+== Additional Readings
+
+* [Medium]: https://medium.com/@ivangfr/building-a-web-chat-with-social-login-using-spring-boot-introduction-644702e6be8e[**Building a Web Chat with Social Login using Spring Boot: Introduction**]
+
 == Project Diagram
 
 image::./documentation/project-diagram.jpeg[]
