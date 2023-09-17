@@ -28,7 +28,6 @@ image::./documentation/project-diagram.jpeg[]
 
 * https://www.oracle.com/java/technologies/downloads/#java17[`Java 17+`]
 * https://www.docker.com/[`Docker`]
-* https://docs.docker.com/compose/install/[`Docker-Compose`]
 
 == Start Environment
 
@@ -36,14 +35,14 @@ image::./documentation/project-diagram.jpeg[]
 +
 [source]
 ----
-docker-compose up -d
+docker compose up -d
 ----
 
 * Wait for Docker containers to be up and running. To check it, run
 +
 [source]
 ----
-docker-compose ps
+docker compose ps
 ----
 
 == Running applications with Maven
@@ -163,11 +162,11 @@ select * from prices;
 ----
 ./stop-apps.sh
 ----
-* To stop and remove docker-compose containers, network and volumes, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the following command
+* To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the following command
 +
 [source]
 ----
-docker-compose down -v
+docker compose down -v
 ----
 
 == Cleanup
