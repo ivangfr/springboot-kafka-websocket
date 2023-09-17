@@ -1,6 +1,6 @@
 = springboot-kafka-websocket
 
-The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications, `bitcoin-api` and `bitcoin-client`. The first simulates `BTC` price changes and, the second, will listen from those changes and update a UI at real-time.
+The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications: `bitcoin-api` and `bitcoin-client`. The `bitcoin-api` application simulates `BTC` price changes, while the `bitcoin-client` application listens to these changes and updates a real-time UI. The `bitcoin-client` UI is secured using Basic Authentication.
 
 == Proof-of-Concepts & Articles
 
