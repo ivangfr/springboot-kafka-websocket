@@ -36,14 +36,14 @@ image::./documentation/project-diagram.jpeg[]
 
 == Start Environment
 
-* Open a terminal and inside `springboot-kafka-websocket` root folder run
+* Open a terminal and inside `springboot-kafka-websocket` root folder run:
 +
 [source]
 ----
 docker compose up -d
 ----
 
-* Wait for Docker containers to be up and running. To check it, run
+* Wait for Docker containers to be up and running. To check it, run:
 +
 [source]
 ----
@@ -52,7 +52,7 @@ docker compose ps
 
 == Running applications with Maven
 
-Inside `springboot-kafka-websocket` root folder, run the following `Maven` commands in different terminals
+Inside `springboot-kafka-websocket` root folder, run the following `Maven` commands in different terminals:
 
 * *bitcoin-api*
 +
@@ -72,9 +72,9 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 
 === Build Application's Docker Image
 
-* In a terminal, make sure you are in `springboot-kafka-websocket` root folder
+* In a terminal, make sure you are in `springboot-kafka-websocket` root folder;
 
-* In order to build the application docker images, run the following script
+* In order to build the application docker images, run the following script:
 +
 [source]
 ----
@@ -115,9 +115,9 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 
 == Run Application's Docker container
 
-* In a terminal, make sure you are inside `springboot-kafka-websocket` root folder
+* In a terminal, make sure you are inside `springboot-kafka-websocket` root folder;
 
-* Run following script
+* Run following script:
 +
 [source]
 ----
@@ -138,8 +138,7 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 |`user1/123` or `user2/123`
 |===
 
-The gif below shows two users checking real-time the `BTC` price changes. Besides, they are using a chat channel to
-communicate with each other.
+The gif below shows two users checking real-time the `BTC` price changes. Besides, they are using a chat channel to communicate with each other.
 
 image::./documentation/two-users-example.gif[]
 
@@ -160,14 +159,14 @@ select * from prices;
 == Shutdown
 
 * To stop applications
-** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`
-** If they were started as Docker containers, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below
+** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`;
+** If they were started as Docker containers, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below:
 +
 [source]
 ----
 ./stop-apps.sh
 ----
-* To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the following command
+* To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the following command:
 +
 [source]
 ----
@@ -176,7 +175,7 @@ docker compose down -v
 
 == Cleanup
 
-To remove the Docker images created by this project, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below
+To remove the Docker images created by this project, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below:
 [source]
 ----
 ./remove-docker-images.sh
