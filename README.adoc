@@ -113,7 +113,7 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 |Specify port of the `Kafka` message broker to use (default `29092`)
 |===
 
-== Run Application's Docker container
+=== Start Application's Docker container
 
 * In a terminal, make sure you are inside `springboot-kafka-websocket` root folder;
 
