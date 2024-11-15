@@ -1,6 +1,6 @@
 = springboot-kafka-websocket
 
-The goal of this project is to implement two https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/[`String Boot`] applications: `bitcoin-api` and `bitcoin-client`. The `bitcoin-api` application simulates `BTC` price changes, while the `bitcoin-client` application listens to these changes and updates a real-time UI. The `bitcoin-client` UI is secured using Basic Authentication.
+The goal of this project is to implement two https://docs.spring.io/spring-boot/index.html[`String Boot`] applications: `bitcoin-api` and `bitcoin-client`. The `bitcoin-api` application simulates `BTC` price changes, while the `bitcoin-client` application listens to these changes and updates a real-time UI. The `bitcoin-client` UI is secured using Basic Authentication.
 
 == Proof-of-Concepts & Articles
 
@@ -9,11 +9,7 @@ On https://ivangfr.github.io:[ivangfr.github.io], I have compiled my Proof-of-Co
 == Additional Readings
 
 * [Medium]: https://medium.com/@ivangfr/building-a-web-chat-with-social-login-using-spring-boot-introduction-644702e6be8e[**Building a Web Chat with Social Login using Spring Boot: Introduction**]
-* [Medium]: https://medium.com/javarevisited/implementing-a-kafka-producer-and-consumer-using-spring-cloud-stream-d4b9a6a9eab1[**Implementing a Kafka Producer and Consumer using Spring Cloud Stream**]
-* [Medium]: https://medium.com/javarevisited/implementing-unit-tests-for-a-kafka-producer-and-consumer-that-uses-spring-cloud-stream-f7a98a89fcf2[**Implementing Unit Tests for a Kafka Producer and Consumer that uses Spring Cloud Stream**]
-* [Medium]: https://medium.com/javarevisited/implementing-end-to-end-testing-for-a-kafka-producer-and-consumer-that-uses-spring-cloud-stream-fbf5e666899e[**Implementing End-to-End testing for a Kafka Producer and Consumer that uses Spring Cloud Stream**]
-* [Medium]: https://medium.com/javarevisited/configuring-distributed-tracing-with-zipkin-in-a-kafka-producer-and-consumer-that-uses-spring-cloud-9f1e55468b9e[**Configuring Distributed Tracing with Zipkin in a Kafka Producer and Consumer that uses Spring Cloud Stream**]
-* [Medium]: https://medium.com/@ivangfr/using-cloudevents-in-a-kafka-producer-and-consumer-that-uses-spring-cloud-stream-9c51670b5566[**Using Cloudevents in a Kafka Producer and Consumer that uses Spring Cloud Stream**]
+* [Medium]: https://medium.com/@ivangfr/list/news-producer-and-consumer-tutorial-815f134a1eda[**News Producer and Consumer Tutorial**]
 
 == Project Diagram
 
