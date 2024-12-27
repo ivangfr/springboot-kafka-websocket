@@ -10,11 +10,3 @@ spring:
         prices-in-0:
           destination: com.ivanfranchin.bitcoin.api.price
           group: bitcoinClientGroup
-
-management:
-  endpoints:
-    web:
-      exposure.include: beans, env, health, info, metrics, mappings
-  endpoint:
-    health:
-      show-details: always
