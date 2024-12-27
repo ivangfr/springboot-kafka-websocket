@@ -27,12 +27,12 @@ image::./documentation/project-diagram.jpeg[]
 
 == Prerequisites
 
-* https://www.oracle.com/java/technologies/downloads/#java17[`Java 17+`]
-* https://www.docker.com/[`Docker`]
+* https://www.oracle.com/java/technologies/downloads/#java21[`Java 21+`] or higher
+* A containerization tool (e.g., https://www.docker.com[`Docker`], https://podman.io[`Podman`], etc.)
 
 == Start Environment
 
-* Open a terminal and inside `springboot-kafka-websocket` root folder run:
+* Open a terminal and inside the `springboot-kafka-websocket` root folder run:
 +
 [source]
 ----
@@ -43,12 +43,12 @@ docker compose up -d
 +
 [source]
 ----
-docker compose ps
+docker ps -a
 ----
 
 == Running applications with Maven
 
-Inside `springboot-kafka-websocket` root folder, run the following `Maven` commands in different terminals:
+Inside the `springboot-kafka-websocket` root folder, run the following `Maven` commands in different terminals:
 
 * *bitcoin-api*
 +
@@ -68,13 +68,13 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 
 === Build Application's Docker Image
 
-* In a terminal, make sure you are in `springboot-kafka-websocket` root folder;
+* In a terminal, make sure you are in the `springboot-kafka-websocket` root folder;
 
 * In order to build the application docker images, run the following script:
 +
 [source]
 ----
-./docker-build.sh
+./build-docker-images.sh
 ----
 
 === Application's Environment Variables
@@ -111,7 +111,7 @@ Inside `springboot-kafka-websocket` root folder, run the following `Maven` comma
 
 === Start Application's Docker container
 
-* In a terminal, make sure you are inside `springboot-kafka-websocket` root folder;
+* In a terminal, make sure you are inside the `springboot-kafka-websocket` root folder;
 
 * Run following script:
 +
@@ -156,13 +156,13 @@ select * from prices;
 
 * To stop applications
 ** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`;
-** If they were started as Docker containers, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below:
+** If they were started as Docker containers, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the script below:
 +
 [source]
 ----
 ./stop-apps.sh
 ----
-* To stop and remove docker compose containers, network and volumes, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the following command:
+* To stop and remove docker compose containers, network and volumes, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the following command:
 +
 [source]
 ----
@@ -171,7 +171,7 @@ docker compose down -v
 
 == Cleanup
 
-To remove the Docker images created by this project, go to a terminal and, inside `springboot-kafka-websocket` root folder, run the script below:
+To remove the Docker images created by this project, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the script below:
 [source]
 ----
 ./remove-docker-images.sh
