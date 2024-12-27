@@ -1,6 +1,6 @@
-package com.ivanfranchin.bitcoinapi.repository;
+package com.ivanfranchin.bitcoinapi.price;
 
-import com.ivanfranchin.bitcoinapi.model.Price;
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

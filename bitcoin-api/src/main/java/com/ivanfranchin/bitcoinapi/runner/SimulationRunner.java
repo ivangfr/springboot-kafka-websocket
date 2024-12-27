@@ -1,7 +1,7 @@
 package com.ivanfranchin.bitcoinapi.runner;
 
-import com.ivanfranchin.bitcoinapi.model.Price;
-import com.ivanfranchin.bitcoinapi.service.PriceService;
+import com.ivanfranchin.bitcoinapi.price.model.Price;
+import com.ivanfranchin.bitcoinapi.price.PriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

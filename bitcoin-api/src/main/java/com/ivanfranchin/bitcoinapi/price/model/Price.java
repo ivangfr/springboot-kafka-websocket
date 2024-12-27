@@ -1,4 +1,4 @@
-package com.ivanfranchin.bitcoinapi.model;
+package com.ivanfranchin.bitcoinapi.price.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

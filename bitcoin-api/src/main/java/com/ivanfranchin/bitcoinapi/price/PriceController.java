@@ -1,9 +1,7 @@
-package com.ivanfranchin.bitcoinapi.rest;
+package com.ivanfranchin.bitcoinapi.price;
 
-import com.ivanfranchin.bitcoinapi.model.Price;
-import com.ivanfranchin.bitcoinapi.rest.dto.PriceResponse;
-import com.ivanfranchin.bitcoinapi.service.PriceService;
-import io.swagger.v3.oas.annotations.Operation;
+import com.ivanfranchin.bitcoinapi.price.dto.PriceResponse;
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +14,6 @@ public class PriceController {
 
     private final PriceService priceService;
 
-    @Operation(summary = "Get last price")
     @GetMapping("/last")
     public PriceResponse getLastPrice() {
         Price price = priceService.getLastPrice();

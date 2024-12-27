@@ -1,8 +1,8 @@
 package com.ivanfranchin.bitcoinapi.scheduler;
 
-import com.ivanfranchin.bitcoinapi.kafka.PriceStreamer;
-import com.ivanfranchin.bitcoinapi.model.Price;
-import com.ivanfranchin.bitcoinapi.service.PriceService;
+import com.ivanfranchin.bitcoinapi.price.PriceEmitter;
+import com.ivanfranchin.bitcoinapi.price.model.Price;
+import com.ivanfranchin.bitcoinapi.price.PriceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,7 +20,7 @@ import java.util.Random;
 public class PriceScheduler {
 
     private final PriceService priceService;
-    private final PriceStreamer priceStreamer;
+    private final PriceEmitter priceStreamer;
 
     @Scheduled(cron = "*/5 * * * * *") // every 5 seconds
     public void streamNewPrice() {

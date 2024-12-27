@@ -1,6 +1,7 @@
-package com.ivanfranchin.bitcoinapi.kafka;
+package com.ivanfranchin.bitcoinapi.price;
 
-import com.ivanfranchin.bitcoinapi.model.Price;
+import com.ivanfranchin.bitcoinapi.price.message.PriceMessage;
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class PriceStreamer {
+public class PriceEmitter {
 
     private final StreamBridge streamBridge;
 

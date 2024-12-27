@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class PriceStream {
+public class PriceListener {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 

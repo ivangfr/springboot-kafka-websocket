@@ -1,4 +1,4 @@
-package com.ivanfranchin.bitcoinapi.kafka;
+package com.ivanfranchin.bitcoinapi.price.message;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

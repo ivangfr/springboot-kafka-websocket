@@ -1,4 +1,4 @@
-package com.ivanfranchin.bitcoinapi.rest.dto;
+package com.ivanfranchin.bitcoinapi.price.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
