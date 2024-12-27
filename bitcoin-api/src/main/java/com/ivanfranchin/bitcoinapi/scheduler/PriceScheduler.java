@@ -1,6 +1,6 @@
 package com.ivanfranchin.bitcoinapi.scheduler;
 
-import com.ivanfranchin.bitcoinapi.price.PriceEmitter;
+import com.ivanfranchin.bitcoinapi.price.PriceEventEmitter;
 import com.ivanfranchin.bitcoinapi.price.model.Price;
 import com.ivanfranchin.bitcoinapi.price.PriceService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.Random;
 public class PriceScheduler {
 
     private final PriceService priceService;
-    private final PriceEmitter priceStreamer;
+    private final PriceEventEmitter priceStreamer;
 
     @Scheduled(cron = "*/5 * * * * *") // every 5 seconds
     public void streamNewPrice() {

@@ -68,7 +68,7 @@ Inside the `springboot-kafka-websocket` root folder, run the following `Maven` c
 
 === Build Application's Docker Image
 
-* In a terminal, make sure you are in the `springboot-kafka-websocket` root folder;
+* In a terminal, make sure you are inside the `springboot-kafka-websocket` root folder;
 
 * In order to build the application docker images, run the following script:
 +

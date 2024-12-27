@@ -16,16 +16,16 @@ import java.util.function.Consumer;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class PriceListener {
+public class PriceEventListener {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     @Bean
-    Consumer<Message<PriceMessage>> prices() {
+    Consumer<Message<PriceChanged>> prices() {
         return message -> {
-            PriceMessage priceMessage = message.getPayload();
+            PriceChanged priceMessage = message.getPayload();
             MessageHeaders messageHeaders = message.getHeaders();
-            log.info("PriceMessage with id {}, value '{}' and timestamp '{}' received from bus. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
+            log.info("PriceChanged event with id {}, value '{}' and timestamp '{}' received. topic: {}, partition: {}, offset: {}, deliveryAttempt: {}",
                     priceMessage.id(), priceMessage.value(), priceMessage.timestamp(),
                     messageHeaders.get(KafkaHeaders.RECEIVED_TOPIC, String.class),
                     messageHeaders.get(KafkaHeaders.RECEIVED_PARTITION, Integer.class),
