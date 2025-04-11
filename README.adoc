@@ -27,7 +27,7 @@ image::./documentation/project-diagram.jpeg[]
 
 == Prerequisites
 
-* https://www.oracle.com/java/technologies/downloads/#java21[`Java 21+`] or higher
+* https://www.oracle.com/java/technologies/downloads/#java21[`Java 21`] or higher
 * A containerization tool (e.g., https://www.docker.com[`Docker`], https://podman.io[`Podman`], etc.)
 
 == Start Environment
