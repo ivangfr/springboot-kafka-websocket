@@ -1,6 +1,6 @@
 = springboot-kafka-websocket
 
-The goal of this project is to implement two https://docs.spring.io/spring-boot/index.html[`String Boot`] applications: `bitcoin-api` and `bitcoin-client`. The `bitcoin-api` application simulates `BTC` price changes, while the `bitcoin-client` application listens to these changes and updates a real-time UI. The `bitcoin-client` UI is secured using Basic Authentication.
+The goal of this project is to implement two https://docs.spring.io/spring-boot/index.html[`Spring Boot`] applications: `bitcoin-api` and `bitcoin-client`. The `bitcoin-api` application simulates `BTC` price changes, while the `bitcoin-client` application listens to these changes and updates a real-time UI. The `bitcoin-client` UI is secured using Basic Authentication.
 
 == Proof-of-Concepts & Articles
 
@@ -23,7 +23,7 @@ image::./documentation/project-diagram.jpeg[]
 
 * *bitcoin-client*
 +
-`Spring Boot` Web Java application that was implemented using `Thymeleaf` as HTML template. It reads from `Kafka` and updates its UI using `Websocket`. It has also a chat where users can talk to each other, by sending messages publicly or privately.
+`Spring Boot` Web Java application that was implemented using `Thymeleaf` as HTML template. It reads from `Kafka` and updates its UI using `Websocket`. It has also a chat where users can talk to each other by sending messages publicly or privately.
 
 == Prerequisites
 
@@ -113,7 +113,7 @@ Inside the `springboot-kafka-websocket` root folder, run the following `Maven` c
 
 * In a terminal, make sure you are inside the `springboot-kafka-websocket` root folder;
 
-* Run following script:
+* Run the following script:
 +
 [source]
 ----
@@ -134,7 +134,7 @@ Inside the `springboot-kafka-websocket` root folder, run the following `Maven` c
 |`user1/123` or `user2/123`
 |===
 
-The gif below shows two users checking real-time the `BTC` price changes. Besides, they are using a chat channel to communicate with each other.
+The gif below shows two users checking real-time the `BTC` price changes. Additionally, they are using a chat channel to communicate with each other.
 
 image::./documentation/two-users-example.gif[]
 
