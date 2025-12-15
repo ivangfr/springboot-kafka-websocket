@@ -27,21 +27,21 @@ image::./documentation/project-diagram.jpeg[]
 
 == Prerequisites
 
-* https://www.oracle.com/java/technologies/downloads/#java21[`Java 21`] or higher
+* https://www.oracle.com/java/technologies/downloads/#java25[`Java 25`] or higher
 * A containerization tool (e.g., https://www.docker.com[`Docker`], https://podman.io[`Podman`], etc.)
 
 == Start Environment
 
 * Open a terminal and inside the `springboot-kafka-websocket` root folder run:
 +
-[source]
+[source,bash]
 ----
 docker compose up -d
 ----
 
 * Wait for Docker containers to be up and running. To check it, run:
 +
-[source]
+[source,bash]
 ----
 docker ps -a
 ----
@@ -52,14 +52,14 @@ Inside the `springboot-kafka-websocket` root folder, run the following `Maven` c
 
 * *bitcoin-api*
 +
-[source]
+[source,bash]
 ----
 ./mvnw clean spring-boot:run --projects bitcoin-api -Dspring-boot.run.jvmArguments="-Dserver.port=9081"
 ----
 
 * *bitcoin-client*
 +
-[source]
+[source,bash]
 ----
 ./mvnw clean spring-boot:run --projects bitcoin-client -Dspring-boot.run.jvmArguments="-Dserver.port=9082"
 ----
@@ -72,7 +72,7 @@ Inside the `springboot-kafka-websocket` root folder, run the following `Maven` c
 
 * In order to build the application docker images, run the following script:
 +
-[source]
+[source,bash]
 ----
 ./build-docker-images.sh
 ----
@@ -115,7 +115,7 @@ Inside the `springboot-kafka-websocket` root folder, run the following `Maven` c
 
 * Run the following script:
 +
-[source]
+[source,bash]
 ----
 ./start-apps.sh
 ----
@@ -146,7 +146,7 @@ image::./documentation/two-users-example.gif[]
 
 * *MySQL*
 +
-[source]
+[source,bash]
 ----
 docker exec -it -e MYSQL_PWD=secret mysql mysql -uroot --database bitcoindb
 select * from prices;
@@ -158,13 +158,13 @@ select * from prices;
 ** If they were started with `Maven`, go to the terminals where they are running and press `Ctrl+C`;
 ** If they were started as Docker containers, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the script below:
 +
-[source]
+[source,bash]
 ----
 ./stop-apps.sh
 ----
 * To stop and remove docker compose containers, network and volumes, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the following command:
 +
-[source]
+[source,bash]
 ----
 docker compose down -v
 ----
@@ -172,7 +172,7 @@ docker compose down -v
 == Cleanup
 
 To remove the Docker images created by this project, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the script below:
-[source]
+[source,bash]
 ----
 ./remove-docker-images.sh
 ----
