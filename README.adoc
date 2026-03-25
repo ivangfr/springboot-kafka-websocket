@@ -1,5 +1,8 @@
 = springboot-kafka-websocket
 
+image:https://img.shields.io/badge/License-MIT-green.svg[License: MIT, link=LICENSE]
+image:https://img.shields.io/badge/Buy%20Me%20A%20Coffee-ivan.franchin-FFDD00?logo=buymeacoffee&logoColor=black[Buy Me A Coffee, link=https://buymeacoffee.com/ivan.franchin]
+
 The goal of this project is to implement two https://docs.spring.io/spring-boot/index.html[`Spring Boot`] applications: `bitcoin-api` and `bitcoin-client`. The `bitcoin-api` application simulates `BTC` price changes, while the `bitcoin-client` application listens to these changes and updates a real-time UI. The `bitcoin-client` UI is secured using Basic Authentication.
 
 == Proof-of-Concepts & Articles
@@ -13,7 +16,7 @@ On https://ivangfr.github.io:[ivangfr.github.io], I have compiled my Proof-of-Co
 
 == Project Diagram
 
-image::./documentation/project-diagram.jpeg[]
+image::./documentation/project-diagram.png[]
 
 == Applications
 
@@ -176,3 +179,13 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ----
 ./remove-docker-images.sh
 ----
+
+== How to optimize GIFs and PNGs in documentation folder
+
+https://medium.com/itnext/how-i-reduce-gif-and-screenshot-sizes-for-my-technical-articles-on-macos-7fea331afc68[**[Medium] How I Reduce GIF and Screenshot Sizes for My Technical Articles on macOS**]
+
+== Support
+
+If you find this useful, consider buying me a coffee:
+
+image:https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png[Buy Me A Coffee, link=https://buymeacoffee.com/ivan.franchin, height=50]

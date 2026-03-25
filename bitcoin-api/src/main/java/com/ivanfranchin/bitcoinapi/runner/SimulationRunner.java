@@ -1,7 +1,7 @@
 package com.ivanfranchin.bitcoinapi.runner;
 
-import com.ivanfranchin.bitcoinapi.price.model.Price;
 import com.ivanfranchin.bitcoinapi.price.PriceService;
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,8 +17,10 @@ public class SimulationRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        priceService.savePrice(INITIAL_PRICE);
+        priceService.savePrice(initialPrice());
     }
 
-    private static final Price INITIAL_PRICE = new Price(BigDecimal.valueOf(37000), LocalDateTime.now());
+    private Price initialPrice() {
+        return new Price(BigDecimal.valueOf(37000), LocalDateTime.now());
+    }
 }

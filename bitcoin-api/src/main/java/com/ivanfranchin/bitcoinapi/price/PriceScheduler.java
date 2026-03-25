@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,29 +17,23 @@ import java.util.Random;
 public class PriceScheduler {
 
     private final PriceService priceService;
-    private final PriceEventEmitter priceStreamer;
+    private final PriceEventEmitter priceEventEmitter;
 
     @Scheduled(cron = "*/5 * * * * *") // every 5 seconds
     public void streamNewPrice() {
-        if (hasTrade()) {
+        if (ThreadLocalRandom.current().nextBoolean()) {
             Price price = priceService.getLastPrice();
-            price = getNewPrice(price.getValue());
+            price = computeNewPrice(price.getValue());
             priceService.savePrice(price);
-            priceStreamer.send(price);
+            priceEventEmitter.send(price);
         }
     }
 
-    private boolean hasTrade() {
-        return rand.nextBoolean();
-    }
-
-    private Price getNewPrice(BigDecimal currentPrice) {
-        boolean sign = rand.nextBoolean();
-        double var = rand.nextDouble() * 100;
+    private Price computeNewPrice(BigDecimal currentPrice) {
+        boolean sign = ThreadLocalRandom.current().nextBoolean();
+        double var = ThreadLocalRandom.current().nextDouble() * 100;
         BigDecimal variation = BigDecimal.valueOf(sign ? var : -1 * var);
         BigDecimal newValue = currentPrice.add(variation).setScale(2, RoundingMode.HALF_UP);
         return new Price(newValue, LocalDateTime.now());
     }
-
-    private static final Random rand = new SecureRandom();
 }
