@@ -172,6 +172,40 @@ select * from prices;
 docker compose down -v
 ----
 
+== Running Tests
+
+The tests do *not* require a running environment — no MySQL or Kafka needed.
+
+* *Run all tests (both modules)*
++
+[source,bash]
+----
+./mvnw clean test
+----
+
+* *Run tests for a single module*
++
+[source,bash]
+----
+./mvnw clean test --projects bitcoin-api
+./mvnw clean test --projects bitcoin-client
+----
+
+* *Run a single test class*
++
+[source,bash]
+----
+./mvnw test --projects bitcoin-api -Dtest=PriceControllerTests
+./mvnw test --projects bitcoin-client -Dtest=SecurityConfigTests
+----
+
+* *Run a single test method*
++
+[source,bash]
+----
+./mvnw test --projects bitcoin-api -Dtest=PriceControllerTests#testGetLastPriceReturnsLatestBitcoinPrice
+----
+
 == Cleanup
 
 To remove the Docker images created by this project, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the script below:

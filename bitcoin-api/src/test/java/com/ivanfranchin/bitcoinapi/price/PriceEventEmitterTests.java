@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.then;
 
@@ -30,6 +31,7 @@ class PriceEventEmitterTests {
     void testSendPublishesMessageWithCorrectPayloadAndBinding() {
         LocalDateTime now = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
         Price price = new Price(BigDecimal.valueOf(42000), now);
+        price.setId(7L);
 
         priceEventEmitter.send(price);
 
@@ -37,7 +39,18 @@ class PriceEventEmitterTests {
         then(streamBridge).should().send(eq("prices-out-0"), captor.capture());
 
         PriceChanged sent = captor.getValue();
+        assertThat(sent.id()).isEqualTo(7L);
         assertThat(sent.value()).isEqualByComparingTo(BigDecimal.valueOf(42000));
         assertThat(sent.timestamp()).isEqualTo(now);
+    }
+
+    @Test
+    void testSendUsesCorrectBindingName() {
+        LocalDateTime now = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
+        Price price = new Price(BigDecimal.valueOf(50000), now);
+
+        priceEventEmitter.send(price);
+
+        then(streamBridge).should().send(eq("prices-out-0"), any(PriceChanged.class));
     }
 }
