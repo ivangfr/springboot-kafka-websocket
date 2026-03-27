@@ -10,7 +10,7 @@ services:
       - 'MYSQL_ROOT_PASSWORD=secret'
       - 'MYSQL_DATABASE=bitcoindb'
     healthcheck:
-      test: 'mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}'
+      test: 'mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD} --silent'
 
   zookeeper:
     image: 'confluentinc/cp-zookeeper:7.9.5'
@@ -28,7 +28,8 @@ services:
     container_name: 'kafka'
     restart: 'unless-stopped'
     depends_on:
-      - 'zookeeper'
+      zookeeper:
+        condition: service_healthy
     ports:
       - '29092:29092'
     environment:
@@ -37,7 +38,7 @@ services:
       - 'KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092'
       - 'KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1'
     healthcheck:
-      test: [ "CMD", "nc", "-z", "localhost", "9092" ]
+      test: [ "CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list" ]
 
   kafdrop:
     image: 'obsidiandynamics/kafdrop:4.2.0'

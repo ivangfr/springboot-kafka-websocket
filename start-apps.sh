@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
+set -e
 
 source scripts/my-functions.sh
+
+APP_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
+
+DOCKER_IMAGE_PREFIX="ivanfranchin"
+BITCOIN_API_APP_NAME="bitcoin-api"
+BITCOIN_CLIENT_APP_NAME="bitcoin-client"
+
+BITCOIN_API_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${BITCOIN_API_APP_NAME}:${APP_VERSION}"
+BITCOIN_CLIENT_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${BITCOIN_CLIENT_APP_NAME}:${APP_VERSION}"
 
 echo
 echo "Starting bitcoin-api..."
@@ -8,8 +18,7 @@ echo "Starting bitcoin-api..."
 docker run -d --rm --name bitcoin-api -p 9081:8080 \
   -e MYSQL_HOST=mysql -e KAFKA_HOST=kafka -e KAFKA_PORT=9092 \
   --network=springboot-kafka-websocket_default \
-  --health-cmd='[ -z "$(echo "" > /dev/tcp/localhost/9081)" ] || exit 1' \
-  ivanfranchin/bitcoin-api:1.0.0
+  "$BITCOIN_API_DOCKER_IMAGE_NAME"
 
 echo
 echo "Starting bitcoin-client..."
@@ -17,8 +26,7 @@ echo "Starting bitcoin-client..."
 docker run -d --rm --name bitcoin-client -p 9082:8080 \
   -e KAFKA_HOST=kafka -e KAFKA_PORT=9092 \
   --network=springboot-kafka-websocket_default \
-  --health-cmd='[ -z "$(echo "" > /dev/tcp/localhost/9082)" ] || exit 1' \
-  ivanfranchin/bitcoin-client:1.0.0
+  "$BITCOIN_CLIENT_DOCKER_IMAGE_NAME"
 
 echo
 wait_for_container_log "bitcoin-client" "Started"
