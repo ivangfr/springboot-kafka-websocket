@@ -19,7 +19,7 @@ public class PriceScheduler {
     private final PriceService priceService;
     private final PriceEventEmitter priceEventEmitter;
 
-    @Scheduled(cron = "*/5 * * * * *") // every 5 seconds
+    @Scheduled(cron = "*/2 * * * * *") // every 5 seconds
     public void streamNewPrice() {
         if (ThreadLocalRandom.current().nextBoolean()) {
             Price price = priceService.getLastPrice();

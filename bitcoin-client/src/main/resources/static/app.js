@@ -172,7 +172,8 @@ $(function () {
     })
 
     $('#comment').keydown(function (e) {
-        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault()
             $('#chatForm').submit()
         }
     })

@@ -78,15 +78,15 @@
     </style>
 </head>
 
-<body class="flex flex-col min-h-screen bg-gray-950 text-gray-100 font-mono">
+<body class="flex flex-col h-screen overflow-hidden bg-gray-950 text-gray-100 font-mono">
 
 <!-- Header -->
 <div th:insert="~{fragments/header :: header}"></div>
 
-<main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+<main class="flex-1 overflow-hidden flex flex-col max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
 
     <!-- Top stats bar -->
-    <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-3 gap-4 mb-6 shrink-0">
         <!-- Current price -->
         <div class="col-span-2 card-accent bg-gray-900 rounded-xl price-glow transition-all duration-300 border border-gray-800">
             <div class="px-5 py-4 border-b border-gray-800 flex items-center gap-2">
@@ -127,11 +127,11 @@
     </div>
 
     <!-- Main content: price history + chat -->
-    <div class="grid grid-cols-2 gap-6">
+    <div class="grid grid-cols-2 gap-6 flex-1 min-h-0">
 
         <!-- Price History -->
-        <div class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden">
-            <div class="px-5 py-4 border-b border-gray-800 flex items-center justify-between">
+        <div class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden min-h-0">
+            <div class="px-5 py-4 border-b border-gray-800 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse-slow"></div>
                     <h2 class="text-white font-semibold text-sm tracking-wide">Price History</h2>
@@ -139,7 +139,7 @@
                 <span class="text-gray-600 text-xs">Last 20 ticks</span>
             </div>
 
-            <div class="overflow-y-auto flex-1" style="max-height: calc(100vh - 26rem)">
+            <div class="overflow-y-auto flex-1">
                 <table class="w-full text-sm" id="priceList">
                     <thead class="sticky top-0 bg-gray-950">
                         <tr>
@@ -157,14 +157,14 @@
         </div>
 
         <!-- Chat -->
-        <div class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden">
-            <div class="px-5 py-4 border-b border-gray-800 flex items-center gap-2">
+        <div class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden min-h-0">
+            <div class="px-5 py-4 border-b border-gray-800 flex items-center gap-2 shrink-0">
                 <div class="w-2 h-2 rounded-full bg-violet-400 animate-pulse-slow"></div>
                 <h2 class="text-white font-semibold text-sm tracking-wide">Live Chat</h2>
             </div>
 
             <!-- Chat message area -->
-            <div class="overflow-y-auto flex-1" style="max-height: calc(100vh - 34rem)">
+            <div class="overflow-y-auto flex-1">
                 <table class="w-full text-sm" id="chatList">
                     <tbody></tbody>
                 </table>
@@ -175,7 +175,7 @@
             </div>
 
             <!-- Chat input form -->
-            <div class="border-t border-gray-800 px-5 py-4 bg-gray-950/50">
+            <div class="border-t border-gray-800 px-5 py-4 bg-gray-950/50 shrink-0">
                 <form id="chatForm">
                     <div class="grid grid-cols-1 min-[900px]:grid-cols-2 gap-3 mb-3">
                         <div>
@@ -191,7 +191,7 @@
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <textarea id="comment" rows="3" placeholder="Type a message… (Ctrl+Enter to send)"
+                        <textarea id="comment" rows="3" placeholder="Type a message… (Shift+Enter for new line)"
                                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm font-mono placeholder-gray-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-colors resize-none"></textarea>
                         <button type="submit"
                                 class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-gray-900 font-bold text-sm rounded-lg transition-colors duration-150">
