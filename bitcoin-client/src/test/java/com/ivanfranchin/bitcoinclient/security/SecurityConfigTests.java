@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -46,5 +47,13 @@ class SecurityConfigTests {
         // Must be authenticated so Spring Security does not redirect to login first.
         mockMvc.perform(post("/websocket/info"))
                 .andExpect(status().isNotFound()); // 404 (no handler), never 403
+    }
+
+    @Test
+    @WithMockUser(username = "user1", roles = "USER")
+    void testLogoutRedirectsToLoginPage() throws Exception {
+        mockMvc.perform(post("/logout").with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login?logout"));
     }
 }

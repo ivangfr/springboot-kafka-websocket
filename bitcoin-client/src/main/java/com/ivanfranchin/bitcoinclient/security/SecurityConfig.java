@@ -31,10 +31,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
+                .logout(Customizer.withDefaults())
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/websocket/**"))
                 .build();
     }

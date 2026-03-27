@@ -1,14 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<header>
-    <nav>
-        <div class="nav-wrapper light-blue darken-3">
-            <div class="container">
-                <a th:href="@{/}" class="brand-logo center">Bitcoin-Client</a>
+<header th:fragment="header">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900 border-b border-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand -->
+                <a th:href="@{/}" class="flex items-center gap-3 group">
+                    <div class="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg group-hover:shadow-amber-500/40 transition-shadow duration-300">
+                        <span class="text-gray-900 font-black text-lg leading-none">₿</span>
+                    </div>
+                    <div class="flex flex-col leading-none">
+                        <span class="text-white font-bold text-base tracking-wide">Bitcoin</span>
+                        <span class="text-amber-400 font-semibold text-xs tracking-widest uppercase">Live Dashboard</span>
+                    </div>
+                </a>
+
+                <!-- Right side: connection status + user info -->
+                <div class="flex items-center gap-5">
+                    <!-- Connection status -->
+                    <div class="flex items-center gap-2">
+                        <span id="wsStatusDot" class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                        </span>
+                        <span id="wsStatusText" class="text-red-400 text-xs font-semibold tracking-wider uppercase">Disconnected</span>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="h-5 w-px bg-gray-700"></div>
+
+                    <!-- Username + Logout -->
+                    <div class="flex items-center gap-3">
+                        <span class="text-gray-300 text-xs font-semibold tracking-wide" th:text="${#authentication.getName()}"></span>
+                        <form method="post" th:action="@{/logout}">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button type="submit"
+                                    class="px-3 py-1 rounded text-xs font-semibold tracking-wide text-gray-900 bg-amber-400 hover:bg-amber-300 transition-colors duration-200">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
+    <!-- Spacer so content doesn't hide under fixed nav -->
+    <div class="h-16"></div>
 </header>
 </body>
 </html>

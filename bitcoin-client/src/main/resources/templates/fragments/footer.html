@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<footer class="page-footer grey lighten-1" th:fragment="footer">
-    <div class="footer-copyright grey darken-3">
-        <div class="align-center container center-align">© 2026 Copyright</div>
+<footer class="bg-gray-900 border-t border-gray-800 mt-auto" th:fragment="footer">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="text-amber-400 font-black text-base">₿</span>
+                <span class="text-gray-400 text-sm">Bitcoin Live Dashboard</span>
+            </div>
+            <span class="text-gray-600 text-xs">© 2026 Copyright &nbsp;·&nbsp; Powered by Spring Boot + Kafka + WebSocket</span>
+        </div>
     </div>
 </footer>
 </body>
