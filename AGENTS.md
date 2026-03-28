@@ -351,7 +351,7 @@ day.js uses the same `.format()` API as Moment.js. Do not reintroduce Moment.js.
 
 ### UI Behaviour Notes
 
-- The chat message input is a `<textarea>` (not `<input type="text">`). Plain `Enter` inserts a newline. **`Ctrl+Enter`** (or **`Cmd+Enter`** on Mac) submits the form.
+- The chat message input is a `<textarea>` (not `<input type="text">`). Plain **Enter** submits the form. **Shift+Enter** inserts a newline.
 - The WebSocket connection status indicator (pulsing dot + text) in the navbar is toggled by `setWsStatus(connected)` in `app.js` — green when connected, red when disconnected.
 - A toggle switch (`#websocketSwitch`) in the UI calls `connect()` or `disconnect()` to establish or tear down the STOMP/SockJS connection.
 - The navbar also displays the authenticated username and a Logout button. The logout form submits `POST /logout` with a CSRF token via Thymeleaf's `th:name="${_csrf.parameterName}"` / `th:value="${_csrf.token}"`. Spring Security invalidates the session and redirects to `/login?logout`.
