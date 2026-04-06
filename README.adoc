@@ -216,7 +216,7 @@ To remove the Docker images created by this project, go to a terminal and, insid
 
 == How to optimize GIFs and PNGs in documentation folder
 
-https://medium.com/itnext/how-i-reduce-gif-and-screenshot-sizes-for-my-technical-articles-on-macos-7fea331afc68[**[Medium] How I Reduce GIF and Screenshot Sizes for My Technical Articles on macOS**]
+* [Medium]: https://medium.com/itnext/how-i-reduce-gif-and-screenshot-sizes-for-my-technical-articles-on-macos-7fea331afc68[**How I Reduce GIF and Screenshot Sizes for My Technical Articles on macOS**]
 
 == Support
 
