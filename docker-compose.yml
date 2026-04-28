@@ -45,7 +45,8 @@ services:
     container_name: 'kafdrop'
     restart: 'unless-stopped'
     depends_on:
-      - 'kafka'
+      kafka:
+        condition: service_healthy
     ports:
       - '9000:9000'
     environment:
