@@ -17,7 +17,9 @@ public class SimulationRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        priceService.savePrice(initialPrice());
+        if (priceService.getLastPrice() == null) {
+            priceService.savePrice(initialPrice());
+        }
     }
 
     private Price initialPrice() {

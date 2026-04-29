@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -27,6 +28,7 @@ class SimulationRunnerTests {
 
     @Test
     void testRunSavesInitialPriceOf37000() throws Exception {
+        given(priceService.getLastPrice()).willReturn(null);
         given(priceService.savePrice(any(Price.class))).willAnswer(inv -> inv.getArgument(0));
 
         simulationRunner.run();
@@ -40,7 +42,17 @@ class SimulationRunnerTests {
     }
 
     @Test
+    void testRunDoesNotSavePriceWhenPricesAlreadyExist() throws Exception {
+        given(priceService.getLastPrice()).willReturn(new Price(BigDecimal.valueOf(37000), LocalDateTime.now()));
+
+        simulationRunner.run();
+
+        then(priceService).shouldHaveNoMoreInteractions();
+    }
+
+    @Test
     void testRunInvokesSavePriceExactlyOnce() throws Exception {
+        given(priceService.getLastPrice()).willReturn(null);
         given(priceService.savePrice(any(Price.class))).willAnswer(inv -> inv.getArgument(0));
 
         simulationRunner.run();

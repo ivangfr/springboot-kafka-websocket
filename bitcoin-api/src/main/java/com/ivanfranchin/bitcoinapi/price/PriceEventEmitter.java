@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PriceEventEmitter {
 
+    private static final String BINDING_NAME = "prices-out-0";
+
     private final StreamBridge streamBridge;
 
     public void send(Price price) {
         PriceChanged priceMessage = new PriceChanged(price.getId(), price.getValue(), price.getTimestamp());
-        streamBridge.send("prices-out-0", priceMessage);
+        streamBridge.send(BINDING_NAME, priceMessage);
         log.info("{} sent to bus.", priceMessage);
     }
 }

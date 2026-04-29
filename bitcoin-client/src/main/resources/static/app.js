@@ -54,68 +54,73 @@ function setVariationStyle(priceVar) {
 }
 
 function connect() {
-    const socket = new SockJS('/websocket')
-    stompClient = Stomp.over(socket)
-    stompClient.debug = null
+    stompClient = new StompJs.Client({
+        webSocketFactory: () => new SockJS('/websocket'),
+        debug: () => {}
+    })
 
     let prevPriceValue = null
 
-    stompClient.connect({},
-        function (frame) {
-            console.log('Connected: ' + frame)
-            setWsStatus(true)
+    stompClient.onConnect = function (frame) {
+        console.log('Connected: ' + frame)
+        setWsStatus(true)
 
-            stompClient.subscribe('/topic/prices', function (price) {
-                const priceBody = JSON.parse(price.body)
-                const priceValue = priceBody.value
-                const priceTimestamp = priceBody.timestamp
+        stompClient.subscribe('/topic/prices', function (price) {
+            const priceBody = JSON.parse(price.body)
+            const priceValue = priceBody.value
+            const priceTimestamp = priceBody.timestamp
 
-                if (prevPriceValue == null) {
-                    prevPriceValue = priceValue
-                }
-                const priceVar = priceValue - prevPriceValue
+            if (prevPriceValue == null) {
                 prevPriceValue = priceValue
+            }
+            const priceVar = priceValue - prevPriceValue
+            prevPriceValue = priceValue
 
-                // Update current price display
-                $('#currentPrice').text(Number(priceValue).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
+            $('#currentPrice').text(Number(priceValue).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }))
 
-                // Update variation badge with color
-                setVariationStyle(priceVar)
+            setVariationStyle(priceVar)
 
-                // Add row to price history table
-                const formattedPrice = Number(priceValue).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                const formattedTime = dayjs(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')
-                const varSign = priceVar > 0 ? '+' : ''
-                const varClass = priceVar > 0 ? 'text-emerald-400' : priceVar < 0 ? 'text-red-400' : 'text-gray-500'
-                const row = `<tr class="border-b border-gray-800/60 hover:bg-gray-800/40 transition-colors">
-                    <td class="px-5 py-2.5 text-white font-semibold tabular-nums">
-                        $${formattedPrice}
-                        <span class="ml-2 text-xs ${varClass} tabular-nums">${varSign}${Number(priceVar).toFixed(2)}</span>
-                    </td>
-                    <td class="px-5 py-2.5 text-gray-500 text-xs text-right tabular-nums">${formattedTime}</td>
-                </tr>`
+            const formattedPrice = Number(priceValue).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            const formattedTime = dayjs(priceTimestamp).format('YYYY-MM-DD HH:mm:ss')
+            const varSign = priceVar > 0 ? '+' : ''
+            const varClass = priceVar > 0 ? 'text-emerald-400' : priceVar < 0 ? 'text-red-400' : 'text-gray-500'
+            const row = `<tr class="border-b border-gray-800/60 hover:bg-gray-800/40 transition-colors">
+                <td class="px-5 py-2.5 text-white font-semibold tabular-nums">
+                    $${formattedPrice}
+                    <span class="ml-2 text-xs ${varClass} tabular-nums">${varSign}${Number(priceVar).toFixed(2)}</span>
+                </td>
+                <td class="px-5 py-2.5 text-gray-500 text-xs text-right tabular-nums">${formattedTime}</td>
+            </tr>`
 
-                if ($('#priceList tr').length > 20) {
-                    $('#priceList tbody tr:last').remove()
-                }
-                $('#priceList').find('tbody').prepend(row)
-                $('#priceEmpty').hide()
-            })
+            if ($('#priceList tr').length > 20) {
+                $('#priceList tbody tr:last').remove()
+            }
+            $('#priceList').find('tbody').prepend(row)
+            $('#priceEmpty').hide()
+        })
 
-            stompClient.subscribe('/topic/chat-messages', function (chatMessage) {
-                appendChatMessage(chatMessage, false)
-            })
+        stompClient.subscribe('/topic/chat-messages', function (chatMessage) {
+            appendChatMessage(chatMessage, false)
+        })
 
-            stompClient.subscribe('/user/topic/chat-messages', function (chatMessage) {
-                appendChatMessage(chatMessage, true)
-            })
-        },
-        function () {
-            console.log('Unable to connect to WebSocket!')
-            setWsStatus(false)
-            $('#websocketSwitch').prop('checked', false)
-        }
-    )
+        stompClient.subscribe('/user/topic/chat-messages', function (chatMessage) {
+            appendChatMessage(chatMessage, true)
+        })
+    }
+
+    stompClient.onStompError = function (frame) {
+        console.log('STOMP error: ' + frame)
+        setWsStatus(false)
+        $('#websocketSwitch').prop('checked', false)
+    }
+
+    stompClient.onWebSocketClose = function () {
+        console.log('WebSocket closed')
+        setWsStatus(false)
+        $('#websocketSwitch').prop('checked', false)
+    }
+
+    stompClient.activate()
 }
 
 function appendChatMessage(chatMessage, isPrivate) {
@@ -156,7 +161,7 @@ function appendChatMessage(chatMessage, isPrivate) {
 
 function disconnect() {
     if (stompClient !== null) {
-        stompClient.disconnect()
+        stompClient.deactivate()
     }
     setWsStatus(false)
     console.log('Disconnected')
@@ -178,6 +183,10 @@ $(function () {
         }
     })
 
+    $('#comment').on('input', function () {
+        $(this).removeClass('border-red-500')
+    })
+
     $('#chatForm').submit(function (e) {
         e.preventDefault()
 
@@ -189,8 +198,11 @@ $(function () {
 
         if (fromUser.length !== 0 && comment.length !== 0) {
             const chatMessage = JSON.stringify({ fromUser, toUser, comment, timestamp })
-            stompClient.send('/app/chat', {}, chatMessage)
+            stompClient.publish({ destination: '/app/chat', body: chatMessage })
             $comment.val('')
+            $comment.removeClass('border-red-500')
+        } else if (comment.length === 0) {
+            $comment.addClass('border-red-500').focus()
         }
     })
 

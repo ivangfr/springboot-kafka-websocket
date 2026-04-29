@@ -2,7 +2,6 @@ package com.ivanfranchin.bitcoinapi.price;
 
 import com.ivanfranchin.bitcoinapi.price.model.Price;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +10,6 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
-@Slf4j
 @RequiredArgsConstructor
 @Component
 public class PriceScheduler {
@@ -19,7 +17,7 @@ public class PriceScheduler {
     private final PriceService priceService;
     private final PriceEventEmitter priceEventEmitter;
 
-    @Scheduled(cron = "*/2 * * * * *") // every 2 seconds
+    @Scheduled(cron = "${price.scheduler.cron:*/2 * * * * *}") // every 2 seconds
     public void streamNewPrice() {
         if (ThreadLocalRandom.current().nextBoolean()) {
             Price price = priceService.getLastPrice();

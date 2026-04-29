@@ -6,10 +6,10 @@ This file provides context for agentic coding tools operating in this repository
 
 ## Project Overview
 
-A multi-module Maven project demonstrating a Bitcoin price streaming system using Spring Boot, Apache Kafka (via Spring Cloud Stream), WebSocket, Thymeleaf, Spring Security, and MySQL.
+A multi-module Maven project demonstrating a Bitcoin price streaming system using Spring Boot, Apache Kafka (via Spring Cloud Stream), WebSocket, Thymeleaf, Spring Security, Swagger/OpenAPI (springdoc), and MySQL.
 
 - **Java version:** 25
-- **Spring Boot:** 4.0.4
+- **Spring Boot:** 4.0.6
 - **Spring Cloud:** 2025.1.0
 - **Modules:** `bitcoin-api` (REST API + Kafka producer + JPA/MySQL), `bitcoin-client` (Kafka consumer + WebSocket + Thymeleaf UI + Security)
 - **Root package:** `com.ivanfranchin`
@@ -331,18 +331,18 @@ The `bitcoin-client` UI is server-rendered with **Thymeleaf** and styled with **
 - **JetBrains Mono** is loaded from Google Fonts (`fonts.googleapis.com`).
 - No other CSS frameworks are in use. Materialize CSS has been removed.
 
-### JavaScript Libraries (all from `cdnjs.cloudflare.com`)
+### JavaScript Libraries
 
-| Library | Version | Purpose |
-|---|---|---|
-| jQuery | 3.7.1 | DOM manipulation in `app.js` |
-| SockJS | 1.6.1 | WebSocket transport fallback |
-| STOMP.js | 2.3.3 | STOMP messaging over WebSocket |
-| day.js | 1.11.13 | Date formatting (replaces Moment.js) |
+| Library | Version | CDN Source | Purpose |
+|---|---|---|---|
+| jQuery | 4.0.0 | code.jquery.com | DOM manipulation in `app.js` |
+| SockJS | 1.6.1 | cdn.jsdelivr.net | WebSocket transport fallback |
+| @stomp/stompjs | 7.3.0 | cdn.jsdelivr.net | STOMP messaging over WebSocket |
+| day.js | 1.11.18 | cdn.jsdelivr.net | Date formatting |
 
-All CDN scripts load from `cdnjs.cloudflare.com` — the two exceptions are Tailwind (`cdn.tailwindcss.com`) and Google Fonts (`fonts.googleapis.com`), which are not available on cdnjs.
+CDN sources: jQuery uses `code.jquery.com` (4.0.0 not yet available on cdnjs/jsdelivr), `@stomp/stompjs`, `SockJS`, and `day.js` use `cdn.jsdelivr.net`, Tailwind uses `cdn.tailwindcss.com`, and Google Fonts uses `fonts.googleapis.com`.
 
-day.js uses the same `.format()` API as Moment.js. Do not reintroduce Moment.js.
+Do not reintroduce Moment.js; day.js is the project's date formatting library.
 
 ### Thymeleaf Fragments
 

@@ -41,6 +41,14 @@ class PriceControllerTests {
     }
 
     @Test
+    void testGetLastPriceReturns404WhenNoPricesExist() throws Exception {
+        given(priceService.getLastPrice()).willReturn(null);
+
+        mockMvc.perform(get("/api/bitcoin/last"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     void testGetLastPriceReturnsCorrectContentType() throws Exception {
         LocalDateTime timestamp = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
         Price price = new Price(BigDecimal.valueOf(42000.50), timestamp);
