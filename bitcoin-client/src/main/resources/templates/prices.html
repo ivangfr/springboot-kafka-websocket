@@ -1,222 +1,360 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Bitcoin Live Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        mono: ['JetBrains Mono', 'Fira Code', 'Cascadia Code', 'ui-monospace', 'monospace'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'fade-in': 'fadeIn 0.3s ease-in-out',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(-4px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: [
+                "JetBrains Mono",
+                "Fira Code",
+                "Cascadia Code",
+                "ui-monospace",
+                "monospace",
+              ],
+            },
+            animation: {
+              "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "fade-in": "fadeIn 0.3s ease-in-out",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(-4px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
     </script>
     <!-- JetBrains Mono font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    />
     <style>
-        body { background-color: #030712; }
+      body {
+        background-color: #030712;
+      }
 
-        /* Scrollbar styling */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #111827; }
-        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 2px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4B5563; }
+      /* Scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #111827;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #374151;
+        border-radius: 2px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #4b5563;
+      }
 
-        /* Glowing amber ring on price card */
-        .price-glow {
-            box-shadow: 0 0 0 1px rgba(251,191,36,0.15), 0 4px 32px rgba(251,191,36,0.07);
-        }
-        .price-glow:hover {
-            box-shadow: 0 0 0 1px rgba(251,191,36,0.3), 0 8px 40px rgba(251,191,36,0.12);
-        }
+      /* Glowing amber ring on price card */
+      .price-glow {
+        box-shadow:
+          0 0 0 1px rgba(251, 191, 36, 0.15),
+          0 4px 32px rgba(251, 191, 36, 0.07);
+      }
+      .price-glow:hover {
+        box-shadow:
+          0 0 0 1px rgba(251, 191, 36, 0.3),
+          0 8px 40px rgba(251, 191, 36, 0.12);
+      }
 
-        /* Subtle amber accent line on cards */
-        .card-accent::before {
-            content: '';
-            display: block;
-            height: 2px;
-            background: #f59e0b;
-            border-radius: 2px 2px 0 0;
-        }
+      /* Subtle amber accent line on cards */
+      .card-accent::before {
+        content: "";
+        display: block;
+        height: 2px;
+        background: #f59e0b;
+        border-radius: 2px 2px 0 0;
+      }
 
-        /* Price row fade-in */
-        #priceList tbody tr:first-child {
-            animation: fadeIn 0.3s ease-in-out;
+      /* Price row fade-in */
+      #priceList tbody tr:first-child {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          background-color: rgba(251, 191, 36, 0.12);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; background-color: rgba(251,191,36,0.12); }
-            to { opacity: 1; background-color: transparent; }
+        to {
+          opacity: 1;
+          background-color: transparent;
         }
+      }
 
-        /* Chat row fade-in */
-        #chatList tbody tr:first-child {
-            animation: fadeIn 0.3s ease-in-out;
-        }
+      /* Chat row fade-in */
+      #chatList tbody tr:first-child {
+        animation: fadeIn 0.3s ease-in-out;
+      }
 
-        /* Toggle switch */
-        .toggle-checkbox:checked { right: 0; border-color: #f59e0b; }
-        .toggle-checkbox:checked + .toggle-label { background-color: #f59e0b; }
-        .toggle-checkbox { right: 3px; transition: all 0.2s ease; }
-        .toggle-label { transition: all 0.2s ease; }
+      /* Toggle switch */
+      .toggle-checkbox:checked {
+        right: 0;
+        border-color: #f59e0b;
+      }
+      .toggle-checkbox:checked + .toggle-label {
+        background-color: #f59e0b;
+      }
+      .toggle-checkbox {
+        right: 3px;
+        transition: all 0.2s ease;
+      }
+      .toggle-label {
+        transition: all 0.2s ease;
+      }
     </style>
-</head>
+  </head>
 
-<body class="flex flex-col h-screen overflow-hidden bg-gray-950 text-gray-100 font-mono">
+  <body
+    class="flex flex-col h-screen overflow-hidden bg-gray-950 text-gray-100 font-mono"
+  >
+    <!-- Header -->
+    <div th:insert="~{fragments/header :: header}"></div>
 
-<!-- Header -->
-<div th:insert="~{fragments/header :: header}"></div>
-
-<main class="flex-1 overflow-hidden flex flex-col max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
-
-    <!-- Top stats bar -->
-    <div class="grid grid-cols-3 gap-4 mb-6 shrink-0">
+    <main
+      class="flex-1 overflow-hidden flex flex-col max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6"
+    >
+      <!-- Top stats bar -->
+      <div class="grid grid-cols-3 gap-4 mb-6 shrink-0">
         <!-- Current price -->
-        <div class="col-span-2 card-accent bg-gray-900 rounded-xl price-glow transition-all duration-300 border border-gray-800">
-            <div class="px-5 py-4 border-b border-gray-800 flex items-center gap-2">
-                <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse-slow"></div>
-                <h2 class="text-white font-semibold text-sm tracking-wide">BTC / USD &nbsp;·&nbsp; Live Price</h2>
+        <div
+          class="col-span-2 card-accent bg-gray-900 rounded-xl price-glow transition-all duration-300 border border-gray-800"
+        >
+          <div
+            class="px-5 py-4 border-b border-gray-800 flex items-center gap-2"
+          >
+            <div
+              class="w-2 h-2 rounded-full bg-amber-400 animate-pulse-slow"
+            ></div>
+            <h2 class="text-white font-semibold text-sm tracking-wide">
+              BTC / USD &nbsp;·&nbsp; Live Price
+            </h2>
+          </div>
+          <div class="p-5">
+            <div class="flex items-end gap-4 flex-wrap">
+              <div class="flex items-start gap-1">
+                <span class="text-amber-400 text-2xl font-bold mt-1">$</span>
+                <span
+                  id="currentPrice"
+                  class="text-white text-5xl font-bold tracking-tight tabular-nums leading-none"
+                  >——.——</span
+                >
+              </div>
+              <div
+                id="variationBadge"
+                class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-bold tabular-nums bg-gray-800 text-gray-500 border border-gray-700 transition-all duration-300"
+              >
+                <span id="variationArrow" class="text-base leading-none"
+                  >—</span
+                >
+                <span id="variation">——</span>
+              </div>
             </div>
-            <div class="p-5">
-                <div class="flex items-end gap-4 flex-wrap">
-                    <div class="flex items-start gap-1">
-                        <span class="text-amber-400 text-2xl font-bold mt-1">$</span>
-                        <span id="currentPrice" class="text-white text-5xl font-bold tracking-tight tabular-nums leading-none">——.——</span>
-                    </div>
-                    <div id="variationBadge" class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-bold tabular-nums bg-gray-800 text-gray-500 border border-gray-700 transition-all duration-300">
-                        <span id="variationArrow" class="text-base leading-none">—</span>
-                        <span id="variation">——</span>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
 
         <!-- WebSocket control card -->
-        <div class="bg-gray-900 rounded-xl p-5 border border-gray-800 flex flex-col justify-between">
-            <p class="text-gray-500 text-xs font-semibold tracking-widest uppercase mb-3">WebSocket Feed</p>
-            <div class="flex items-center justify-between">
-                <div>
-                    <p id="wsControlText" class="text-white font-semibold text-sm">Connected</p>
-                    <p class="text-gray-600 text-xs mt-0.5">Real-time prices</p>
-                </div>
-                <!-- Toggle switch -->
-                <div class="relative inline-block w-12 mr-1 align-middle select-none">
-                    <input type="checkbox" id="websocketSwitch" checked
-                           class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-600 appearance-none cursor-pointer top-0"/>
-                    <label for="websocketSwitch"
-                           class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
-                </div>
+        <div
+          class="bg-gray-900 rounded-xl p-5 border border-gray-800 flex flex-col justify-between"
+        >
+          <p
+            class="text-gray-500 text-xs font-semibold tracking-widest uppercase mb-3"
+          >
+            WebSocket Feed
+          </p>
+          <div class="flex items-center justify-between">
+            <div>
+              <p id="wsControlText" class="text-white font-semibold text-sm">
+                Connected
+              </p>
+              <p class="text-gray-600 text-xs mt-0.5">Real-time prices</p>
             </div>
+            <!-- Toggle switch -->
+            <div
+              class="relative inline-block w-12 mr-1 align-middle select-none"
+            >
+              <input
+                type="checkbox"
+                id="websocketSwitch"
+                checked
+                class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-gray-600 appearance-none cursor-pointer top-0"
+              />
+              <label
+                for="websocketSwitch"
+                class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"
+              ></label>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Main content: price history + chat -->
-    <div class="grid grid-cols-2 gap-6 flex-1 min-h-0">
-
+      <!-- Main content: price history + chat -->
+      <div class="grid grid-cols-2 gap-6 flex-1 min-h-0">
         <!-- Price History -->
-        <div class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden min-h-0">
-            <div class="px-5 py-4 border-b border-gray-800 flex items-center justify-between shrink-0">
-                <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse-slow"></div>
-                    <h2 class="text-white font-semibold text-sm tracking-wide">Price History</h2>
-                </div>
-                <span class="text-gray-600 text-xs">Last 20 ticks</span>
+        <div
+          class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden min-h-0"
+        >
+          <div
+            class="px-5 py-4 border-b border-gray-800 flex items-center justify-between shrink-0"
+          >
+            <div class="flex items-center gap-2">
+              <div
+                class="w-2 h-2 rounded-full bg-amber-400 animate-pulse-slow"
+              ></div>
+              <h2 class="text-white font-semibold text-sm tracking-wide">
+                Price History
+              </h2>
             </div>
+            <span class="text-gray-600 text-xs">Last 20 ticks</span>
+          </div>
 
-            <div class="overflow-y-auto flex-1">
-                <table class="w-full text-sm" id="priceList">
-                    <thead class="sticky top-0 bg-gray-950">
-                        <tr>
-                            <th class="text-left px-5 py-2.5 text-gray-500 text-xs font-semibold tracking-widest uppercase border-b border-gray-800">Price (USD)</th>
-                            <th class="text-right px-5 py-2.5 text-gray-500 text-xs font-semibold tracking-widest uppercase border-b border-gray-800">Timestamp</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <div id="priceEmpty" class="flex flex-col items-center justify-center py-16 text-gray-700">
-                    <span class="text-4xl mb-3">₿</span>
-                    <p class="text-sm">Waiting for price data…</p>
-                </div>
+          <div class="overflow-y-auto flex-1">
+            <table class="w-full text-sm" id="priceList">
+              <thead class="sticky top-0 bg-gray-950">
+                <tr>
+                  <th
+                    class="text-left px-5 py-2.5 text-gray-500 text-xs font-semibold tracking-widest uppercase border-b border-gray-800"
+                  >
+                    Price (USD)
+                  </th>
+                  <th
+                    class="text-right px-5 py-2.5 text-gray-500 text-xs font-semibold tracking-widest uppercase border-b border-gray-800"
+                  >
+                    Timestamp
+                  </th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+            <div
+              id="priceEmpty"
+              class="flex flex-col items-center justify-center py-16 text-gray-700"
+            >
+              <span class="text-4xl mb-3">₿</span>
+              <p class="text-sm">Waiting for price data…</p>
             </div>
+          </div>
         </div>
 
         <!-- Chat -->
-        <div class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden min-h-0">
-            <div class="px-5 py-4 border-b border-gray-800 flex items-center gap-2 shrink-0">
-                <div class="w-2 h-2 rounded-full bg-violet-400 animate-pulse-slow"></div>
-                <h2 class="text-white font-semibold text-sm tracking-wide">Live Chat</h2>
-            </div>
+        <div
+          class="card-accent bg-gray-900 rounded-xl border border-gray-800 flex flex-col overflow-hidden min-h-0"
+        >
+          <div
+            class="px-5 py-4 border-b border-gray-800 flex items-center gap-2 shrink-0"
+          >
+            <div
+              class="w-2 h-2 rounded-full bg-violet-400 animate-pulse-slow"
+            ></div>
+            <h2 class="text-white font-semibold text-sm tracking-wide">
+              Live Chat
+            </h2>
+          </div>
 
-            <!-- Chat message area -->
-            <div class="overflow-y-auto flex-1">
-                <table class="w-full text-sm" id="chatList">
-                    <tbody></tbody>
-                </table>
-                <div id="chatEmpty" class="flex flex-col items-center justify-center py-12 text-gray-700">
-                    <span class="text-3xl mb-3">💬</span>
-                    <p class="text-sm">No messages yet…</p>
+          <!-- Chat message area -->
+          <div class="overflow-y-auto flex-1">
+            <table class="w-full text-sm" id="chatList">
+              <tbody></tbody>
+            </table>
+            <div
+              id="chatEmpty"
+              class="flex flex-col items-center justify-center py-12 text-gray-700"
+            >
+              <span class="text-3xl mb-3">💬</span>
+              <p class="text-sm">No messages yet…</p>
+            </div>
+          </div>
+
+          <!-- Chat input form -->
+          <div
+            class="border-t border-gray-800 px-5 py-4 bg-gray-950/50 shrink-0"
+          >
+            <form id="chatForm">
+              <div class="grid grid-cols-1 min-[900px]:grid-cols-2 gap-3 mb-3">
+                <div>
+                  <label
+                    class="text-gray-500 text-xs font-semibold tracking-wider uppercase block mb-1.5"
+                    >From</label
+                  >
+                  <input
+                    disabled
+                    id="fromUser"
+                    type="text"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-gray-400 text-sm font-mono cursor-not-allowed"
+                    th:value="${#authentication.getName()}"
+                  />
                 </div>
-            </div>
-
-            <!-- Chat input form -->
-            <div class="border-t border-gray-800 px-5 py-4 bg-gray-950/50 shrink-0">
-                <form id="chatForm">
-                    <div class="grid grid-cols-1 min-[900px]:grid-cols-2 gap-3 mb-3">
-                        <div>
-                            <label class="text-gray-500 text-xs font-semibold tracking-wider uppercase block mb-1.5">From</label>
-                            <input disabled id="fromUser" type="text"
-                                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-gray-400 text-sm font-mono cursor-not-allowed"
-                                   th:value="${#authentication.getName()}"/>
-                        </div>
-                        <div>
-                            <label for="toUser" class="text-gray-500 text-xs font-semibold tracking-wider uppercase block mb-1.5">To <span class="text-gray-700 font-normal normal-case">(empty = broadcast)</span></label>
-                            <input id="toUser" type="text" placeholder="username…"
-                                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm font-mono placeholder-gray-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-colors"/>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <textarea id="comment" rows="3" placeholder="Type a message… (Shift+Enter for new line)"
-                               class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm font-mono placeholder-gray-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-colors resize-none"></textarea>
-                        <button type="submit"
-                                class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-gray-900 font-bold text-sm rounded-lg transition-colors duration-150">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/>
-                            </svg>
-                            Send
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <div>
+                  <label
+                    for="toUser"
+                    class="text-gray-500 text-xs font-semibold tracking-wider uppercase block mb-1.5"
+                    >To
+                    <span class="text-gray-700 font-normal normal-case"
+                      >(empty = broadcast)</span
+                    ></label
+                  >
+                  <input
+                    id="toUser"
+                    type="text"
+                    placeholder="username…"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm font-mono placeholder-gray-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-colors"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-col gap-2">
+                <textarea
+                  id="comment"
+                  rows="3"
+                  placeholder="Type a message… (Shift+Enter for new line)"
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm font-mono placeholder-gray-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-colors resize-none"
+                ></textarea>
+                <button
+                  type="submit"
+                  class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-gray-900 font-bold text-sm rounded-lg transition-colors duration-150"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"
+                    />
+                  </svg>
+                  Send
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+    </main>
 
-    </div>
-</main>
+    <!-- Footer -->
+    <div th:insert="~{fragments/footer :: footer}"></div>
 
-<!-- Footer -->
-<div th:insert="~{fragments/footer :: footer}"></div>
-
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.3.0/bundles/stomp.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.18/dayjs.min.js"></script>
-<script src="/app.js"></script>
-
-</body>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.3.0/bundles/stomp.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.18/dayjs.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
 </html>

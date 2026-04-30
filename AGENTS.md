@@ -106,31 +106,26 @@ Package structure follows **feature/domain slicing** (e.g., `price/`, `kafka/`, 
 
 ### Indentation & Formatting
 
-- **4 spaces** — never tabs
+- **2 spaces (Google Java Format default)** — never tabs
 - Opening brace on the **same line** as the declaration (K&R style)
 - One blank line between methods; one blank line after the class opening brace before the first member
 - No enforced line-length limit, but keep lines readable
 
 ### Import Organization
 
-Imports are organized in **three groups**, each separated by a blank line, in this order:
-
-1. Project imports (`com.ivanfranchin.*`)
-2. Third-party / framework imports (Lombok, Spring, Jakarta, etc.)
-3. Standard library imports (`java.*`)
-
-No static imports are used in `src/main`. In `src/test`, static imports are encouraged for readability (AssertJ, Mockito, MockMvc helpers).
+Imports follow Google Java Format + custom ordering: static imports first (separated by a blank line), then non-static imports sorted lexicographically with order `java.*` → `jakarta.*` → `org.*` → `com.*`. Wildcard imports are forbidden. Static imports are allowed in `src/main` with Spotless enforcement.
 
 ```java
-import com.ivanfranchin.bitcoinapi.price.model.Price;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Entity;
+
+import org.springframework.stereotype.Component;
+
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 ```
 
 | Element | Convention | Example |
@@ -244,6 +239,10 @@ private static final Price INITIAL_PRICE = new Price(..., LocalDateTime.now());
 The project relies on Spring's default exception propagation. There are no custom exception classes, `@ControllerAdvice`, or `@ExceptionHandler` in use. For new code, follow the same convention — allow Spring to handle exceptions unless there is a specific need for custom error behavior.
 
 ---
+
+### Frontend Files
+
+HTML/JS files are formatted via Prettier 3.5.3 (enforced by Spotless). Run `./mvnw spotless:apply` to format these files.
 
 ## Configuration
 
@@ -366,9 +365,10 @@ Do not reintroduce Moment.js; day.js is the project's date formatting library.
 3. Annotation order on classes: Lombok first, Spring last
 4. `@Bean` methods are package-private
 5. Use `record` for DTOs and event/message types
-6. Imports: project → third-party → `java.*`, each group blank-line separated, no static imports in `src/main` (static imports are fine in tests)
-7. 4-space indentation, K&R brace style
+6. Imports: static first, then `java.*` → `jakarta.*` → `org.*` → `com.*`, wildcard imports forbidden, static imports allowed in `src/main`
+7. 2-space indentation (Google Java Format default), K&R brace style
 8. Properties use `${ENV_VAR:default}` substitution pattern
 9. Test classes are package-private, named `[Class]Tests`, use JUnit 5; choose `@WebMvcTest` for controller slices, `@ExtendWith(MockitoExtension.class)` for pure unit tests; mark `@Disabled` when external infrastructure is required
-10. No automated formatter is configured — maintain style manually by following existing code conventions
+10. Automated formatting enforced via Spotless + Google Java Format (2-space Java indent) and Prettier (JS/HTML). Run ./mvnw spotless:apply to format all code.
 11. CSRF must be disabled (or explicitly configured to ignore) for WebSocket (`/websocket/**`) endpoints
+12. HTML/JS files formatted via Prettier 3.5.3, enforced by Spotless.

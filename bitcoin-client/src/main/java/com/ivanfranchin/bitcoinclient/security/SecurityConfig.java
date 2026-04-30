@@ -15,33 +15,30 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    private static final String USER = "USER";
+  private static final String USER = "USER";
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        UserDetails user1 = User.withUsername("user1")
-                .password(passwordEncoder().encode("123"))
-                .roles(USER).build();
+  @Bean
+  UserDetailsService userDetailsService() {
+    UserDetails user1 =
+        User.withUsername("user1").password(passwordEncoder().encode("123")).roles(USER).build();
 
-        UserDetails user2 = User.withUsername("user2")
-                .password(passwordEncoder().encode("123"))
-                .roles(USER).build();
+    UserDetails user2 =
+        User.withUsername("user2").password(passwordEncoder().encode("123")).roles(USER).build();
 
-        return new InMemoryUserDetailsManager(user1, user2);
-    }
+    return new InMemoryUserDetailsManager(user1, user2);
+  }
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
-                .logout(Customizer.withDefaults())
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/websocket/**"))
-                .build();
-    }
+  @Bean
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+        .formLogin(Customizer.withDefaults())
+        .logout(Customizer.withDefaults())
+        .csrf(csrf -> csrf.ignoringRequestMatchers("/websocket/**"))
+        .build();
+  }
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
+  @Bean
+  PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  }
 }

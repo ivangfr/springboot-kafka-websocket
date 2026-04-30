@@ -5,5 +5,4 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @Configuration
-public class SchedulingConfig {
-}
+public class SchedulingConfig {}

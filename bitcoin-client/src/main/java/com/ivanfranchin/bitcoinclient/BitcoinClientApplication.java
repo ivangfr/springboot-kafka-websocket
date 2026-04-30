@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BitcoinClientApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BitcoinClientApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(BitcoinClientApplication.class, args);
+  }
 }

@@ -206,6 +206,24 @@ The tests do *not* require a running environment — no MySQL or Kafka needed.
 ./mvnw test --projects bitcoin-api -Dtest=PriceControllerTests#testGetLastPriceReturnsLatestBitcoinPrice
 ----
 
+== Code Formatting
+
+Uses https://github.com/diffplug/spotless/tree/main/plugin-maven[Spotless Maven Plugin] + https://github.com/google/google-java-format[Google Java Format] (Java) and https://prettier.io/[Prettier] (JS/HTML) for automated formatting.
+
+*Check formatting:*
+[source,bash]
+----
+./mvnw spotless:check
+----
+
+*Auto-fix formatting:*
+[source,bash]
+----
+./mvnw spotless:apply
+----
+
+Formatting is enforced automatically during `./mvnw verify`.
+
 == Cleanup
 
 To remove the Docker images created by this project, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the script below:
