@@ -3,9 +3,9 @@ set -e
 
 source scripts/my-functions.sh
 
-APP_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)
-
 DOCKER_IMAGE_PREFIX="ivanfranchin"
+APP_VERSION="1.0.0"
+
 BITCOIN_API_APP_NAME="bitcoin-api"
 BITCOIN_CLIENT_APP_NAME="bitcoin-client"
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 DOCKER_IMAGE_PREFIX="ivanfranchin"
 APP_VERSION="1.0.0"
