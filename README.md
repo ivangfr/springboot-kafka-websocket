@@ -54,8 +54,8 @@ flowchart TB
     Listener -->|"sends to"| WS
     WS -->|"pushes price"| UI
 
-    UI -->|"sends chat via STOMP"| WS
-    WS -->|"broadcasts chat (all/private)"| UI
+    UI -->|"sends chat comment"| WS
+    WS -->|"broadcasts chat comment/n(all/private)"| UI
 
     HTTP -->|"calls"| RestCtrl
     Browser <-->|"accesses"| UI
