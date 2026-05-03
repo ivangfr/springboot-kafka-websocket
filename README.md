@@ -14,9 +14,55 @@ On [ivangfr.github.io](https://ivangfr.github.io:), I have compiled my Proof-of-
 - [Medium]: [**Building a Web Chat with Social Login using Spring Boot: Introduction**](https://medium.com/@ivangfr/building-a-web-chat-with-social-login-using-spring-boot-introduction-644702e6be8e)
 - [Medium]: [**News Producer and Consumer Tutorial**](https://medium.com/@ivangfr/list/news-producer-and-consumer-tutorial-815f134a1eda)
 
-## Project Diagram
+## Project Overview
 
-![project-diagram](./documentation/project-diagram.png)
+```mermaid
+flowchart TB
+    subgraph mysql ["MySQL"]
+        db[("prices")]
+    end
+
+    subgraph kafka ["Kafka"]
+        Topic["com.ivanfranchin.bitcoin.api.price"]
+    end
+
+    subgraph bitcoin-api ["bitcoin-api:9081\n(Spring Boot)"]
+        RestCtrl["PriceController\nREST /api/bitcoin/last"]
+        SwaggerUI["Swagger UI"]
+        SimRunner["SimulationRunner"]
+        Scheduler["PriceScheduler"]
+        Emitter["PriceEventEmitter"]
+    end
+
+    subgraph bitcoin-client ["bitcoin-client:9082\n(Spring Boot)"]
+        Listener["priceEventListener"]
+        WS["WebSocket / STOMP"]
+        UI["Thymeleaf UI"]
+    end
+
+    subgraph users ["Users"]
+        HTTP["REST Clients"]
+        Browser["Browser"]
+    end
+
+    SimRunner -->|"creates"| db
+    db -->|"reads latest"| Scheduler
+    Scheduler -->|"triggers"| Emitter
+    Emitter -->|"pushes Price events"| Topic
+
+    Topic -->|"consumes"| Listener
+    Listener -->|"sends to"| WS
+    WS -->|"pushes price"| UI
+
+    UI -->|"sends chat via STOMP"| WS
+    WS -->|"broadcasts chat (all/private)"| UI
+
+    HTTP -->|"calls"| RestCtrl
+    Browser <-->|"accesses"| UI
+    Browser -->|"accesses"| SwaggerUI
+    SwaggerUI -->|"uses"| RestCtrl
+    RestCtrl -->|"reads"| db
+```
 
 ## Applications
 
@@ -203,7 +249,7 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ./remove-docker-images.sh
 ```
 
-## How to optimize GIFs and PNGs in documentation folder
+## How to optimize the GIF in the documentation folder
 
 - [Medium]: [**How I Reduce GIF and Screenshot Sizes for My Technical Articles on macOS**](https://medium.com/itnext/how-i-reduce-gif-and-screenshot-sizes-for-my-technical-articles-on-macos-7fea331afc68)
 

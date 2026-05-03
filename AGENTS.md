@@ -10,7 +10,7 @@ A multi-module Maven project demonstrating a Bitcoin price streaming system usin
 
 - **Java version:** 25
 - **Spring Boot:** 4.0.6
-- **Spring Cloud:** 2025.1.0
+- **Spring Cloud:** 2025.1.1
 - **Modules:** `bitcoin-api` (REST API + Kafka producer + JPA/MySQL), `bitcoin-client` (Kafka consumer + WebSocket + Thymeleaf UI + Security)
 - **Root package:** `com.ivanfranchin`
 
