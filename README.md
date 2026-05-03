@@ -55,7 +55,7 @@ flowchart TB
     WS -->|"pushes price"| UI
 
     UI -->|"sends chat comment"| WS
-    WS -->|"broadcasts chat comment/n(all/private)"| UI
+    WS -->|"broadcasts chat comment\n(all/private)"| UI
 
     HTTP -->|"calls"| RestCtrl
     Browser <-->|"accesses"| UI
