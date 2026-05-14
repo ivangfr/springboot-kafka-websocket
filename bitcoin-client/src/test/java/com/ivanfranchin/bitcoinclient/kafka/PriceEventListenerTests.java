@@ -2,7 +2,7 @@ package com.ivanfranchin.bitcoinclient.kafka;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,7 +41,7 @@ class PriceEventListenerTests {
     consumer.accept(message);
 
     ArgumentCaptor<PriceChanged> captor = ArgumentCaptor.forClass(PriceChanged.class);
-    then(simpMessagingTemplate).should().convertAndSend(eq("/topic/prices"), captor.capture());
+    verify(simpMessagingTemplate).convertAndSend(eq("/topic/prices"), captor.capture());
 
     PriceChanged forwarded = captor.getValue();
     assertThat(forwarded.id()).isEqualTo(1L);
@@ -65,7 +65,7 @@ class PriceEventListenerTests {
     consumer.accept(message);
 
     ArgumentCaptor<PriceChanged> captor = ArgumentCaptor.forClass(PriceChanged.class);
-    then(simpMessagingTemplate).should().convertAndSend(eq("/topic/prices"), captor.capture());
+    verify(simpMessagingTemplate).convertAndSend(eq("/topic/prices"), captor.capture());
 
     PriceChanged forwarded = captor.getValue();
     assertThat(forwarded.id()).isEqualTo(99L);

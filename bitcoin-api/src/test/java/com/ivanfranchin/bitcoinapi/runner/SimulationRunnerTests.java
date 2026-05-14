@@ -2,8 +2,9 @@ package com.ivanfranchin.bitcoinapi.runner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,29 +12,31 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ivanfranchin.bitcoinapi.price.PriceService;
 import com.ivanfranchin.bitcoinapi.price.model.Price;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@Import(SimulationRunner.class)
 class SimulationRunnerTests {
 
-  @Mock private PriceService priceService;
+  @MockitoBean private PriceService priceService;
 
-  @InjectMocks private SimulationRunner simulationRunner;
+  @Autowired private SimulationRunner simulationRunner;
 
   @Test
   void testRunSavesInitialPriceOf37000() throws Exception {
-    given(priceService.getLastPrice()).willReturn(null);
-    given(priceService.savePrice(any(Price.class))).willAnswer(inv -> inv.getArgument(0));
+    when(priceService.getLastPrice()).thenReturn(null);
+    when(priceService.savePrice(any(Price.class))).thenAnswer(inv -> inv.getArgument(0));
 
     simulationRunner.run();
 
     ArgumentCaptor<Price> captor = ArgumentCaptor.forClass(Price.class);
-    then(priceService).should().savePrice(captor.capture());
+    verify(priceService).savePrice(captor.capture());
 
     Price saved = captor.getValue();
     assertThat(saved.getValue()).isEqualByComparingTo(BigDecimal.valueOf(37000));
@@ -42,22 +45,24 @@ class SimulationRunnerTests {
 
   @Test
   void testRunDoesNotSavePriceWhenPricesAlreadyExist() throws Exception {
-    given(priceService.getLastPrice())
-        .willReturn(new Price(BigDecimal.valueOf(37000), LocalDateTime.now()));
+    when(priceService.getLastPrice())
+        .thenReturn(new Price(BigDecimal.valueOf(37000), LocalDateTime.now()));
 
     simulationRunner.run();
 
-    then(priceService).shouldHaveNoMoreInteractions();
+    verify(priceService).getLastPrice();
+    verifyNoMoreInteractions(priceService);
   }
 
   @Test
   void testRunInvokesSavePriceExactlyOnce() throws Exception {
-    given(priceService.getLastPrice()).willReturn(null);
-    given(priceService.savePrice(any(Price.class))).willAnswer(inv -> inv.getArgument(0));
+    when(priceService.getLastPrice()).thenReturn(null);
+    when(priceService.savePrice(any(Price.class))).thenAnswer(inv -> inv.getArgument(0));
 
     simulationRunner.run();
 
-    then(priceService).should().savePrice(any(Price.class));
-    then(priceService).shouldHaveNoMoreInteractions();
+    verify(priceService).getLastPrice();
+    verify(priceService).savePrice(any(Price.class));
+    verifyNoMoreInteractions(priceService);
   }
 }

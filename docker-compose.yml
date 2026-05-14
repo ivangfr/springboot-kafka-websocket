@@ -11,6 +11,9 @@ services:
       - 'MYSQL_DATABASE=bitcoindb'
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=$$MYSQL_ROOT_PASSWORD"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
   zookeeper:
     image: 'confluentinc/cp-zookeeper:7.9.5'
@@ -22,6 +25,9 @@ services:
       - 'ZOOKEEPER_CLIENT_PORT=2181'
     healthcheck:
       test: ["CMD-SHELL", "echo ruok | nc localhost 2181"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
   kafka:
     image: 'confluentinc/cp-kafka:7.9.5'
@@ -39,6 +45,9 @@ services:
       - 'KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1'
     healthcheck:
       test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
 
   kafdrop:
     image: 'obsidiandynamics/kafdrop:4.2.0'
@@ -53,3 +62,6 @@ services:
       - 'KAFKA_BROKERCONNECT=kafka:9092'
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000"]
+      interval: 3s
+      timeout: 3s
+      retries: 5

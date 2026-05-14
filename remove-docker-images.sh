@@ -1,13 +1,4 @@
 #!/usr/bin/env bash
 
-DOCKER_IMAGE_PREFIX="ivanfranchin"
-APP_VERSION="1.0.0"
-
-BITCOIN_API_APP_NAME="bitcoin-api"
-BITCOIN_CLIENT_APP_NAME="bitcoin-client"
-
-BITCOIN_CLIENT_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${BITCOIN_CLIENT_APP_NAME}:${APP_VERSION}"
-BITCOIN_API_DOCKER_IMAGE_NAME="${DOCKER_IMAGE_PREFIX}/${BITCOIN_API_APP_NAME}:${APP_VERSION}"
-
-docker rmi "${BITCOIN_CLIENT_DOCKER_IMAGE_NAME}"
-docker rmi "${BITCOIN_API_DOCKER_IMAGE_NAME}"
+docker rmi ivanfranchin/bitcoin-client:1.0.0
+docker rmi ivanfranchin/bitcoin-api:1.0.0

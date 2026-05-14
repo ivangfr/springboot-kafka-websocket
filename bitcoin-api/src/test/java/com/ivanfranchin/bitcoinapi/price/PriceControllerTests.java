@@ -1,7 +1,7 @@
 package com.ivanfranchin.bitcoinapi.price;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -31,7 +31,7 @@ class PriceControllerTests {
   void testGetLastPriceReturnsLatestBitcoinPrice() throws Exception {
     LocalDateTime timestamp = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
     Price price = new Price(BigDecimal.valueOf(42000.50), timestamp);
-    given(priceService.getLastPrice()).willReturn(price);
+    when(priceService.getLastPrice()).thenReturn(price);
 
     mockMvc
         .perform(get("/api/bitcoin/last"))
@@ -42,7 +42,7 @@ class PriceControllerTests {
 
   @Test
   void testGetLastPriceReturns404WhenNoPricesExist() throws Exception {
-    given(priceService.getLastPrice()).willReturn(null);
+    when(priceService.getLastPrice()).thenReturn(null);
 
     mockMvc.perform(get("/api/bitcoin/last")).andExpect(status().isNotFound());
   }
@@ -51,7 +51,7 @@ class PriceControllerTests {
   void testGetLastPriceReturnsCorrectContentType() throws Exception {
     LocalDateTime timestamp = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
     Price price = new Price(BigDecimal.valueOf(42000.50), timestamp);
-    given(priceService.getLastPrice()).willReturn(price);
+    when(priceService.getLastPrice()).thenReturn(price);
 
     mockMvc
         .perform(get("/api/bitcoin/last"))
@@ -63,7 +63,7 @@ class PriceControllerTests {
   void testGetLastPriceReturnsCorrectTimestampValue() throws Exception {
     LocalDateTime timestamp = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
     Price price = new Price(BigDecimal.valueOf(42000.50), timestamp);
-    given(priceService.getLastPrice()).willReturn(price);
+    when(priceService.getLastPrice()).thenReturn(price);
 
     mockMvc
         .perform(get("/api/bitcoin/last"))

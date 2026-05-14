@@ -3,7 +3,7 @@ package com.ivanfranchin.bitcoinapi.price;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.verify;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,20 +11,22 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ivanfranchin.bitcoinapi.price.event.PriceChanged;
 import com.ivanfranchin.bitcoinapi.price.model.Price;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@Import(PriceEventEmitter.class)
 class PriceEventEmitterTests {
 
-  @Mock private StreamBridge streamBridge;
+  @MockitoBean private StreamBridge streamBridge;
 
-  @InjectMocks private PriceEventEmitter priceEventEmitter;
+  @Autowired private PriceEventEmitter priceEventEmitter;
 
   @Test
   void testSendPublishesMessageWithCorrectPayloadAndBinding() {
@@ -35,7 +37,7 @@ class PriceEventEmitterTests {
     priceEventEmitter.send(price);
 
     ArgumentCaptor<PriceChanged> captor = ArgumentCaptor.forClass(PriceChanged.class);
-    then(streamBridge).should().send(eq("prices-out-0"), captor.capture());
+    verify(streamBridge).send(eq("prices-out-0"), captor.capture());
 
     PriceChanged sent = captor.getValue();
     assertThat(sent.id()).isEqualTo(7L);
@@ -50,6 +52,6 @@ class PriceEventEmitterTests {
 
     priceEventEmitter.send(price);
 
-    then(streamBridge).should().send(eq("prices-out-0"), any(PriceChanged.class));
+    verify(streamBridge).send(eq("prices-out-0"), any(PriceChanged.class));
   }
 }

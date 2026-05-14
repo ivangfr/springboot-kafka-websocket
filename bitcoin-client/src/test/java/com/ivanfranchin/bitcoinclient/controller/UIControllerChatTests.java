@@ -1,7 +1,7 @@
 package com.ivanfranchin.bitcoinclient.controller;
 
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.verify;
 
 import java.time.Instant;
 
@@ -27,9 +27,7 @@ class UIControllerChatTests {
 
     uiController.addChatComment(chatMessage);
 
-    then(simpMessagingTemplate)
-        .should()
-        .convertAndSend(eq("/topic/chat-messages"), eq(chatMessage));
+    verify(simpMessagingTemplate).convertAndSend(eq("/topic/chat-messages"), eq(chatMessage));
   }
 
   @Test
@@ -38,8 +36,7 @@ class UIControllerChatTests {
 
     uiController.addChatComment(chatMessage);
 
-    then(simpMessagingTemplate)
-        .should()
+    verify(simpMessagingTemplate)
         .convertAndSendToUser(eq("user2"), eq("/topic/chat-messages"), eq(chatMessage));
   }
 }

@@ -2,9 +2,9 @@ package com.ivanfranchin.bitcoinapi.price;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,27 +12,29 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.ivanfranchin.bitcoinapi.price.model.Price;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@Import(PriceScheduler.class)
 class PriceSchedulerTests {
 
-  @Mock private PriceService priceService;
+  @MockitoBean private PriceService priceService;
 
-  @Mock private PriceEventEmitter priceEventEmitter;
+  @MockitoBean private PriceEventEmitter priceEventEmitter;
 
-  @InjectMocks private PriceScheduler priceScheduler;
+  @Autowired private PriceScheduler priceScheduler;
 
   @Test
   void testStreamNewPriceInvokesServiceAndEmitterWhenRandomFires() {
     LocalDateTime now = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
     Price lastPrice = new Price(BigDecimal.valueOf(37000), now);
-    given(priceService.getLastPrice()).willReturn(lastPrice);
-    given(priceService.savePrice(any(Price.class))).willAnswer(inv -> inv.getArgument(0));
+    when(priceService.getLastPrice()).thenReturn(lastPrice);
+    when(priceService.savePrice(any(Price.class))).thenAnswer(inv -> inv.getArgument(0));
 
     // Run many times so at least one iteration fires the random branch
     for (int i = 0; i < 100; i++) {
@@ -40,24 +42,24 @@ class PriceSchedulerTests {
     }
 
     // Over 100 iterations the random branch must have fired at least once
-    then(priceService).should(atLeastOnce()).getLastPrice();
-    then(priceService).should(atLeastOnce()).savePrice(any(Price.class));
-    then(priceEventEmitter).should(atLeastOnce()).send(any(Price.class));
+    verify(priceService, atLeastOnce()).getLastPrice();
+    verify(priceService, atLeastOnce()).savePrice(any(Price.class));
+    verify(priceEventEmitter, atLeastOnce()).send(any(Price.class));
   }
 
   @Test
   void testStreamNewPriceComputesPositiveOrNegativeVariationFromCurrentValue() {
     LocalDateTime now = LocalDateTime.of(2025, 1, 15, 10, 30, 0);
     Price lastPrice = new Price(BigDecimal.valueOf(50000), now);
-    given(priceService.getLastPrice()).willReturn(lastPrice);
-    given(priceService.savePrice(any(Price.class))).willAnswer(inv -> inv.getArgument(0));
+    when(priceService.getLastPrice()).thenReturn(lastPrice);
+    when(priceService.savePrice(any(Price.class))).thenAnswer(inv -> inv.getArgument(0));
 
     ArgumentCaptor<Price> captor = ArgumentCaptor.forClass(Price.class);
     for (int i = 0; i < 100; i++) {
       priceScheduler.streamNewPrice();
     }
 
-    then(priceService).should(atLeastOnce()).savePrice(captor.capture());
+    verify(priceService, atLeastOnce()).savePrice(captor.capture());
 
     // Every computed price must have a value (not null) and a timestamp (not null)
     captor
