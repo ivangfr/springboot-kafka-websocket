@@ -2,12 +2,10 @@ package com.ivanfranchin.bitcoinapi.price.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
-
-import com.ivanfranchin.bitcoinapi.price.model.Price;
 
 class PriceResponseTests {
 

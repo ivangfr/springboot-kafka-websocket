@@ -3,16 +3,14 @@ package com.ivanfranchin.bitcoinclient.controller;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
+import com.ivanfranchin.bitcoinclient.websocket.ChatMessage;
 import java.time.Instant;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-
-import com.ivanfranchin.bitcoinclient.websocket.ChatMessage;
 
 @ExtendWith(MockitoExtension.class)
 class UIControllerChatTests {

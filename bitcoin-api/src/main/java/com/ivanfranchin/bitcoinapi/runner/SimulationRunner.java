@@ -1,15 +1,12 @@
 package com.ivanfranchin.bitcoinapi.runner;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
 import com.ivanfranchin.bitcoinapi.price.PriceService;
 import com.ivanfranchin.bitcoinapi.price.model.Price;
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component

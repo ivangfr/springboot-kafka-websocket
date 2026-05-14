@@ -1,10 +1,8 @@
 package com.ivanfranchin.bitcoinapi.price;
 
-import org.springframework.stereotype.Service;
-
 import com.ivanfranchin.bitcoinapi.price.model.Price;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service

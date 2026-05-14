@@ -49,9 +49,6 @@
                             <version>${google-java-format.version}</version>
                             <style>GOOGLE</style>
                         </googleJavaFormat>
-                        <importOrder>
-                            <order>java,jakarta,org,com</order>
-                        </importOrder>
                         <removeUnusedImports/>
                         <forbidWildcardImports/>
                         <formatAnnotations/>

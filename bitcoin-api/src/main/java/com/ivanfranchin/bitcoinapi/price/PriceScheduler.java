@@ -1,16 +1,13 @@
 package com.ivanfranchin.bitcoinapi.price;
 
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import com.ivanfranchin.bitcoinapi.price.model.Price;
-
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component

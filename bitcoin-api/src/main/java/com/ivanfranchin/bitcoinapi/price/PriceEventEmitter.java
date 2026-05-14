@@ -1,13 +1,11 @@
 package com.ivanfranchin.bitcoinapi.price;
 
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.stereotype.Component;
-
 import com.ivanfranchin.bitcoinapi.price.event.PriceChanged;
 import com.ivanfranchin.bitcoinapi.price.model.Price;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 @RequiredArgsConstructor

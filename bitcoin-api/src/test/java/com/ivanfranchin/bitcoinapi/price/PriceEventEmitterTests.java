@@ -5,9 +5,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
+import com.ivanfranchin.bitcoinapi.price.event.PriceChanged;
+import com.ivanfranchin.bitcoinapi.price.model.Price;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -16,9 +17,6 @@ import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import com.ivanfranchin.bitcoinapi.price.event.PriceChanged;
-import com.ivanfranchin.bitcoinapi.price.model.Price;
 
 @ExtendWith(SpringExtension.class)
 @Import(PriceEventEmitter.class)
