@@ -1,7 +1,7 @@
 # This file is intended to be sourced, not executed directly.
 # Usage: source scripts/my-functions.sh
 
-TIMEOUT=120
+TIMEOUT=60
 
 # -- wait_for_container_log --
 # $1: docker container name
