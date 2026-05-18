@@ -10,7 +10,7 @@
     </parent>
     <artifactId>bitcoin-client</artifactId>
     <name>bitcoin-client</name>
-    <description>Demo project for Spring Boot</description>
+    <description/>
     <url/>
     <licenses>
         <license/>
