@@ -223,24 +223,6 @@ The tests do **not** require a running environment — no MySQL or Kafka needed.
   ./mvnw test --projects bitcoin-api -Dtest=PriceControllerTests#testGetLastPriceReturnsLatestBitcoinPrice
   ```
 
-## Code Formatting
-
-Uses [Spotless Maven Plugin](https://github.com/diffplug/spotless/tree/main/plugin-maven) + [Google Java Format](https://github.com/google/google-java-format) (Java) and [Prettier](https://prettier.io/) (JS/HTML) for automated formatting.
-
-- **Check formatting:**
-
-  ```bash
-  ./mvnw spotless:check
-  ```
-
-- **Auto-fix formatting:**
-
-  ```bash
-  ./mvnw spotless:apply
-  ```
-
-Formatting is enforced automatically during `./mvnw verify`.
-
 ## Cleanup
 
 To remove the Docker images created by this project, go to a terminal and, inside the `springboot-kafka-websocket` root folder, run the script below:
@@ -248,6 +230,22 @@ To remove the Docker images created by this project, go to a terminal and, insid
 ```bash
 ./remove-docker-images.sh
 ```
+
+## Code Formatting
+
+Uses [Spotless Maven Plugin](https://github.com/diffplug/spotless/tree/main/plugin-maven) + [Google Java Format](https://github.com/google/google-java-format) (Java) and [Prettier](https://prettier.io/) (JS/HTML) for automated formatting.
+
+- **Check formatting:**
+  ```bash
+  ./mvnw spotless:check
+  ```
+
+- **Auto-fix formatting:**
+  ```bash
+  ./mvnw spotless:apply
+  ```
+
+Formatting is enforced automatically during `./mvnw verify`.
 
 ## How to optimize the GIF in the documentation folder
 
