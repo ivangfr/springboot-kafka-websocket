@@ -81,7 +81,7 @@ docker compose down -v
 ```
 springboot-kafka-websocket/         ← Root multi-module Maven project
 ├── pom.xml                         ← Parent POM
-├── docker-compose.yml
+├── compose.yaml
 ├── bitcoin-api/                    ← Module 1
 │   └── src/main/java/com/ivanfranchin/bitcoinapi/
 │       ├── config/                 ← @Configuration classes
