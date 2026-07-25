@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
+        <version>4.1.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ivanfranchin</groupId>
@@ -29,9 +29,7 @@
     </scm>
     <properties>
         <java.version>25</java.version>
-        <spotless.version>3.4.0</spotless.version>
-        <google-java-format.version>1.35.0</google-java-format.version>
-        <prettier.version>3.5.3</prettier.version>
+        <spotless.version>3.8.0</spotless.version>
     </properties>
     <modules>
         <module>bitcoin-api</module>
@@ -46,7 +44,6 @@
                 <configuration>
                     <java>
                         <googleJavaFormat>
-                            <version>${google-java-format.version}</version>
                             <style>GOOGLE</style>
                         </googleJavaFormat>
                         <removeUnusedImports/>
@@ -57,9 +54,7 @@
                         <includes>
                             <include>src/main/resources/static/**/*.js</include>
                         </includes>
-                        <prettier>
-                            <prettierVersion>${prettier.version}</prettierVersion>
-                        </prettier>
+                        <prettier />
                     </javascript>
                     <formats>
                         <format>
@@ -67,7 +62,6 @@
                                 <include>src/main/resources/templates/**/*.html</include>
                             </includes>
                             <prettier>
-                                <prettierVersion>${prettier.version}</prettierVersion>
                                 <config>
                                     <parser>html</parser>
                                 </config>
@@ -80,7 +74,7 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                        <phase>verify</phase>
+                        <phase>validate</phase>
                     </execution>
                 </executions>
             </plugin>

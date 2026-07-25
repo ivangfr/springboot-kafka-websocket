@@ -195,8 +195,6 @@ The gif below shows two users checking real-time the `BTC` price changes. Additi
 
 ## Running Tests
 
-The tests do **not** require a running environment — no MySQL or Kafka needed.
-
 - **Run all tests (both modules)**
 
   ```bash
@@ -208,19 +206,6 @@ The tests do **not** require a running environment — no MySQL or Kafka needed.
   ```bash
   ./mvnw clean test --projects bitcoin-api
   ./mvnw clean test --projects bitcoin-client
-  ```
-
-- **Run a single test class**
-
-  ```bash
-  ./mvnw test --projects bitcoin-api -Dtest=PriceControllerTests
-  ./mvnw test --projects bitcoin-client -Dtest=SecurityConfigTests
-  ```
-
-- **Run a single test method**
-
-  ```bash
-  ./mvnw test --projects bitcoin-api -Dtest=PriceControllerTests#testGetLastPriceReturnsLatestBitcoinPrice
   ```
 
 ## Cleanup

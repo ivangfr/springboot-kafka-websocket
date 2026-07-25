@@ -8,7 +8,7 @@ function setWsStatus(connected) {
   if (connected) {
     dot.html(
       '<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>' +
-        '<span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>',
+        '<span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>'
     );
     text
       .text("Connected")
@@ -18,7 +18,7 @@ function setWsStatus(connected) {
   } else {
     dot.html(
       '<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>' +
-        '<span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>',
+        '<span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>'
     );
     text
       .text("Disconnected")
@@ -36,7 +36,7 @@ function setVariationStyle(priceVar) {
   badge.removeClass(
     "bg-emerald-950 border-emerald-800 text-emerald-400 " +
       "bg-red-950 border-red-800 text-red-400 " +
-      "bg-gray-800 border-gray-700 text-gray-500",
+      "bg-gray-800 border-gray-700 text-gray-500"
   );
   arrow.text("");
   variation.removeClass("text-emerald-400 text-red-400 text-gray-500");
@@ -86,7 +86,7 @@ function connect() {
         Number(priceValue).toLocaleString("en-US", {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
-        }),
+        })
       );
 
       setVariationStyle(priceVar);
@@ -101,12 +101,14 @@ function connect() {
         priceVar > 0
           ? "text-emerald-400"
           : priceVar < 0
-            ? "text-red-400"
-            : "text-gray-500";
+          ? "text-red-400"
+          : "text-gray-500";
       const row = `<tr class="border-b border-gray-800/60 hover:bg-gray-800/40 transition-colors">
                 <td class="px-5 py-2.5 text-white font-semibold tabular-nums">
                     $${formattedPrice}
-                    <span class="ml-2 text-xs ${varClass} tabular-nums">${varSign}${Number(priceVar).toFixed(2)}</span>
+                    <span class="ml-2 text-xs ${varClass} tabular-nums">${varSign}${Number(
+        priceVar
+      ).toFixed(2)}</span>
                 </td>
                 <td class="px-5 py-2.5 text-gray-500 text-xs text-right tabular-nums">${formattedTime}</td>
             </tr>`;
